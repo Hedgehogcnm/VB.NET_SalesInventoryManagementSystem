@@ -1,0 +1,68 @@
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.exe
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.deps.json
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.runtimeconfig.json
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.pdb
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.Text.Json.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.AssemblyReference.cache
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.Form1.resources
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.GenerateResource.cache
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.AssemblyInfo.vb
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales an.A5B9DE93.Up2Date
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\refint\Sales and Inventory Management System.dll
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.pdb
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.genruntimeconfig.cache
+C:\Users\User\Desktop\VB_Sales Inventory\Sales and Inventory Management System\obj\Debug\net8.0-windows\ref\Sales and Inventory Management System.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.exe
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.deps.json
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.runtimeconfig.json
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Sales and Inventory Management System.pdb
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\Google.Protobuf.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\MySql.Data.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\System.Text.Json.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\ZstdSharp.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.AssemblyReference.cache
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.Form1.resources
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.GenerateResource.cache
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.GeneratedMSBuildEditorConfig.editorconfig
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.AssemblyInfoInputs.cache
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.AssemblyInfo.vb
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.CoreCompileInputs.cache
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales an.A5B9DE93.Up2Date
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\refint\Sales and Inventory Management System.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.pdb
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.genruntimeconfig.cache
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\ref\Sales and Inventory Management System.dll
