@@ -54,7 +54,6 @@ E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Ma
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.AssemblyReference.cache
-E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.Form1.resources
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.vbproj.GenerateResource.cache
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.GeneratedMSBuildEditorConfig.editorconfig
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.AssemblyInfoInputs.cache
@@ -66,3 +65,9 @@ E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Ma
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.pdb
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.genruntimeconfig.cache
 E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\ref\Sales and Inventory Management System.dll
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.LoginForm.resources
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales and Inventory Management System.sourcelink.json
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.SalesForm.resources
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.InventoryForm.resources
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.ReportForm.resources
+E:\UTM\Sem5 DDWD\VB.NET\Sales Inventory Management System\Sales and Inventory Management System\obj\Debug\net8.0-windows\Sales_and_Inventory_Management_System.SupplierForm.resources
