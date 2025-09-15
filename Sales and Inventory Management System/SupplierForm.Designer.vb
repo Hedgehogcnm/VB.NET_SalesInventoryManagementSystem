@@ -28,17 +28,17 @@ Partial Class SupplierForm
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
-<<<<<<< HEAD
+
         Label1 = New Label()
-        ContextMenuStrip1 = New ContextMenuStrip(components)
-=======
+        ContextMenuStrip1 = New ContextMenuStrip()
+
         MenuStrip1 = New MenuStrip()
         btnChangeStatus = New Button()
         Button1 = New Button()
         Button2 = New Button()
         DataGridViewSupplier = New DataGridView()
         Label2 = New Label()
->>>>>>> 5d8833b (Create Supplier List)
+
         MenuStrip1.SuspendLayout()
         CType(DataGridViewSupplier, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -82,9 +82,7 @@ Partial Class SupplierForm
         LogOutToolStripMenuItem.Size = New Size(76, 24)
         LogOutToolStripMenuItem.Text = "Log Out"
         ' 
-<<<<<<< HEAD
-        ' Label1
-=======
+
         ' MenuStrip1
         ' 
         MenuStrip1.ImageScalingSize = New Size(20, 20)
@@ -96,7 +94,7 @@ Partial Class SupplierForm
         MenuStrip1.Text = "MenuStrip1"
         ' 
         ' btnChangeStatus
->>>>>>> 5d8833b (Create Supplier List)
+
         ' 
         btnChangeStatus.Location = New Point(626, 367)
         btnChangeStatus.Name = "btnChangeStatus"
@@ -176,15 +174,14 @@ Partial Class SupplierForm
     Friend WithEvents SupplierToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
-<<<<<<< HEAD
-    Friend WithEvents Label1 As Label
+
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-=======
+
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents btnChangeStatus As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents DataGridViewSupplier As DataGridView
     Friend WithEvents Label2 As Label
->>>>>>> 5d8833b (Create Supplier List)
+
 End Class
