@@ -90,6 +90,7 @@ Partial Class ReportForm
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
         Name = "ReportForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ReportForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()

@@ -29,8 +29,8 @@ Partial Class SupplierForm
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
-        ContextMenuStrip1 = New ContextMenuStrip(components)
         Label1 = New Label()
+        ContextMenuStrip1 = New ContextMenuStrip(components)
         MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -74,12 +74,6 @@ Partial Class SupplierForm
         LogOutToolStripMenuItem.Size = New Size(76, 24)
         LogOutToolStripMenuItem.Text = "Log Out"
         ' 
-        ' ContextMenuStrip1
-        ' 
-        ContextMenuStrip1.ImageScalingSize = New Size(20, 20)
-        ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(61, 4)
-        ' 
         ' Label1
         ' 
         Label1.AutoSize = True
@@ -88,6 +82,12 @@ Partial Class SupplierForm
         Label1.Size = New Size(90, 20)
         Label1.TabIndex = 1
         Label1.Text = "supplier en7"
+        ' 
+        ' ContextMenuStrip1
+        ' 
+        ContextMenuStrip1.ImageScalingSize = New Size(20, 20)
+        ContextMenuStrip1.Name = "ContextMenuStrip1"
+        ContextMenuStrip1.Size = New Size(211, 32)
         ' 
         ' SupplierForm
         ' 
@@ -98,6 +98,7 @@ Partial Class SupplierForm
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
         Name = "SupplierForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "SupplierForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
@@ -111,6 +112,6 @@ Partial Class SupplierForm
     Friend WithEvents SupplierToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents Label1 As Label
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
 End Class

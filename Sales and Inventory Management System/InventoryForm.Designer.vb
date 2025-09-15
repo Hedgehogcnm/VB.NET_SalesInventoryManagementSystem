@@ -98,6 +98,7 @@ Partial Class InventoryForm
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
         Name = "InventoryForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "InventoryForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()

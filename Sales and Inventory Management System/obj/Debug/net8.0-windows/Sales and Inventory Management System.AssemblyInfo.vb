@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("Sales and Inventory Management System"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51fe3270f510c946c7fb405610d332b11c82c170"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afc73865d78ed23be930d871cfe4568491eadf83"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("Sales and Inventory Management System"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("Sales and Inventory Management System"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

@@ -91,13 +91,14 @@ Partial Class SalesForm
         ' 
         ' SalesForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
         Controls.Add(Label1)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
         Name = "SalesForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "SalesForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()

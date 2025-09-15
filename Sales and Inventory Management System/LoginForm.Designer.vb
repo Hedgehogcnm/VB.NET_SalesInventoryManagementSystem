@@ -102,7 +102,8 @@ Partial Class LoginForm
         ' 
         ' LoginForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AcceptButton = loginButton
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
         Controls.Add(Label5)
@@ -114,6 +115,7 @@ Partial Class LoginForm
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "LoginForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Login Form"
         ResumeLayout(False)
         PerformLayout()
