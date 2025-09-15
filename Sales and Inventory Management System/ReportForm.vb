@@ -28,4 +28,8 @@
         login.Show()
         Me.Close()
     End Sub
+
+    Private Sub ReportForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

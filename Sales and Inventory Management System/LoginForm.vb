@@ -36,6 +36,10 @@ Public Class LoginForm
         Finally
             conn.Close()
         End Try
+    End Sub
 
+    Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        usernameTextBox.Text = "admin"
+        passwordTextBox.Text = "12345"
     End Sub
 End Class

@@ -102,7 +102,10 @@ Partial Class LoginForm
         ' 
         ' LoginForm
         ' 
+<<<<<<< HEAD
         AcceptButton = loginButton
+=======
+>>>>>>> 5d8833b (Create Supplier List)
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
