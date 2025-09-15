@@ -74,11 +74,36 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginForm.vb [Design]",
+              "DocumentMoniker": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb",
+              "RelativeDocumentMoniker": "LoginForm.vb",
+              "ToolTip": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb [Design]",
+              "RelativeToolTip": "LoginForm.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-09-13T10:35:18.063Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginForm.vb",
+              "DocumentMoniker": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb",
+              "RelativeDocumentMoniker": "LoginForm.vb",
+              "ToolTip": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb",
+              "RelativeToolTip": "LoginForm.vb",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBIAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-09-12T13:39:28.561Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -91,31 +116,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003380|",
               "WhenOpened": "2025-09-12T10:35:19.996Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "LoginForm.vb [Design]",
-              "DocumentMoniker": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb",
-              "RelativeDocumentMoniker": "LoginForm.vb",
-              "ToolTip": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb [Design]*",
-              "RelativeToolTip": "LoginForm.vb [Design]*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-09-13T10:35:18.063Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LoginForm.vb",
-              "DocumentMoniker": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb",
-              "RelativeDocumentMoniker": "LoginForm.vb",
-              "ToolTip": "E:\\UTM\\Sem5 DDWD\\VB.NET\\Sales Inventory Management System\\Sales and Inventory Management System\\LoginForm.vb*",
-              "RelativeToolTip": "LoginForm.vb*",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBsAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-09-12T13:39:28.561Z",
               "EditorCaption": ""
             },
             {

@@ -1,0 +1,48 @@
+# Ignore Visual Studio temporary files, build results, and caches
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+Debug/
+Release/
+
+# Visual Studio cache
+.vs/
+
+# Auto-generated files
+*.log
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.idb
+*.res
+*.tlog
+*.tmp
+*.cachefile
+*.dbmdl
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# Others
+*.exe
+*.dll
+*.bak
+*.swp
+*.sln.iml
