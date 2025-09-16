@@ -54,10 +54,25 @@ Public Class SupplierForm
             DataGridViewSupplier.DataSource = dt
 
             ' Adjust DataGridView style
-            DataGridViewSupplier.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+            DataGridViewSupplier.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            DataGridViewSupplier.EnableHeadersVisualStyles = False
+            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Font = New Font(DataGridViewSupplier.Font, FontStyle.Bold)
+            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            DataGridViewSupplier.Columns("sup_id").Width = 60
+            DataGridViewSupplier.Columns("sup_name").Width = 170
+            DataGridViewSupplier.Columns("sup_contact").Width = 80
+            DataGridViewSupplier.Columns("sup_email").Width = 170
+            DataGridViewSupplier.Columns("status").Width = 60
+            DataGridViewSupplier.Columns("sup_id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            DataGridViewSupplier.Columns("sup_contact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            DataGridViewSupplier.Columns("status").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             DataGridViewSupplier.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.SelectionBackColor = DataGridViewSupplier.ColumnHeadersDefaultCellStyle.BackColor
+            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.SelectionForeColor = DataGridViewSupplier.ColumnHeadersDefaultCellStyle.ForeColor
             DataGridViewSupplier.MultiSelect = True
             DataGridViewSupplier.ReadOnly = True
+            DataGridViewSupplier.AllowUserToAddRows = False
+
 
             ' Change column header text
             DataGridViewSupplier.Columns("sup_id").HeaderText = "Supplier ID"
@@ -65,6 +80,19 @@ Public Class SupplierForm
             DataGridViewSupplier.Columns("sup_contact").HeaderText = "Contact"
             DataGridViewSupplier.Columns("sup_email").HeaderText = "Email"
             DataGridViewSupplier.Columns("status").HeaderText = "Status"
+
+            ' Add Edit Icon one time in DataGridView Column
+            If Not DataGridViewSupplier.Columns.Contains("EditColumn") Then
+                Dim editColumn As New DataGridViewImageColumn()
+                editColumn.Image = Image.FromFile("C:\Users\asus-pc\OneDrive\Desktop\VB PROJECT\Sales and Inventory Management System\EditIcon.png")
+                editColumn.HeaderText = ""
+                editColumn.Name = "EditColumn"
+                editColumn.ImageLayout = DataGridViewImageCellLayout.Zoom
+                DataGridViewSupplier.Columns.Add(editColumn)
+                DataGridViewSupplier.EnableHeadersVisualStyles = False
+                DataGridViewSupplier.Columns("EditColumn").Width = 35
+                DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            End If
 
         Catch ex As Exception
             MessageBox.Show("Failed to load suppliers: " & ex.Message)
@@ -74,41 +102,21 @@ Public Class SupplierForm
         End Try
     End Sub
 
-    Private Sub btnChangeStatus_Click(sender As Object, e As EventArgs) Handles btnChangeStatus.Click
-        If DataGridViewSupplier.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select at least one supplier.")
-            Return
+    Private Sub DataGridViewSupplier_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewSupplier.CellContentClick
+        If e.ColumnIndex = DataGridViewSupplier.Columns("EditColumn").Index AndAlso e.RowIndex >= 0 Then
+            Dim sup_id As Integer = Convert.ToInt32(DataGridViewSupplier.Rows(e.RowIndex).Cells("sup_id").Value)
+            Dim editForm As New EditSupplierForm(sup_id)
+            editForm.ShowDialog()
+            LoadSuppliers()
+            DataGridViewSupplier.ClearSelection()
         End If
+    End Sub
 
-        ' Ask user for the new status once
-        Dim newStatus = InputBox("Enter new status: Active, or Inactive", "Change Supplier Status", "Inactive")
-
-        If newStatus <> "Active" AndAlso newStatus <> "Inactive" Then
-            Return
-        End If
-
-        Try
-            ConnectDB()
-
-            ' Loop through all selected rows
-            For Each row As DataGridViewRow In DataGridViewSupplier.SelectedRows
-                Dim sup_id = Convert.ToInt32(row.Cells("sup_id").Value)
-
-                Dim sql = "UPDATE tb_suppliers SET status=@status WHERE sup_id=@sup_id"
-                Using cmd As New MySqlCommand(sql, conn)
-                    cmd.Parameters.AddWithValue("@status", newStatus)
-                    cmd.Parameters.AddWithValue("@sup_id", sup_id)
-                    cmd.ExecuteNonQuery()
-                End Using
-            Next
-
-            MessageBox.Show("Status updated to " & newStatus & " for " & DataGridViewSupplier.SelectedRows.Count & " suppliers.")
-            LoadSuppliers() ' refresh table
-
-        Catch ex As Exception
-            MessageBox.Show("Error updating status: " & ex.Message)
-        Finally
-            conn.Close()
-        End Try
+    Private Sub AddPictureBox_Click(sender As Object, e As EventArgs) Handles AddPictureBox.Click
+        Dim addSupplierID As Integer = DataGridViewSupplier.Rows.Count + 1
+        Dim addForm As New AddSupplierForm(addSupplierID)
+        addForm.ShowDialog()
+        LoadSuppliers()
+        DataGridViewSupplier.ClearSelection()
     End Sub
 End Class
