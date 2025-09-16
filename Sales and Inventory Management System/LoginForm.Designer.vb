@@ -102,7 +102,6 @@ Partial Class LoginForm
         ' 
         ' LoginForm
         ' 
-
         AcceptButton = loginButton
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
