@@ -31,12 +31,14 @@ Partial Class InventoryForm
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         Label1 = New Label()
-        DataGridView1 = New DataGridView()
+        ProductListDataGridView = New DataGridView()
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
         Button1 = New Button()
+        Button2 = New Button()
+        Button3 = New Button()
         MenuStrip1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -94,14 +96,14 @@ Partial Class InventoryForm
         Label1.TabIndex = 1
         Label1.Text = "inventory teng"
         ' 
-        ' DataGridView1
+        ' ProductListDataGridView
         ' 
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(148, 97)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.RowHeadersWidth = 51
-        DataGridView1.Size = New Size(602, 310)
-        DataGridView1.TabIndex = 3
+        ProductListDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        ProductListDataGridView.Location = New Point(148, 97)
+        ProductListDataGridView.Name = "ProductListDataGridView"
+        ProductListDataGridView.RowHeadersWidth = 51
+        ProductListDataGridView.Size = New Size(602, 310)
+        ProductListDataGridView.TabIndex = 3
         ' 
         ' SearchProductButton
         ' 
@@ -128,15 +130,35 @@ Partial Class InventoryForm
         Button1.Text = "Order Product"
         Button1.UseVisualStyleBackColor = True
         ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(27, 179)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(94, 48)
+        Button2.TabIndex = 7
+        Button2.Text = "Add Product"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' Button3
+        ' 
+        Button3.Location = New Point(27, 257)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(94, 50)
+        Button3.TabIndex = 8
+        Button3.Text = "Edit Product"
+        Button3.UseVisualStyleBackColor = True
+        ' 
         ' InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Button3)
+        Controls.Add(Button2)
         Controls.Add(Button1)
         Controls.Add(ProductSearchTextBox)
         Controls.Add(SearchProductButton)
-        Controls.Add(DataGridView1)
+        Controls.Add(ProductListDataGridView)
         Controls.Add(Label1)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
@@ -145,7 +167,7 @@ Partial Class InventoryForm
         Text = "InventoryForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        CType(ProductListDataGridView, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -158,8 +180,10 @@ Partial Class InventoryForm
     Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents Label1 As Label
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents ProductListDataGridView As DataGridView
     Friend WithEvents SearchProductButton As Button
     Friend WithEvents ProductSearchTextBox As TextBox
     Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
 End Class
