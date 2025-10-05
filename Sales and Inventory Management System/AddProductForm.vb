@@ -6,7 +6,7 @@ Public Class AddProductForm
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         Dim ProductName As String = ProductNameTextBox.Text
-
+        Dim ProductCategory As String = ProductCategoryComboBox.SelectedItem
         Dim ProductStock As Integer
         If Integer.TryParse(ProductStockTextBox.Text, ProductStock) Then
             ' Conversion successful — ProductStock now holds the number
@@ -37,12 +37,17 @@ Public Class AddProductForm
 
         Try
             ConnectDB()
-            Dim sql As String = "INSERT INTO tb_products (p_id, sup_id, p_name, p_caterogy, p_stock, p_minStock, p_costPrice, p_sellPrice) VALUES (@name, @contact, @email)"
+            Dim sql As String = "INSERT INTO tb_products (p_id, sup_id, p_name, p_caterogy, p_stock, p_minStock, p_costPrice, p_sellPrice) VALUES (@ProductName, @ProductName, @ProductCategory, @ProductStock, @ProductMinStock, @ProductCostPrice, @ProductSellPrice)"
             Using cmd As New MySqlCommand(sql, conn)
-                'cmd.Parameters.AddWithValue("@name", Name)
-                'cmd.Parameters.AddWithValue("@contact", contact)
-                'cmd.Parameters.AddWithValue("@email", email)
-                'cmd.ExecuteNonQuery()
+                'cmd.Parameters.AddWithValue("@ProductID", ProductID)
+                'cmd.Parameters.AddWithValue("@SID", ProductName)
+                cmd.Parameters.AddWithValue("@ProductName", ProductName)
+                cmd.Parameters.AddWithValue("@ProductCategory", ProductCategory)
+                cmd.Parameters.AddWithValue("@ProductStock", ProductStock)
+                cmd.Parameters.AddWithValue("@ProductMinStock", ProductMinStock)
+                cmd.Parameters.AddWithValue("@ProductCostPrice", ProductCostPrice)
+                cmd.Parameters.AddWithValue("@ProductSellPrice", ProductSellPrice)
+                cmd.ExecuteNonQuery()
             End Using
             isSaved = True
             MessageBox.Show("Product added successfully!")
