@@ -47,21 +47,20 @@ Public Class InventoryForm
             ProductListDataGridView.DataSource = dt
 
             ' Adjust DataGridView style
-            ProductListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            ProductListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
             ProductListDataGridView.EnableHeadersVisualStyles = False
-            ProductListDataGridView.ColumnHeadersDefaultCellStyle.Font = New Font(ProductListDataGridView.Font, FontStyle.Bold)
-            ProductListDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            ProductListDataGridView.Columns("p_id").Width = 60
-            ProductListDataGridView.Columns("sup_id").Width = 170
-            ProductListDataGridView.Columns("p_name").Width = 80
-            ProductListDataGridView.Columns("sup_email").Width = 170
-            ProductListDataGridView.Columns("p_stock").Width = 60
-            ProductListDataGridView.Columns("p_minStock").Width = 60
-            ProductListDataGridView.Columns("p_costPrice").Width = 60
-            ProductListDataGridView.Columns("p_sellPrice").Width = 60
-            ProductListDataGridView.Columns("p_costPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            ProductListDataGridView.Columns("p_sellPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            ProductListDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            'ProductListDataGridView.ColumnHeadersDefaultCellStyle.Font = New Font(ProductListDataGridView.Font, FontStyle.Bold)
+            'ProductListDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            'ProductListDataGridView.Columns("p_id").Width = 60
+            'ProductListDataGridView.Columns("sup_id").Width = 170
+            'ProductListDataGridView.Columns("p_name").Width = 80
+            'ProductListDataGridView.Columns("p_stock").Width = 60
+            'ProductListDataGridView.Columns("p_minStock").Width = 60
+            'ProductListDataGridView.Columns("p_costPrice").Width = 60
+            'ProductListDataGridView.Columns("p_sellPrice").Width = 60
+            'ProductListDataGridView.Columns("p_costPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            'ProductListDataGridView.Columns("p_sellPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            'ProductListDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect
             ProductListDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = ProductListDataGridView.ColumnHeadersDefaultCellStyle.BackColor
             ProductListDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = ProductListDataGridView.ColumnHeadersDefaultCellStyle.ForeColor
             ProductListDataGridView.MultiSelect = True
@@ -72,7 +71,6 @@ Public Class InventoryForm
             ProductListDataGridView.Columns("p_id").HeaderText = "Product ID"
             ProductListDataGridView.Columns("sup_id").HeaderText = "Supplier ID"
             ProductListDataGridView.Columns("p_name").HeaderText = "Product Name"
-            ProductListDataGridView.Columns("sup_email").HeaderText = "Supplier Email"
             ProductListDataGridView.Columns("p_stock").HeaderText = "Product Stock"
             ProductListDataGridView.Columns("p_minStock").HeaderText = "Product Minimum Stock"
             ProductListDataGridView.Columns("p_costPrice").HeaderText = "Product Cost Price"
@@ -84,5 +82,9 @@ Public Class InventoryForm
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
 
+    End Sub
+
+    Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
+        AddProductForm.ShowDialog()
     End Sub
 End Class

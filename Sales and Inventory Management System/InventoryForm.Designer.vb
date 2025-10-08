@@ -35,7 +35,7 @@ Partial Class InventoryForm
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
         Button1 = New Button()
-        Button2 = New Button()
+        AddProductButton = New Button()
         Button3 = New Button()
         MenuStrip1.SuspendLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
@@ -47,7 +47,7 @@ Partial Class InventoryForm
         MenuStrip1.Items.AddRange(New ToolStripItem() {SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(800, 28)
+        MenuStrip1.Size = New Size(1175, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -102,12 +102,12 @@ Partial Class InventoryForm
         ProductListDataGridView.Location = New Point(148, 97)
         ProductListDataGridView.Name = "ProductListDataGridView"
         ProductListDataGridView.RowHeadersWidth = 51
-        ProductListDataGridView.Size = New Size(602, 310)
+        ProductListDataGridView.Size = New Size(776, 416)
         ProductListDataGridView.TabIndex = 3
         ' 
         ' SearchProductButton
         ' 
-        SearchProductButton.Location = New Point(656, 51)
+        SearchProductButton.Location = New Point(830, 54)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -116,7 +116,7 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(460, 52)
+        ProductSearchTextBox.Location = New Point(630, 55)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
         ProductSearchTextBox.Size = New Size(180, 27)
         ProductSearchTextBox.TabIndex = 5
@@ -130,14 +130,14 @@ Partial Class InventoryForm
         Button1.Text = "Order Product"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' Button2
+        ' AddProductButton
         ' 
-        Button2.Location = New Point(27, 179)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(94, 48)
-        Button2.TabIndex = 7
-        Button2.Text = "Add Product"
-        Button2.UseVisualStyleBackColor = True
+        AddProductButton.Location = New Point(27, 179)
+        AddProductButton.Name = "AddProductButton"
+        AddProductButton.Size = New Size(94, 48)
+        AddProductButton.TabIndex = 7
+        AddProductButton.Text = "Add Product"
+        AddProductButton.UseVisualStyleBackColor = True
         ' 
         ' Button3
         ' 
@@ -152,9 +152,9 @@ Partial Class InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1175, 525)
         Controls.Add(Button3)
-        Controls.Add(Button2)
+        Controls.Add(AddProductButton)
         Controls.Add(Button1)
         Controls.Add(ProductSearchTextBox)
         Controls.Add(SearchProductButton)
@@ -184,6 +184,6 @@ Partial Class InventoryForm
     Friend WithEvents SearchProductButton As Button
     Friend WithEvents ProductSearchTextBox As TextBox
     Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents AddProductButton As Button
     Friend WithEvents Button3 As Button
 End Class
