@@ -38,6 +38,8 @@ Partial Class AddProductForm
         ProductCostPriceTextBox = New TextBox()
         ProductSellPriceTextBox = New TextBox()
         AddProductButton = New Button()
+        ProductIDTextBox = New TextBox()
+        SupplierIDTextBox = New TextBox()
         SuspendLayout()
         ' 
         ' Label1
@@ -183,11 +185,27 @@ Partial Class AddProductForm
         AddProductButton.Text = "Add"
         AddProductButton.UseVisualStyleBackColor = True
         ' 
+        ' ProductIDTextBox
+        ' 
+        ProductIDTextBox.Location = New Point(204, 105)
+        ProductIDTextBox.Name = "ProductIDTextBox"
+        ProductIDTextBox.Size = New Size(151, 27)
+        ProductIDTextBox.TabIndex = 17
+        ' 
+        ' SupplierIDTextBox
+        ' 
+        SupplierIDTextBox.Location = New Point(204, 165)
+        SupplierIDTextBox.Name = "SupplierIDTextBox"
+        SupplierIDTextBox.Size = New Size(151, 27)
+        SupplierIDTextBox.TabIndex = 18
+        ' 
         ' AddProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(SupplierIDTextBox)
+        Controls.Add(ProductIDTextBox)
         Controls.Add(AddProductButton)
         Controls.Add(ProductSellPriceTextBox)
         Controls.Add(ProductCostPriceTextBox)
@@ -226,4 +244,6 @@ Partial Class AddProductForm
     Friend WithEvents ProductCostPriceTextBox As TextBox
     Friend WithEvents ProductSellPriceTextBox As TextBox
     Friend WithEvents AddProductButton As Button
+    Friend WithEvents ProductIDTextBox As TextBox
+    Friend WithEvents SupplierIDTextBox As TextBox
 End Class
