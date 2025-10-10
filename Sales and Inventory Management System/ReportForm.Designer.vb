@@ -29,7 +29,15 @@ Partial Class ReportForm
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         Label1 = New Label()
+        ToDateTimePicker = New DateTimePicker()
+        Label2 = New Label()
+        Label3 = New Label()
+        FromDateTimePicker = New DateTimePicker()
+        GenerateButton = New Button()
+        PrintButton = New Button()
+        ReportDataGridView = New DataGridView()
         MenuStrip1.SuspendLayout()
+        CType(ReportDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -75,17 +83,83 @@ Partial Class ReportForm
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(275, 191)
+        Label1.Location = New Point(691, 421)
         Label1.Name = "Label1"
         Label1.Size = New Size(82, 20)
         Label1.TabIndex = 1
         Label1.Text = "Report en7"
+        ' 
+        ' ToDateTimePicker
+        ' 
+        ToDateTimePicker.Location = New Point(445, 61)
+        ToDateTimePicker.Name = "ToDateTimePicker"
+        ToDateTimePicker.Size = New Size(250, 27)
+        ToDateTimePicker.TabIndex = 2
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(401, 66)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(28, 20)
+        Label2.TabIndex = 3
+        Label2.Text = "To:"
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(55, 63)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(46, 20)
+        Label3.TabIndex = 4
+        Label3.Text = "From:"
+        ' 
+        ' FromDateTimePicker
+        ' 
+        FromDateTimePicker.Location = New Point(117, 61)
+        FromDateTimePicker.Name = "FromDateTimePicker"
+        FromDateTimePicker.Size = New Size(250, 27)
+        FromDateTimePicker.TabIndex = 5
+        ' 
+        ' GenerateButton
+        ' 
+        GenerateButton.Location = New Point(261, 119)
+        GenerateButton.Name = "GenerateButton"
+        GenerateButton.Size = New Size(94, 29)
+        GenerateButton.TabIndex = 6
+        GenerateButton.Text = "Generate"
+        GenerateButton.UseVisualStyleBackColor = True
+        ' 
+        ' PrintButton
+        ' 
+        PrintButton.Location = New Point(401, 119)
+        PrintButton.Name = "PrintButton"
+        PrintButton.Size = New Size(94, 29)
+        PrintButton.TabIndex = 7
+        PrintButton.Text = "Print"
+        PrintButton.UseVisualStyleBackColor = True
+        ' 
+        ' ReportDataGridView
+        ' 
+        ReportDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        ReportDataGridView.Location = New Point(54, 184)
+        ReportDataGridView.Name = "ReportDataGridView"
+        ReportDataGridView.RowHeadersWidth = 51
+        ReportDataGridView.Size = New Size(684, 232)
+        ReportDataGridView.TabIndex = 8
         ' 
         ' ReportForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(ReportDataGridView)
+        Controls.Add(PrintButton)
+        Controls.Add(GenerateButton)
+        Controls.Add(FromDateTimePicker)
+        Controls.Add(Label3)
+        Controls.Add(Label2)
+        Controls.Add(ToDateTimePicker)
         Controls.Add(Label1)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
@@ -94,6 +168,7 @@ Partial Class ReportForm
         Text = "ReportForm"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
+        CType(ReportDataGridView, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -105,4 +180,11 @@ Partial Class ReportForm
     Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label1 As Label
+    Friend WithEvents ToDateTimePicker As DateTimePicker
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents FromDateTimePicker As DateTimePicker
+    Friend WithEvents GenerateButton As Button
+    Friend WithEvents PrintButton As Button
+    Friend WithEvents ReportDataGridView As DataGridView
 End Class

@@ -92,9 +92,8 @@ Partial Class AddSupplierForm
         Label5.AutoSize = True
         Label5.Location = New Point(0, 421)
         Label5.Name = "Label5"
-        Label5.Size = New Size(801, 20)
+        Label5.Size = New Size(0, 20)
         Label5.TabIndex = 10
-        Label5.Text = "------------------------------------------------------------------------------------------------------------------------------------"
         ' 
         ' Label4
         ' 
