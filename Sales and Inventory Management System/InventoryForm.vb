@@ -87,4 +87,8 @@ Public Class InventoryForm
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         AddProductForm.ShowDialog()
     End Sub
+
+    Private Sub EditProductButton_Click(sender As Object, e As EventArgs) Handles EditProductButton.Click
+        EditProductForm.ShowDialog()
+    End Sub
 End Class

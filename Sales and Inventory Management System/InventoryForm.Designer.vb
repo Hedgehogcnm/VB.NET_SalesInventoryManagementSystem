@@ -36,7 +36,7 @@ Partial Class InventoryForm
         ProductSearchTextBox = New TextBox()
         Button1 = New Button()
         AddProductButton = New Button()
-        Button3 = New Button()
+        EditProductButton = New Button()
         MenuStrip1.SuspendLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -139,21 +139,21 @@ Partial Class InventoryForm
         AddProductButton.Text = "Add Product"
         AddProductButton.UseVisualStyleBackColor = True
         ' 
-        ' Button3
+        ' EditProductButton
         ' 
-        Button3.Location = New Point(27, 257)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(94, 50)
-        Button3.TabIndex = 8
-        Button3.Text = "Edit Product"
-        Button3.UseVisualStyleBackColor = True
+        EditProductButton.Location = New Point(27, 257)
+        EditProductButton.Name = "EditProductButton"
+        EditProductButton.Size = New Size(94, 50)
+        EditProductButton.TabIndex = 8
+        EditProductButton.Text = "Edit Product"
+        EditProductButton.UseVisualStyleBackColor = True
         ' 
         ' InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1175, 525)
-        Controls.Add(Button3)
+        Controls.Add(EditProductButton)
         Controls.Add(AddProductButton)
         Controls.Add(Button1)
         Controls.Add(ProductSearchTextBox)
@@ -185,5 +185,5 @@ Partial Class InventoryForm
     Friend WithEvents ProductSearchTextBox As TextBox
     Friend WithEvents Button1 As Button
     Friend WithEvents AddProductButton As Button
-    Friend WithEvents Button3 As Button
+    Friend WithEvents EditProductButton As Button
 End Class

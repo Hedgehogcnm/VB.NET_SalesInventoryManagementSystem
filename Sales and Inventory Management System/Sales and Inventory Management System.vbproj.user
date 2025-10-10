@@ -7,10 +7,10 @@
     <Compile Update="EditSupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="EditProductForm.vb">
+    <Compile Update="AddProductForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="AddProductForm.vb">
+    <Compile Update="EditProductForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="InventoryForm.vb">
