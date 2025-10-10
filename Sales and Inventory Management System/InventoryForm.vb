@@ -91,4 +91,49 @@ Public Class InventoryForm
     Private Sub EditProductButton_Click(sender As Object, e As EventArgs) Handles EditProductButton.Click
         EditProductForm.ShowDialog()
     End Sub
+
+    Private Sub DeleteProductButton_Click(sender As Object, e As EventArgs) Handles DeleteProductButton.Click
+        ' Check if a row is selected
+        If ProductListDataGridView.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Get Product ID from the selected row
+        Dim ProductID As Integer = Convert.ToInt32(ProductListDataGridView.SelectedRows(0).Cells("p_id").Value)
+
+        ' Confirm deletion
+        Dim confirm As DialogResult = MessageBox.Show(
+            "Are you sure you want to delete this product?",
+            "Confirm Delete",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question
+        )
+
+        If confirm = DialogResult.No Then
+            Return
+        End If
+
+        ' Delete the product from the database
+        Try
+            ConnectDB()
+            Dim sql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
+            Using cmd As New MySqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@ProductID", ProductID)
+                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+                If rowsAffected > 0 Then
+                    MessageBox.Show("✅ Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LoadProduct() ' Refresh the DataGridView
+                Else
+                    MessageBox.Show("⚠️ No product found with that ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("❌ Error deleting product: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
 End Class

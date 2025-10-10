@@ -31,6 +31,8 @@ Partial Class EditProductForm
         Label7 = New Label()
         Label8 = New Label()
         SaveButton = New Button()
+        ProductCategoryComboBox = New ComboBox()
+        EditProductNameTextBox = New TextBox()
         SuspendLayout()
         ' 
         ' Label1
@@ -122,11 +124,29 @@ Partial Class EditProductForm
         SaveButton.Text = "Save"
         SaveButton.UseVisualStyleBackColor = True
         ' 
+        ' ProductCategoryComboBox
+        ' 
+        ProductCategoryComboBox.FormattingEnabled = True
+        ProductCategoryComboBox.Items.AddRange(New Object() {"Hand Tools", "Power Tools", "Plumbing", "Electrical", "Building Materials", "Paint & Adhesives", "Safety Equipment"})
+        ProductCategoryComboBox.Location = New Point(312, 271)
+        ProductCategoryComboBox.Name = "ProductCategoryComboBox"
+        ProductCategoryComboBox.Size = New Size(151, 28)
+        ProductCategoryComboBox.TabIndex = 9
+        ' 
+        ' EditProductNameTextBox
+        ' 
+        EditProductNameTextBox.Location = New Point(290, 209)
+        EditProductNameTextBox.Name = "EditProductNameTextBox"
+        EditProductNameTextBox.Size = New Size(151, 27)
+        EditProductNameTextBox.TabIndex = 10
+        ' 
         ' EditProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(943, 480)
+        Controls.Add(EditProductNameTextBox)
+        Controls.Add(ProductCategoryComboBox)
         Controls.Add(SaveButton)
         Controls.Add(Label8)
         Controls.Add(Label7)
@@ -151,4 +171,6 @@ Partial Class EditProductForm
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents SaveButton As Button
+    Friend WithEvents ProductCategoryComboBox As ComboBox
+    Friend WithEvents EditProductNameTextBox As TextBox
 End Class

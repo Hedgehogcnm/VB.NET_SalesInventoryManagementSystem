@@ -37,6 +37,7 @@ Partial Class InventoryForm
         Button1 = New Button()
         AddProductButton = New Button()
         EditProductButton = New Button()
+        DeleteProductButton = New Button()
         MenuStrip1.SuspendLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -148,11 +149,21 @@ Partial Class InventoryForm
         EditProductButton.Text = "Edit Product"
         EditProductButton.UseVisualStyleBackColor = True
         ' 
+        ' DeleteProductButton
+        ' 
+        DeleteProductButton.Location = New Point(27, 338)
+        DeleteProductButton.Name = "DeleteProductButton"
+        DeleteProductButton.Size = New Size(94, 49)
+        DeleteProductButton.TabIndex = 9
+        DeleteProductButton.Text = "Delete Product"
+        DeleteProductButton.UseVisualStyleBackColor = True
+        ' 
         ' InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1175, 525)
+        Controls.Add(DeleteProductButton)
         Controls.Add(EditProductButton)
         Controls.Add(AddProductButton)
         Controls.Add(Button1)
@@ -186,4 +197,5 @@ Partial Class InventoryForm
     Friend WithEvents Button1 As Button
     Friend WithEvents AddProductButton As Button
     Friend WithEvents EditProductButton As Button
+    Friend WithEvents DeleteProductButton As Button
 End Class
