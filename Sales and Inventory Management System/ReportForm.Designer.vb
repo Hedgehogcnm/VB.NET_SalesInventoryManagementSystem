@@ -36,6 +36,8 @@ Partial Class ReportForm
         GenerateButton = New Button()
         PrintButton = New Button()
         ReportDataGridView = New DataGridView()
+        PageSetupButton = New Button()
+        PrintPreviewButton = New Button()
         MenuStrip1.SuspendLayout()
         CType(ReportDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -123,7 +125,7 @@ Partial Class ReportForm
         ' 
         ' GenerateButton
         ' 
-        GenerateButton.Location = New Point(261, 119)
+        GenerateButton.Location = New Point(159, 125)
         GenerateButton.Name = "GenerateButton"
         GenerateButton.Size = New Size(94, 29)
         GenerateButton.TabIndex = 6
@@ -132,7 +134,7 @@ Partial Class ReportForm
         ' 
         ' PrintButton
         ' 
-        PrintButton.Location = New Point(401, 119)
+        PrintButton.Location = New Point(548, 125)
         PrintButton.Name = "PrintButton"
         PrintButton.Size = New Size(94, 29)
         PrintButton.TabIndex = 7
@@ -148,11 +150,31 @@ Partial Class ReportForm
         ReportDataGridView.Size = New Size(684, 232)
         ReportDataGridView.TabIndex = 8
         ' 
+        ' PageSetupButton
+        ' 
+        PageSetupButton.Location = New Point(277, 125)
+        PageSetupButton.Name = "PageSetupButton"
+        PageSetupButton.Size = New Size(94, 29)
+        PageSetupButton.TabIndex = 9
+        PageSetupButton.Text = "Page Setup"
+        PageSetupButton.UseVisualStyleBackColor = True
+        ' 
+        ' PrintPreviewButton
+        ' 
+        PrintPreviewButton.Location = New Point(408, 125)
+        PrintPreviewButton.Name = "PrintPreviewButton"
+        PrintPreviewButton.Size = New Size(111, 29)
+        PrintPreviewButton.TabIndex = 10
+        PrintPreviewButton.Text = "Page Review"
+        PrintPreviewButton.UseVisualStyleBackColor = True
+        ' 
         ' ReportForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(PrintPreviewButton)
+        Controls.Add(PageSetupButton)
         Controls.Add(ReportDataGridView)
         Controls.Add(PrintButton)
         Controls.Add(GenerateButton)
@@ -187,4 +209,6 @@ Partial Class ReportForm
     Friend WithEvents GenerateButton As Button
     Friend WithEvents PrintButton As Button
     Friend WithEvents ReportDataGridView As DataGridView
+    Friend WithEvents PageSetupButton As Button
+    Friend WithEvents PrintPreviewButton As Button
 End Class
