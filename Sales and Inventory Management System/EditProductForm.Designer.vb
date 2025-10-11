@@ -145,7 +145,7 @@ Partial Class EditProductForm
         ' 
         EditProductNameTextBox.Location = New Point(290, 268)
         EditProductNameTextBox.Name = "EditProductNameTextBox"
-        EditProductNameTextBox.Size = New Size(151, 27)
+        EditProductNameTextBox.Size = New Size(224, 27)
         EditProductNameTextBox.TabIndex = 10
         ' 
         ' Label9

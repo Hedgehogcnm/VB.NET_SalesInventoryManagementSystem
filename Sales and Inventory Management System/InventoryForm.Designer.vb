@@ -153,7 +153,7 @@ Partial Class InventoryForm
         ' 
         DeleteProductButton.Location = New Point(27, 338)
         DeleteProductButton.Name = "DeleteProductButton"
-        DeleteProductButton.Size = New Size(94, 49)
+        DeleteProductButton.Size = New Size(94, 65)
         DeleteProductButton.TabIndex = 9
         DeleteProductButton.Text = "Delete Product"
         DeleteProductButton.UseVisualStyleBackColor = True

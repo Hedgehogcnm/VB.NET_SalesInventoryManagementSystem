@@ -97,4 +97,8 @@ Public Class AddProductForm
         End Try
 
     End Sub
+
+    Private Sub AddProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

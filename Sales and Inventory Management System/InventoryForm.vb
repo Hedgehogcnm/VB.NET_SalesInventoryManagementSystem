@@ -85,7 +85,14 @@ Public Class InventoryForm
     End Sub
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
-        AddProductForm.ShowDialog()
+        ' Open Add Product form as a dialog
+        Dim addForm As New AddProductForm()
+
+        ' Show the form and check if product was saved
+        If addForm.ShowDialog() = DialogResult.OK Then
+            ' Refresh product list automatically
+            LoadProduct()
+        End If
     End Sub
 
     Private Sub EditProductButton_Click(sender As Object, e As EventArgs) Handles EditProductButton.Click
