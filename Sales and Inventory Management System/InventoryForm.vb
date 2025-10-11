@@ -89,8 +89,29 @@ Public Class InventoryForm
     End Sub
 
     Private Sub EditProductButton_Click(sender As Object, e As EventArgs) Handles EditProductButton.Click
-        EditProductForm.ShowDialog()
+        If ProductListDataGridView.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a product to edit.")
+            Return
+        End If
+
+        Dim row As DataGridViewRow = ProductListDataGridView.SelectedRows(0)
+        Dim editForm As New EditProductForm()
+
+        editForm.ProductID = Convert.ToInt32(row.Cells("p_id").Value)
+        editForm.SupplierID = Convert.ToInt32(row.Cells("sup_id").Value)
+        editForm.ProductName = row.Cells("p_name").Value.ToString()
+        editForm.ProductCategory = row.Cells("p_category").Value.ToString()
+        editForm.ProductStock = Convert.ToInt32(row.Cells("p_stock").Value)
+        editForm.ProductMinStock = Convert.ToInt32(row.Cells("p_minStock").Value)
+        editForm.ProductCostPrice = Convert.ToDecimal(row.Cells("p_costPrice").Value)
+        editForm.ProductSellPrice = Convert.ToDecimal(row.Cells("p_sellPrice").Value)
+
+        ' Show as dialog, refresh if saved
+        If editForm.ShowDialog() = DialogResult.OK Then
+            LoadProduct()
+        End If
     End Sub
+
 
     Private Sub DeleteProductButton_Click(sender As Object, e As EventArgs) Handles DeleteProductButton.Click
         ' Check if a row is selected
@@ -99,7 +120,7 @@ Public Class InventoryForm
             Return
         End If
 
-        ' Get Product ID from the selected row
+        ' Get Product ID from selected row
         Dim ProductID As Integer = Convert.ToInt32(ProductListDataGridView.SelectedRows(0).Cells("p_id").Value)
 
         ' Confirm deletion
@@ -110,30 +131,49 @@ Public Class InventoryForm
             MessageBoxIcon.Question
         )
 
-        If confirm = DialogResult.No Then
-            Return
-        End If
+        If confirm = DialogResult.No Then Return
 
-        ' Delete the product from the database
         Try
             ConnectDB()
-            Dim sql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
-            Using cmd As New MySqlCommand(sql, conn)
-                cmd.Parameters.AddWithValue("@ProductID", ProductID)
-                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+            ' --- Step 1: Check if product has related inventory movements ---
+            Dim checkSql As String = "SELECT COUNT(*) FROM tb_inventorymovements WHERE p_id = @ProductID"
+            Using checkCmd As New MySqlCommand(checkSql, conn)
+                checkCmd.Parameters.AddWithValue("@ProductID", ProductID)
+                Dim relatedCount As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+
+                If relatedCount > 0 Then
+                    MessageBox.Show(
+                        "❌ This product cannot be deleted because it is linked to inventory movement records." & vbCrLf &
+                        "Please remove related inventory records first.",
+                        "Delete Blocked",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    )
+                    Return
+                End If
+            End Using
+
+            ' --- Step 2: Proceed with product deletion if safe ---
+            Dim deleteSql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
+            Using deleteCmd As New MySqlCommand(deleteSql, conn)
+                deleteCmd.Parameters.AddWithValue("@ProductID", ProductID)
+                Dim rowsAffected As Integer = deleteCmd.ExecuteNonQuery()
 
                 If rowsAffected > 0 Then
                     MessageBox.Show("✅ Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    LoadProduct() ' Refresh the DataGridView
+                    LoadProduct() ' Refresh DataGridView
                 Else
                     MessageBox.Show("⚠️ No product found with that ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
             End Using
+
         Catch ex As Exception
             MessageBox.Show("❌ Error deleting product: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
     End Sub
+
 
 End Class

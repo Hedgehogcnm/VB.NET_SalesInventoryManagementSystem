@@ -33,6 +33,14 @@ Partial Class EditProductForm
         SaveButton = New Button()
         ProductCategoryComboBox = New ComboBox()
         EditProductNameTextBox = New TextBox()
+        Label9 = New Label()
+        ProductIDLabel = New Label()
+        SupplierIDLabel = New Label()
+        EditProductStockTextBox = New TextBox()
+        EditProductMinStockTextBox = New TextBox()
+        EditProductCostPriceTextBox = New TextBox()
+        EditProductSellPriceTextBox = New TextBox()
+        CancelButton = New Button()
         SuspendLayout()
         ' 
         ' Label1
@@ -59,7 +67,7 @@ Partial Class EditProductForm
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(144, 210)
+        Label3.Location = New Point(144, 269)
         Label3.Name = "Label3"
         Label3.Size = New Size(140, 23)
         Label3.TabIndex = 2
@@ -69,7 +77,7 @@ Partial Class EditProductForm
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.Location = New Point(144, 272)
+        Label4.Location = New Point(144, 331)
         Label4.Name = "Label4"
         Label4.Size = New Size(162, 23)
         Label4.TabIndex = 3
@@ -128,23 +136,94 @@ Partial Class EditProductForm
         ' 
         ProductCategoryComboBox.FormattingEnabled = True
         ProductCategoryComboBox.Items.AddRange(New Object() {"Hand Tools", "Power Tools", "Plumbing", "Electrical", "Building Materials", "Paint & Adhesives", "Safety Equipment"})
-        ProductCategoryComboBox.Location = New Point(312, 271)
+        ProductCategoryComboBox.Location = New Point(312, 330)
         ProductCategoryComboBox.Name = "ProductCategoryComboBox"
         ProductCategoryComboBox.Size = New Size(151, 28)
         ProductCategoryComboBox.TabIndex = 9
         ' 
         ' EditProductNameTextBox
         ' 
-        EditProductNameTextBox.Location = New Point(290, 209)
+        EditProductNameTextBox.Location = New Point(290, 268)
         EditProductNameTextBox.Name = "EditProductNameTextBox"
         EditProductNameTextBox.Size = New Size(151, 27)
         EditProductNameTextBox.TabIndex = 10
+        ' 
+        ' Label9
+        ' 
+        Label9.AutoSize = True
+        Label9.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label9.Location = New Point(144, 201)
+        Label9.Name = "Label9"
+        Label9.Size = New Size(122, 23)
+        Label9.TabIndex = 11
+        Label9.Text = "Suppplier ID: "
+        ' 
+        ' ProductIDLabel
+        ' 
+        ProductIDLabel.AutoSize = True
+        ProductIDLabel.Location = New Point(256, 146)
+        ProductIDLabel.Name = "ProductIDLabel"
+        ProductIDLabel.Size = New Size(0, 20)
+        ProductIDLabel.TabIndex = 12
+        ' 
+        ' SupplierIDLabel
+        ' 
+        SupplierIDLabel.AutoSize = True
+        SupplierIDLabel.Location = New Point(272, 204)
+        SupplierIDLabel.Name = "SupplierIDLabel"
+        SupplierIDLabel.Size = New Size(0, 20)
+        SupplierIDLabel.TabIndex = 13
+        ' 
+        ' EditProductStockTextBox
+        ' 
+        EditProductStockTextBox.Location = New Point(753, 143)
+        EditProductStockTextBox.Name = "EditProductStockTextBox"
+        EditProductStockTextBox.Size = New Size(125, 27)
+        EditProductStockTextBox.TabIndex = 14
+        ' 
+        ' EditProductMinStockTextBox
+        ' 
+        EditProductMinStockTextBox.Location = New Point(753, 209)
+        EditProductMinStockTextBox.Name = "EditProductMinStockTextBox"
+        EditProductMinStockTextBox.Size = New Size(125, 27)
+        EditProductMinStockTextBox.TabIndex = 15
+        ' 
+        ' EditProductCostPriceTextBox
+        ' 
+        EditProductCostPriceTextBox.Location = New Point(753, 272)
+        EditProductCostPriceTextBox.Name = "EditProductCostPriceTextBox"
+        EditProductCostPriceTextBox.Size = New Size(125, 27)
+        EditProductCostPriceTextBox.TabIndex = 16
+        ' 
+        ' EditProductSellPriceTextBox
+        ' 
+        EditProductSellPriceTextBox.Location = New Point(753, 326)
+        EditProductSellPriceTextBox.Name = "EditProductSellPriceTextBox"
+        EditProductSellPriceTextBox.Size = New Size(125, 27)
+        EditProductSellPriceTextBox.TabIndex = 17
+        ' 
+        ' CancelButton
+        ' 
+        CancelButton.Location = New Point(642, 434)
+        CancelButton.Name = "CancelButton"
+        CancelButton.Size = New Size(94, 29)
+        CancelButton.TabIndex = 18
+        CancelButton.Text = "Cancel"
+        CancelButton.UseVisualStyleBackColor = True
         ' 
         ' EditProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(943, 480)
+        Controls.Add(CancelButton)
+        Controls.Add(EditProductSellPriceTextBox)
+        Controls.Add(EditProductCostPriceTextBox)
+        Controls.Add(EditProductMinStockTextBox)
+        Controls.Add(EditProductStockTextBox)
+        Controls.Add(SupplierIDLabel)
+        Controls.Add(ProductIDLabel)
+        Controls.Add(Label9)
         Controls.Add(EditProductNameTextBox)
         Controls.Add(ProductCategoryComboBox)
         Controls.Add(SaveButton)
@@ -173,4 +252,12 @@ Partial Class EditProductForm
     Friend WithEvents SaveButton As Button
     Friend WithEvents ProductCategoryComboBox As ComboBox
     Friend WithEvents EditProductNameTextBox As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents ProductIDLabel As Label
+    Friend WithEvents SupplierIDLabel As Label
+    Friend WithEvents EditProductStockTextBox As TextBox
+    Friend WithEvents EditProductMinStockTextBox As TextBox
+    Friend WithEvents EditProductCostPriceTextBox As TextBox
+    Friend WithEvents EditProductSellPriceTextBox As TextBox
+    Friend WithEvents CancelButton As Button
 End Class
