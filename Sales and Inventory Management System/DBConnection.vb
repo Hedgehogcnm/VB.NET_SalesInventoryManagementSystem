@@ -2,7 +2,6 @@
 Module DBConnection
     Public conn As MySqlConnection
     Public Sub ConnectDB()
-        'Teng Testing'
         Try
             Dim connStr As String = "server=localhost;user id=root;password=;database=db_sales_inventory_management_system;"
             conn = New MySqlConnection(connStr)
