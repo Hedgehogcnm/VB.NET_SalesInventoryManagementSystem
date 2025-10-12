@@ -48,7 +48,7 @@ Partial Class InventoryForm
         MenuStrip1.Items.AddRange(New ToolStripItem() {SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(1175, 28)
+        MenuStrip1.Size = New Size(938, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -162,7 +162,7 @@ Partial Class InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1175, 525)
+        ClientSize = New Size(938, 527)
         Controls.Add(DeleteProductButton)
         Controls.Add(EditProductButton)
         Controls.Add(AddProductButton)

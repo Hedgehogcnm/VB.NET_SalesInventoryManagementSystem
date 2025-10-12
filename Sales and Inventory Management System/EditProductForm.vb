@@ -65,10 +65,13 @@ Public Class EditProductForm
         Finally
             conn.Close()
         End Try
+
+        InventoryForm.Show()
     End Sub
 
     ' --- Cancel Button (optional): close the form ---
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
         Me.Close()
+        InventoryForm.Show()
     End Sub
 End Class

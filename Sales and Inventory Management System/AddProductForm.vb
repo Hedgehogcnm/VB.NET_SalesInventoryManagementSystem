@@ -12,12 +12,12 @@ Public Class AddProductForm
             Exit Sub
         End If
 
-        ' --- Validate Supplier ID ---
-        Dim SupplierID As Integer
-        If Not Integer.TryParse(SupplierIDTextBox.Text, SupplierID) Then
-            MessageBox.Show("Please enter a valid Supplier ID.")
+        ' --- Validate Supplier ID (from ComboBox) ---
+        If SupplierIDComboBox.SelectedIndex = -1 Then
+            MessageBox.Show("Please select a Supplier ID.")
             Exit Sub
         End If
+        Dim SupplierID As Integer = CInt(SupplierIDComboBox.SelectedValue)
 
         ' --- Other inputs ---
         Dim ProductName As String = ProductNameTextBox.Text.Trim()
@@ -56,18 +56,6 @@ Public Class AddProductForm
         Try
             ConnectDB()
 
-            ' --- Check if Supplier exists ---
-            Dim checkSql As String = "SELECT COUNT(*) FROM tb_suppliers WHERE sup_id = @SupplierID"
-            Using checkCmd As New MySqlCommand(checkSql, conn)
-                checkCmd.Parameters.AddWithValue("@SupplierID", SupplierID)
-                Dim exists As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
-                If exists = 0 Then
-                    MessageBox.Show("❌ The Supplier ID you entered does not exist in the suppliers table.")
-                    conn.Close()
-                    Exit Sub
-                End If
-            End Using
-
             ' --- Insert into database ---
             Dim sql As String = "INSERT INTO tb_products (p_id, sup_id, p_name, p_category, p_stock, p_minStock, p_costPrice, p_sellPrice) " &
                                 "VALUES (@ProductID, @SupplierID, @ProductName, @ProductCategory, @ProductStock, @ProductMinStock, @ProductCostPrice, @ProductSellPrice)"
@@ -89,16 +77,43 @@ Public Class AddProductForm
             MessageBox.Show("✅ Product added successfully!")
             Me.DialogResult = DialogResult.OK
             Me.Close()
+            InventoryForm.Show()
 
         Catch ex As Exception
             MessageBox.Show("❌ Error adding product: " & ex.Message)
         Finally
             conn.Close()
         End Try
+    End Sub
 
+    ' --- Load Supplier IDs into ComboBox ---
+    Private Sub LoadSupplierComboBox()
+        Try
+            ConnectDB()
+
+            Dim sql As String = "SELECT sup_id FROM tb_suppliers ORDER BY sup_id ASC"
+            Dim da As New MySqlDataAdapter(sql, conn)
+            Dim dt As New DataTable()
+            da.Fill(dt)
+
+            SupplierIDComboBox.DataSource = dt
+            SupplierIDComboBox.DisplayMember = "sup_id"
+            SupplierIDComboBox.ValueMember = "sup_id"
+            SupplierIDComboBox.SelectedIndex = -1
+
+        Catch ex As Exception
+            MessageBox.Show("❌ Failed to load supplier IDs: " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
     End Sub
 
     Private Sub AddProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadSupplierComboBox() ' 👈 Load supplier list when form opens
+    End Sub
 
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+        InventoryForm.Show()
+        Me.Close()
     End Sub
 End Class

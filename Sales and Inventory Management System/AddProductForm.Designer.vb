@@ -39,7 +39,8 @@ Partial Class AddProductForm
         ProductSellPriceTextBox = New TextBox()
         AddProductButton = New Button()
         ProductIDTextBox = New TextBox()
-        SupplierIDTextBox = New TextBox()
+        SupplierIDComboBox = New ComboBox()
+        CancelButton = New Button()
         SuspendLayout()
         ' 
         ' Label1
@@ -192,19 +193,30 @@ Partial Class AddProductForm
         ProductIDTextBox.Size = New Size(151, 27)
         ProductIDTextBox.TabIndex = 17
         ' 
-        ' SupplierIDTextBox
+        ' SupplierIDComboBox
         ' 
-        SupplierIDTextBox.Location = New Point(204, 165)
-        SupplierIDTextBox.Name = "SupplierIDTextBox"
-        SupplierIDTextBox.Size = New Size(151, 27)
-        SupplierIDTextBox.TabIndex = 18
+        SupplierIDComboBox.FormattingEnabled = True
+        SupplierIDComboBox.Location = New Point(204, 165)
+        SupplierIDComboBox.Name = "SupplierIDComboBox"
+        SupplierIDComboBox.Size = New Size(151, 28)
+        SupplierIDComboBox.TabIndex = 18
+        ' 
+        ' CancelButton
+        ' 
+        CancelButton.Location = New Point(525, 373)
+        CancelButton.Name = "CancelButton"
+        CancelButton.Size = New Size(94, 29)
+        CancelButton.TabIndex = 19
+        CancelButton.Text = "Cancel"
+        CancelButton.UseVisualStyleBackColor = True
         ' 
         ' AddProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
-        Controls.Add(SupplierIDTextBox)
+        Controls.Add(CancelButton)
+        Controls.Add(SupplierIDComboBox)
         Controls.Add(ProductIDTextBox)
         Controls.Add(AddProductButton)
         Controls.Add(ProductSellPriceTextBox)
@@ -245,5 +257,6 @@ Partial Class AddProductForm
     Friend WithEvents ProductSellPriceTextBox As TextBox
     Friend WithEvents AddProductButton As Button
     Friend WithEvents ProductIDTextBox As TextBox
-    Friend WithEvents SupplierIDTextBox As TextBox
+    Friend WithEvents SupplierIDComboBox As ComboBox
+    Friend WithEvents CancelButton As Button
 End Class

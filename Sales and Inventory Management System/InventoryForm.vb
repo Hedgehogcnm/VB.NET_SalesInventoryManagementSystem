@@ -138,6 +138,7 @@ Public Class InventoryForm
 
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
+        Me.Hide()
         ' Open Add Product form as a dialog
         Dim addForm As New AddProductForm()
 
@@ -166,6 +167,7 @@ Public Class InventoryForm
         editForm.ProductCostPrice = Convert.ToDecimal(row.Cells("p_costPrice").Value)
         editForm.ProductSellPrice = Convert.ToDecimal(row.Cells("p_sellPrice").Value)
 
+        Me.Close()
         ' Show as dialog, refresh if saved
         If editForm.ShowDialog() = DialogResult.OK Then
             LoadProduct()
