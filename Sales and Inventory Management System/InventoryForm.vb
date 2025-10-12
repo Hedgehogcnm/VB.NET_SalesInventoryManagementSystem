@@ -32,6 +32,13 @@ Public Class InventoryForm
 
     Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadProduct()
+
+        ' Make the whole row selected when a cell is clicked
+        With ProductListDataGridView
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .ReadOnly = True
+        End With
     End Sub
 
     Private Sub LoadProduct()
@@ -78,11 +85,57 @@ Public Class InventoryForm
         Catch ex As Exception
             MessageBox.Show("Failed to load products: " & ex.Message)
         End Try
+
+        For Each row As DataGridViewRow In ProductListDataGridView.Rows
+            If Not row.IsNewRow Then
+                Dim stock As Integer = Convert.ToInt32(row.Cells("p_stock").Value)
+                Dim minStock As Integer = Convert.ToInt32(row.Cells("p_minStock").Value)
+
+                If stock <= minStock Then
+                    row.DefaultCellStyle.ForeColor = Color.Red
+                Else
+                    row.DefaultCellStyle.ForeColor = Color.Black ' normal color
+                End If
+            End If
+        Next
     End Sub
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
+        Dim searchValue As String = ProductSearchTextBox.Text.Trim()
 
+        ' --- Validate input ---
+        If String.IsNullOrEmpty(searchValue) Then
+            MessageBox.Show("Please enter a Product ID or Product Name to search.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        Dim found As Boolean = False
+
+        ' --- Loop through DataGridView rows to find match ---
+        For Each row As DataGridViewRow In ProductListDataGridView.Rows
+            If Not row.IsNewRow Then
+                Dim productID As String = row.Cells("p_id").Value.ToString()
+                Dim productName As String = row.Cells("p_name").Value.ToString()
+
+                ' Compare case-insensitively
+                If productID.Equals(searchValue, StringComparison.OrdinalIgnoreCase) OrElse
+               productName.IndexOf(searchValue, StringComparison.OrdinalIgnoreCase) >= 0 Then
+
+                    ' Select the found row
+                    row.Selected = True
+                    ProductListDataGridView.FirstDisplayedScrollingRowIndex = row.Index
+                    found = True
+                    Exit For
+                End If
+            End If
+        Next
+
+        ' --- If not found ---
+        If Not found Then
+            MessageBox.Show("No product found with that ID or Name.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
+
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         ' Open Add Product form as a dialog

@@ -29,16 +29,16 @@ Public Class EditProductForm
     ' --- Save Button Click: Update product info ---
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
         Try
-            ConnectDB() ' Make sure this connects to your MySQL database
+            ConnectDB()
 
             Dim sql As String = "UPDATE tb_products SET 
-                                    p_name=@name, 
-                                    p_category=@category, 
-                                    p_stock=@stock, 
-                                    p_minStock=@minStock, 
-                                    p_costPrice=@costPrice, 
-                                    p_sellPrice=@sellPrice
-                                 WHERE p_id=@id"
+                                p_name=@name, 
+                                p_category=@category, 
+                                p_stock=@stock, 
+                                p_minStock=@minStock, 
+                                p_costPrice=@costPrice, 
+                                p_sellPrice=@sellPrice
+                             WHERE p_id=@id"
 
             Using cmd As New MySqlCommand(sql, conn)
                 cmd.Parameters.AddWithValue("@name", EditProductNameTextBox.Text)
@@ -52,15 +52,16 @@ Public Class EditProductForm
                 Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
 
                 If rowsAffected > 0 Then
-                    MessageBox.Show("Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("✅ Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.DialogResult = DialogResult.OK  ' <-- Important line
                     Me.Close()
                 Else
-                    MessageBox.Show("No changes were made.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("⚠️ No changes were made.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             End Using
 
         Catch ex As Exception
-            MessageBox.Show("Error updating product: " & ex.Message)
+            MessageBox.Show("❌ Error updating product: " & ex.Message)
         Finally
             conn.Close()
         End Try
