@@ -235,5 +235,7 @@ Public Class InventoryForm
         End Try
     End Sub
 
-
+    Private Sub OrderProductButton_Click(sender As Object, e As EventArgs) Handles OrderProductButton.Click
+        OrderProductForm.ShowDialog()
+    End Sub
 End Class

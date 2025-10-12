@@ -34,7 +34,7 @@ Partial Class InventoryForm
         ProductListDataGridView = New DataGridView()
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
-        Button1 = New Button()
+        OrderProductButton = New Button()
         AddProductButton = New Button()
         EditProductButton = New Button()
         DeleteProductButton = New Button()
@@ -122,14 +122,14 @@ Partial Class InventoryForm
         ProductSearchTextBox.Size = New Size(180, 27)
         ProductSearchTextBox.TabIndex = 5
         ' 
-        ' Button1
+        ' OrderProductButton
         ' 
-        Button1.Location = New Point(27, 97)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(94, 50)
-        Button1.TabIndex = 6
-        Button1.Text = "Order Product"
-        Button1.UseVisualStyleBackColor = True
+        OrderProductButton.Location = New Point(27, 97)
+        OrderProductButton.Name = "OrderProductButton"
+        OrderProductButton.Size = New Size(94, 50)
+        OrderProductButton.TabIndex = 6
+        OrderProductButton.Text = "Order Product"
+        OrderProductButton.UseVisualStyleBackColor = True
         ' 
         ' AddProductButton
         ' 
@@ -166,7 +166,7 @@ Partial Class InventoryForm
         Controls.Add(DeleteProductButton)
         Controls.Add(EditProductButton)
         Controls.Add(AddProductButton)
-        Controls.Add(Button1)
+        Controls.Add(OrderProductButton)
         Controls.Add(ProductSearchTextBox)
         Controls.Add(SearchProductButton)
         Controls.Add(ProductListDataGridView)
@@ -194,7 +194,7 @@ Partial Class InventoryForm
     Friend WithEvents ProductListDataGridView As DataGridView
     Friend WithEvents SearchProductButton As Button
     Friend WithEvents ProductSearchTextBox As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents OrderProductButton As Button
     Friend WithEvents AddProductButton As Button
     Friend WithEvents EditProductButton As Button
     Friend WithEvents DeleteProductButton As Button
