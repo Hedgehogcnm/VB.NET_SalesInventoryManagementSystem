@@ -84,7 +84,7 @@ Public Class SupplierForm
             ' Add Edit Icon one time in DataGridView Column
             If Not DataGridViewSupplier.Columns.Contains("EditColumn") Then
                 Dim editColumn As New DataGridViewImageColumn()
-                editColumn.Image = Image.FromFile("C:\Users\asus-pc\OneDrive\Desktop\VB PROJECT\Sales and Inventory Management System\EditIcon.png")
+                editColumn.Image = Image.FromFile(IO.Path.Combine(Application.StartupPath, "EditIcon.png"))
                 editColumn.HeaderText = ""
                 editColumn.Name = "EditColumn"
                 editColumn.ImageLayout = DataGridViewImageCellLayout.Zoom
