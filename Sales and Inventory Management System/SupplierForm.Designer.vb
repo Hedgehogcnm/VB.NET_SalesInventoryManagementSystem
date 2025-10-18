@@ -80,7 +80,7 @@ Partial Class SupplierForm
         MenuStrip1.Items.AddRange(New ToolStripItem() {SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(800, 28)
+        MenuStrip1.Size = New Size(1348, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -88,12 +88,13 @@ Partial Class SupplierForm
         ' 
         DataGridViewSupplier.AllowUserToAddRows = False
         DataGridViewSupplier.AllowUserToDeleteRows = False
+        DataGridViewSupplier.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         DataGridViewSupplier.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
         DataGridViewSupplier.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewSupplier.Location = New Point(36, 99)
         DataGridViewSupplier.Name = "DataGridViewSupplier"
         DataGridViewSupplier.RowHeadersWidth = 51
-        DataGridViewSupplier.Size = New Size(718, 315)
+        DataGridViewSupplier.Size = New Size(1274, 578)
         DataGridViewSupplier.TabIndex = 2
         ' 
         ' Label2
@@ -108,10 +109,11 @@ Partial Class SupplierForm
         ' 
         ' AddPictureBox
         ' 
+        AddPictureBox.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         AddPictureBox.BackColor = SystemColors.Control
         AddPictureBox.BackgroundImageLayout = ImageLayout.Zoom
         AddPictureBox.Image = My.Resources.Resources.AddIconBlue
-        AddPictureBox.Location = New Point(707, 47)
+        AddPictureBox.Location = New Point(1263, 44)
         AddPictureBox.Name = "AddPictureBox"
         AddPictureBox.Size = New Size(47, 46)
         AddPictureBox.SizeMode = PictureBoxSizeMode.Zoom
@@ -122,7 +124,7 @@ Partial Class SupplierForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1348, 721)
         Controls.Add(AddPictureBox)
         Controls.Add(Label2)
         Controls.Add(DataGridViewSupplier)
@@ -131,6 +133,7 @@ Partial Class SupplierForm
         Name = "SupplierForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "SupplierForm"
+        WindowState = FormWindowState.Maximized
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(DataGridViewSupplier, ComponentModel.ISupportInitialize).EndInit()

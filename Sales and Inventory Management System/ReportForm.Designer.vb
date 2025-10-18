@@ -52,7 +52,7 @@ Partial Class ReportForm
         MenuStrip1.Items.AddRange(New ToolStripItem() {SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(1178, 28)
+        MenuStrip1.Size = New Size(1348, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -147,11 +147,12 @@ Partial Class ReportForm
         ' 
         ' ReportPanel
         ' 
+        ReportPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         ReportPanel.Controls.Add(ReportDataGridView)
         ReportPanel.Controls.Add(GenerateButton)
         ReportPanel.Location = New Point(179, 105)
         ReportPanel.Name = "ReportPanel"
-        ReportPanel.Size = New Size(995, 394)
+        ReportPanel.Size = New Size(1169, 616)
         ReportPanel.TabIndex = 11
         ' 
         ' SaleReportButton
@@ -181,7 +182,7 @@ Partial Class ReportForm
         Panel1.Dock = DockStyle.Left
         Panel1.Location = New Point(0, 28)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(169, 487)
+        Panel1.Size = New Size(169, 693)
         Panel1.TabIndex = 14
         ' 
         ' InventoryTrackingButton
@@ -197,7 +198,7 @@ Partial Class ReportForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1178, 515)
+        ClientSize = New Size(1348, 721)
         Controls.Add(Panel1)
         Controls.Add(ReportPanel)
         Controls.Add(PrintButton)
@@ -210,6 +211,7 @@ Partial Class ReportForm
         Name = "ReportForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "ReportForm"
+        WindowState = FormWindowState.Maximized
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(ReportDataGridView, ComponentModel.ISupportInitialize).EndInit()
