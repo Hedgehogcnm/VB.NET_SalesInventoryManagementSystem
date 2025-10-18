@@ -1,9 +1,9 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports DocumentFormat.OpenXml.Office2010.Excel
+Imports MySql.Data.MySqlClient
 
 Public Class AddProductForm
 
     Private isSaved As Boolean = False
-
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         ' --- Validate Product ID ---
         Dim ProductID As Integer
