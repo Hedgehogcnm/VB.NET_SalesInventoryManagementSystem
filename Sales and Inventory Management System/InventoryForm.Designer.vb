@@ -176,6 +176,7 @@ Partial Class InventoryForm
         Name = "InventoryForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "InventoryForm"
+        WindowState = FormWindowState.Maximized
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).EndInit()
