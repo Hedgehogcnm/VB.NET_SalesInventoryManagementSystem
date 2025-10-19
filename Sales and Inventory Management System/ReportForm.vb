@@ -297,7 +297,7 @@ Public Class ReportForm
 
         ' === Table Header ===
         g.DrawLine(Pens.Black, tableLeft, tableTop, tableLeft + tableWidth, tableTop)
-        Dim headers() As String = {"Invoice", "Date & Time", "Customer", "Product", "Quantity", "Subtotal"}
+        Dim headers() As String = {"Invoice", "Date & Time", "Customer", "Product Name", "Quantity", "Subtotal"}
 
         For i As Integer = 0 To headers.Length - 1
             If i = headers.Length - 1 Then
@@ -452,30 +452,62 @@ Public Class ReportForm
     End Sub
 
     Private Sub DrawInventoryTracking(g As Graphics, marginBounds As RectangleF)
+        ' === Fonts ===
         Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
         Dim bodyFont As New Font("Arial", 9)
-        Dim leftMargin As Integer = marginBounds.Left
-        Dim tableTop As Integer = marginBounds.Top + 230
 
-        Dim colX() As Integer = {leftMargin, leftMargin + 150, leftMargin + 350, leftMargin + 500}
-        Dim headers() As String = {"Product ID", "Product Name", "Last Update", "Quantity Moved"}
+        ' === Layout ===
+        Dim tableTop As Single = marginBounds.Top + 180
+        Dim tableWidth As Single = 680 ' 增加宽度，列间更宽
+        Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
 
-        ' 表头
-        g.DrawLine(Pens.Black, leftMargin, tableTop, colX.Last + 70, tableTop)
+        ' === 各栏位位置（拉宽列距） ===
+        Dim colX() As Single = {
+            leftMargin,           ' Last Update
+            leftMargin + 200,     ' Product ID
+            leftMargin + 320,     ' Quantity Moved
+            leftMargin + 480      ' Remark
+        }
+
+        ' === 表头 ===
+        Dim headers() As String = {"Last Update", "Product ID", "Quantity Moved", "Remark"}
+        g.DrawLine(Pens.Black, leftMargin, tableTop, leftMargin + tableWidth, tableTop)
+
         For i As Integer = 0 To headers.Length - 1
-            g.DrawString(headers(i), headerFont, Brushes.Black, colX(i), tableTop + 5)
+            Dim headerText As String = headers(i)
+            Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+            Dim headerCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+            g.DrawString(headerText, headerFont, Brushes.Black,
+                         headerCenterX - (g.MeasureString(headerText, headerFont).Width / 2),
+                         tableTop + 5)
         Next
-        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, colX.Last + 70, tableTop + 25)
 
-        ' 数据
-        Dim currentY As Integer = tableTop + 35
+        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
+
+        ' === 数据 ===
+        Dim currentY As Single = tableTop + 35
         For Each r As DataRow In reportData.Rows
-            g.DrawString(r("ProductID").ToString(), bodyFont, Brushes.Black, colX(0), currentY)
-            g.DrawString(r("ProductName").ToString(), bodyFont, Brushes.Black, colX(1), currentY)
-            g.DrawString(r("LastUpdate").ToString(), bodyFont, Brushes.Black, colX(2), currentY)
-            g.DrawString(r("QuantityMoved").ToString(), bodyFont, Brushes.Black, colX(3), currentY)
+            Dim values() As String = {
+                r("LastUpdate").ToString(),
+                r("ProductID").ToString(),
+                r("QuantityMoved").ToString(),
+                r("Remark").ToString()
+            }
+
+            For i As Integer = 0 To values.Length - 1
+                Dim cellText As String = values(i)
+                Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+
+                Dim cellCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+                g.DrawString(cellText, bodyFont, Brushes.Black,
+                             cellCenterX - (g.MeasureString(cellText, bodyFont).Width / 2),
+                             currentY)
+            Next
+
             currentY += 20
         Next
-    End Sub
 
+        ' === 底线 ===
+        g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
+    End Sub
 End Class
