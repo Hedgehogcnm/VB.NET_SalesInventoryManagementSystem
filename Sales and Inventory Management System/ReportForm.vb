@@ -232,13 +232,19 @@ Public Class ReportForm
             Dim logoPath As String = IO.Path.Combine(Application.StartupPath, "VBlogo.png")
             If IO.File.Exists(logoPath) Then
                 Dim logo As Image = Image.FromFile(logoPath)
-                g.DrawImage(logo, CInt((e.PageBounds.Width - 120) / 2), 20, 120, 60)
+
+                ' 让 Logo 水平居中（以 marginBounds 为基准）
+                Dim logoWidth As Integer = 120
+                Dim logoHeight As Integer = 60
+                Dim logoX As Integer = CInt(centerX - (logoWidth / 2))  ' ✅ 改这里，用 centerX 居中
+                Dim logoY As Integer = 20
+                g.DrawImage(logo, logoX, logoY, logoWidth, logoHeight)
             End If
         Catch
             g.DrawString("LOGO MISSING", infoFont, Brushes.Red, centerX, 30, formatCenter)
         End Try
 
-        '=== COmpany Info ===
+        '=== Company Info ===
         g.DrawString("GEARTRACK SDN BHD", companyTitleFont, Brushes.Black, centerX, y + 5, formatCenter)
         g.DrawString("No. 88, Jalan Teknologi, Skudai, Johor, Malaysia", infoFont, Brushes.Black, centerX, y + 30, formatCenter)
         g.DrawString("Tel: +60 13-7323888 | Email: geartrack@gmail.com", infoFont, Brushes.Black, centerX, y + 50, formatCenter)
@@ -246,6 +252,7 @@ Public Class ReportForm
         y += 90
         g.DrawString(reportTitle, reportTitleFont, Brushes.Black, centerX, y, formatCenter)
         y += 40
+
 
         ' Invoke database based on reportTitle
         If reportTitle = "Sales Report" Then
@@ -261,17 +268,17 @@ Public Class ReportForm
     End Sub
 
     Private Sub DrawSalesReport(g As Graphics, marginBounds As RectangleF)
-        ' === 字体 ===
+        ' === Font ===
         Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
         Dim bodyFont As New Font("Arial", 9)
         Dim smallFont As New Font("Arial", 8)
 
-        ' === 表格居中 ===
+        ' === Table Center ===
         Dim tableWidth As Integer = 700
         Dim tableLeft As Integer = CInt((marginBounds.Left + marginBounds.Right - tableWidth) / 2)
         Dim tableTop As Integer = marginBounds.Top + 150
 
-        ' === 列锚点 ===
+        ' === Column ===
         Dim colX() As Integer = {
         tableLeft,           ' Invoice
         tableLeft + 130,     ' Date
@@ -281,16 +288,16 @@ Public Class ReportForm
         tableLeft + 620      ' Subtotal
     }
 
-        ' === 表格右边界（Subtotal 右对齐用）===
+        ' === Subtotal Right-Aligned===
         Dim rightEdge As Integer = tableLeft + tableWidth - 15
 
-        ' === 对齐格式 ===
+        ' === Center-Aligned ===
         Dim centerAlign As New StringFormat() With {.Alignment = StringAlignment.Center}
         Dim rightAlign As New StringFormat() With {.Alignment = StringAlignment.Far}
 
-        ' === 表头 ===
+        ' === Table Header ===
         g.DrawLine(Pens.Black, tableLeft, tableTop, tableLeft + tableWidth, tableTop)
-        Dim headers() As String = {"Invoice", "Date & Time", "Customer", "Product", "Qty", "Subtotal"}
+        Dim headers() As String = {"Invoice", "Date & Time", "Customer", "Product", "Quantity", "Subtotal"}
 
         For i As Integer = 0 To headers.Length - 1
             If i = headers.Length - 1 Then
@@ -304,7 +311,7 @@ Public Class ReportForm
 
         g.DrawLine(Pens.Black, tableLeft, tableTop + 25, tableLeft + tableWidth, tableTop + 25)
 
-        ' === 内容 ===
+        ' === Table Content ===
         Dim currentY As Integer = tableTop + 40
         Dim lineHeight As Integer = 30
         Dim totalQty As Integer = 0
@@ -318,42 +325,34 @@ Public Class ReportForm
                     Dim cust As String = r("Customer").ToString()
                     Dim prod As String = r("ProductName").ToString()
 
-                    ' 去括号里的文字
-                    If prod.Contains("("c) Then prod = prod.Substring(0, prod.IndexOf("("c)).Trim()
-
-                    ' 格式化日期
+                    If prod.Contains("("c) Then prod = prod.Substring(0, prod.IndexOf("("c)).Trim
                     Dim parsed As DateTime
                     If DateTime.TryParse(dt, parsed) Then dt = parsed.ToString("dd/MM/yy HH:mm")
-
-                    ' 截断过长
                     If cust.Length > 18 Then cust = cust.Substring(0, 18) & "..."
                     If prod.Length > 18 Then prod = prod.Substring(0, 18) & "..."
 
                     Dim qty As Integer = CInt(r("Quantity"))
                     Dim subtotal As Decimal = CDec(r("Subtotal"))
 
-                    ' 居中列绘制
                     g.DrawString(invoice, bodyFont, Brushes.Black, CInt((colX(0) + colX(1)) / 2), currentY, centerAlign)
                     g.DrawString(dt, smallFont, Brushes.Black, CInt((colX(1) + colX(2)) / 2), currentY, centerAlign)
                     g.DrawString(cust, bodyFont, Brushes.Black, CInt((colX(2) + colX(3)) / 2), currentY, centerAlign)
                     g.DrawString(prod, bodyFont, Brushes.Black, CInt((colX(3) + colX(4)) / 2), currentY, centerAlign)
                     g.DrawString(qty.ToString(), bodyFont, Brushes.Black, CInt((colX(4) + colX(5)) / 2), currentY, centerAlign)
-
-                    ' Subtotal 右对齐
                     g.DrawString(subtotal.ToString("0.00"), bodyFont, Brushes.Black, CInt(rightEdge), currentY, rightAlign)
 
                     totalQty += qty
                     totalAmount += subtotal
                     currentY += lineHeight
                 Catch
-                    ' 忽略空行
+                    ' Ignore newLine
                 End Try
             Next
         Else
             g.DrawString("No data found.", bodyFont, Brushes.Red, CInt(tableLeft + tableWidth / 2), tableTop + 60, centerAlign)
         End If
 
-        ' === 底部合计 ===
+        ' === Table Summary ===
         currentY += 5
         g.DrawLine(Pens.Black, tableLeft, currentY, tableLeft + tableWidth, currentY)
         currentY += 20
@@ -363,33 +362,93 @@ Public Class ReportForm
         g.DrawString(totalAmount.ToString("0.00"), headerFont, Brushes.Black, CInt(rightEdge), currentY, rightAlign)
     End Sub
 
-
-
     Private Sub DrawInventoryReport(g As Graphics, marginBounds As RectangleF)
+        ' === Fonts ===
+        Dim infoFont As New Font("Arial", 9)
         Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
         Dim bodyFont As New Font("Arial", 9)
-        Dim leftMargin As Integer = marginBounds.Left
-        Dim tableTop As Integer = marginBounds.Top + 230
+        Dim bodyFontBold As New Font("Arial", 9, FontStyle.Bold)
+        Dim noteFont As New Font("Arial", 8, FontStyle.Italic)
 
-        Dim colX() As Integer = {leftMargin, leftMargin + 150, leftMargin + 350, leftMargin + 450}
+        ' === Table Layout (平衡版，表格居中) ===
+        Dim tableTop As Single = marginBounds.Top + 150
+        Dim tableWidth As Single = 700
+        Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
 
-        ' 表头
-        g.DrawLine(Pens.Black, leftMargin, tableTop, colX.Last + 70, tableTop)
-        Dim headers() As String = {"Product ID", "Product Name", "Stock Qty", "Unit Price"}
+        ' 各栏位置
+        Dim colX() As Single = {
+        leftMargin,           ' Product ID
+        leftMargin + 150,     ' Product Name
+        leftMargin + 470,     ' Stock Qty
+        leftMargin + 600      ' Unit Price
+    }
+
+        ' === Order By Product ID ===
+        reportData.DefaultView.Sort = "ProductID ASC"
+        Dim sortedData As DataTable = reportData.DefaultView.ToTable()
+
+        ' === Table Header ===
+        g.DrawLine(Pens.Black, leftMargin, tableTop, leftMargin + tableWidth, tableTop)
+        Dim headers() As String = {"Product ID", "Product Name", "Stock Quantity", "Unit Price"}
+
         For i As Integer = 0 To headers.Length - 1
-            g.DrawString(headers(i), headerFont, Brushes.Black, colX(i), tableTop + 5)
+            Dim headerText As String = headers(i)
+            Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+            Dim headerCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+            g.DrawString(headerText, headerFont, Brushes.Black,
+                     headerCenterX - (g.MeasureString(headerText, headerFont).Width / 2),
+                     tableTop + 5)
         Next
-        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, colX.Last + 70, tableTop + 25)
 
-        ' 数据
-        Dim currentY As Integer = tableTop + 35
-        For Each r As DataRow In reportData.Rows
-            g.DrawString(r("ProductID").ToString(), bodyFont, Brushes.Black, colX(0), currentY)
-            g.DrawString(r("ProductName").ToString(), bodyFont, Brushes.Black, colX(1), currentY)
-            g.DrawString(r("StockQty").ToString(), bodyFont, Brushes.Black, colX(2), currentY)
-            g.DrawString(Format(CDec(r("UnitPrice")), "0.00"), bodyFont, Brushes.Black, colX(3), currentY)
+        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
+
+        ' === Table Rows ===
+        Dim currentY As Single = tableTop + 35
+        For Each r As DataRow In sortedData.Rows
+            Dim values() As String = {
+            r("ProductID").ToString(),
+            r("ProductName").ToString(),
+            r("StockQty").ToString(),
+            Format(CDec(r("UnitPrice")), "0.00")
+        }
+
+            For i As Integer = 0 To values.Length - 1
+                Dim cellText As String = values(i)
+                Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+
+                ' === Check Stock Quantity（Stock Qty < 20 → Red + Bold）===
+                Dim brushColor As Brush = Brushes.Black
+                Dim textFont As Font = bodyFont
+                If i = 2 Then
+                    Dim qty As Integer
+                    If Integer.TryParse(cellText, qty) AndAlso qty < 20 Then
+                        brushColor = Brushes.Red
+                        textFont = bodyFontBold
+                    End If
+                End If
+
+                ' === Table Content ===
+                If i = 3 Then
+                    ' Unit Price Right-Aligned
+                    Dim textWidth As Single = g.MeasureString(cellText, bodyFont).Width
+                    Dim rightEdge As Single = leftMargin + tableWidth - 35
+                    g.DrawString(cellText, bodyFont, Brushes.Black, rightEdge - textWidth, currentY)
+                Else
+                    Dim cellCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+                    g.DrawString(cellText, textFont, brushColor,
+                             cellCenterX - (g.MeasureString(cellText, textFont).Width / 2),
+                             currentY)
+                End If
+            Next
             currentY += 20
         Next
+
+        ' === 底部说明文字 ===
+        Dim noteText As String = "*Red numbers indicate low stock levels that need to be restocked as soon as possible"
+        g.DrawString(noteText, noteFont, Brushes.Black, leftMargin, currentY + 20)
+
+        ' === Bottom Line ===
+        g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
     End Sub
 
     Private Sub DrawInventoryTracking(g As Graphics, marginBounds As RectangleF)
