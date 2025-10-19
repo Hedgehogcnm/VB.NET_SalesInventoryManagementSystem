@@ -246,6 +246,7 @@ Partial Class AddProductForm
         Controls.Add(Label1)
         Name = "AddProductForm"
         Text = "AddProductForm"
+        WindowState = FormWindowState.Maximized
         ResumeLayout(False)
         PerformLayout()
     End Sub
