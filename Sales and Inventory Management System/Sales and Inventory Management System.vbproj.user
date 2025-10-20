@@ -31,6 +31,9 @@
     <Compile Update="SupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ViewOrderForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="My Project\Resources.resx">

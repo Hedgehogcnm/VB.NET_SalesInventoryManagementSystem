@@ -35,7 +35,6 @@ Public Class ReportForm
 
     Private WithEvents PrintDoc As New PrintDocument
     Private PageSetup As New PageSetupDialog
-    Private Preview As New PrintPreviewDialog
     Private PrintDlg As New PrintDialog
     Dim bm As Bitmap
     Private currentPreview As PrintPreviewControl
@@ -47,45 +46,67 @@ Public Class ReportForm
 
         PrintDoc.DefaultPageSettings.Landscape = False
         PageSetup.Document = PrintDoc
-        Preview.Document = PrintDoc
         PrintDlg.Document = PrintDoc
     End Sub
 
-    Private Sub btnGenerate_Click(sender As Object, e As EventArgs) Handles GenerateButton.Click
+    Private Sub DateTimePickerFrom_ValueChanged(sender As Object, e As EventArgs) Handles FromDateTimePicker.ValueChanged
+        ToDateTimePicker.MinDate = FromDateTimePicker.Value
+        RefreshCurrentReport()
+    End Sub
+
+    Private Sub DateTimePickerTo_ValueChanged(sender As Object, e As EventArgs) Handles ToDateTimePicker.ValueChanged
+        If ToDateTimePicker.Value < FromDateTimePicker.Value Then
+            ToDateTimePicker.Value = FromDateTimePicker.Value
+        End If
+        RefreshCurrentReport()
+    End Sub
+
+    Private Sub RefreshCurrentReport()
+        ' 若还没选择报表，就不刷新
+        If String.IsNullOrEmpty(reportTitle) Then Exit Sub
+
         Try
-            If conn.State = ConnectionState.Closed Then
-                ConnectDB()
-            End If
+            Select Case reportTitle
+                Case "Sales Report"
+                    LoadReport("
+                    SELECT 
+                        s.s_invoiceNo AS InvoiceNo,
+                        s.s_dateTime AS DateTime,
+                        s.s_customer AS Customer,
+                        p.p_name AS ProductName,
+                        d.sd_qty AS Quantity,
+                        d.sd_total AS Subtotal
+                    FROM tb_sales s
+                    INNER JOIN tb_sales_detail d ON s.s_id = d.s_id
+                    INNER JOIN tb_products p ON d.p_id = p.p_id
+                ")
 
-            Dim sql As String = "SELECT s.s_invoiceNo AS 'Invoice No',
-                       s.s_dateTime AS 'Date & Time',
-                       s.s_customer AS 'Customer',
-                       p.p_name AS 'Product Name',
-                       p.p_sellPrice AS 'Unit Price',
-                       d.sd_qty AS 'Quantity',
-                       d.sd_total AS 'Subtotal',
-                       s.s_total AS 'Total Amount'
-                FROM tb_sales s
-                INNER JOIN tb_sales_detail d ON s.s_id = d.s_id
-                INNER JOIN tb_products p ON d.p_id = p.p_id
-                WHERE s.s_dateTime BETWEEN @from AND @to
-                ORDER BY s.s_dateTime ASC"
+                Case "Inventory Report"
+                    LoadReport("
+                    SELECT 
+                        p.p_id AS ProductID,
+                        p.p_name AS ProductName,
+                        p.p_stock AS StockQty,
+                        p.p_sellPrice AS UnitPrice
+                    FROM tb_products p
+                    ORDER BY p.p_name ASC
+                ")
 
-            Dim cmd As New MySqlCommand(sql, conn)
-            cmd.Parameters.AddWithValue("@from", FromDateTimePicker.Value.Date)
-            cmd.Parameters.AddWithValue("@to", ToDateTimePicker.Value.Date)
-
-            Dim da As New MySqlDataAdapter(cmd)
-            Dim dt As New DataTable()
-            da.Fill(dt)
-            ReportDataGridView.DataSource = dt
-
-            If dt.Rows.Count = 0 Then
-                MessageBox.Show("No records found for the selected date range.")
-            End If
+                Case "Inventory Tracking Report"
+                    LoadReport("
+                    SELECT 
+                        p.p_id AS ProductID,
+                        p.p_name AS ProductName,
+                        t.im_dateTime AS LastUpdate,
+                        t.im_qtyChange AS QuantityMoved,
+                        t.im_note AS Remark
+                    FROM tb_products p
+                    INNER JOIN tb_inventorymovements t ON p.p_id = t.p_id
+                ")
+            End Select
 
         Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
+            MessageBox.Show("Failed to refresh report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -113,7 +134,7 @@ Public Class ReportForm
         FROM tb_sales s
         INNER JOIN tb_sales_detail d ON s.s_id = d.s_id
         INNER JOIN tb_products p ON d.p_id = p.p_id
-    ")
+        ")
     End Sub
 
     Private Sub InventoryReportButton_Click(sender As Object, e As EventArgs) Handles InventoryReportButton.Click
@@ -126,7 +147,7 @@ Public Class ReportForm
             p.p_sellPrice AS UnitPrice
         FROM tb_products p
         ORDER BY p.p_name ASC
-    ")
+        ")
     End Sub
 
     Private Sub InventoryTrackingButton_Click(sender As Object, e As EventArgs) Handles InventoryTrackingButton.Click
@@ -140,16 +161,14 @@ Public Class ReportForm
             t.im_note AS Remark
         FROM tb_products p
         INNER JOIN tb_inventorymovements t ON p.p_id = t.p_id
-    ")
+        ")
     End Sub
-
 
     '=== General Loading Report ===
     Private Sub LoadReport(query As String)
         Try
             If conn.State = ConnectionState.Closed Then conn.Open()
 
-            ' === 日期栏位根据报表类型自动选择 ===
             Dim dateColumn As String = ""
             If reportTitle.Contains("Sales") Then
                 dateColumn = "s.s_dateTime"
@@ -157,21 +176,17 @@ Public Class ReportForm
                 dateColumn = "t.im_dateTime"
             End If
 
-            ' === 加入日期范围过滤 ===
             If dateColumn <> "" Then
-                ' 先移除尾部的分号，避免拼接错误
                 If query.Trim().EndsWith(";") Then
                     query = query.Trim().Substring(0, query.Trim().Length - 1)
                 End If
 
-                ' 如果 query 里已经有 WHERE，就加 AND；否则加 WHERE
                 If query.ToUpper().Contains("WHERE") Then
                     query &= $" AND {dateColumn} BETWEEN @from AND @to"
                 Else
                     query &= $" WHERE {dateColumn} BETWEEN @from AND @to"
                 End If
 
-                ' 确保 ORDER BY 放在最后
                 If Not query.ToUpper().Contains("ORDER BY") Then
                     query &= $" ORDER BY {dateColumn} ASC"
                 End If
@@ -179,7 +194,7 @@ Public Class ReportForm
                 query &= ";"
             End If
 
-            ' === 执行 SQL ===
+            ' === Execute SQL ===
             Dim cmd As New MySqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@from", FromDateTimePicker.Value.Date)
             cmd.Parameters.AddWithValue("@to", ToDateTimePicker.Value.Date.AddDays(1).AddSeconds(-1))
@@ -200,7 +215,7 @@ Public Class ReportForm
             .Document = PrintDoc,
             .Dock = DockStyle.Fill,
             .Zoom = 1.0
-        }
+            }
 
             ReportPanel.Controls.Clear()
             ReportPanel.Controls.Add(currentPreview)
@@ -210,7 +225,6 @@ Public Class ReportForm
             MessageBox.Show("Error: " & ex.Message, "Load Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
 
     Private Sub PrintDoc_PrintPage(sender As Object, e As Printing.PrintPageEventArgs)
         Dim g As Graphics = e.Graphics
@@ -233,10 +247,9 @@ Public Class ReportForm
             If IO.File.Exists(logoPath) Then
                 Dim logo As Image = Image.FromFile(logoPath)
 
-                ' 让 Logo 水平居中（以 marginBounds 为基准）
                 Dim logoWidth As Integer = 120
                 Dim logoHeight As Integer = 60
-                Dim logoX As Integer = CInt(centerX - (logoWidth / 2))  ' ✅ 改这里，用 centerX 居中
+                Dim logoX As Integer = CInt(centerX - (logoWidth / 2))
                 Dim logoY As Integer = 20
                 g.DrawImage(logo, logoX, logoY, logoWidth, logoHeight)
             End If
@@ -286,7 +299,7 @@ Public Class ReportForm
         tableLeft + 390,     ' Product
         tableLeft + 510,     ' Qty
         tableLeft + 620      ' Subtotal
-    }
+        }
 
         ' === Subtotal Right-Aligned===
         Dim rightEdge As Integer = tableLeft + tableWidth - 15
@@ -370,12 +383,12 @@ Public Class ReportForm
         Dim bodyFontBold As New Font("Arial", 9, FontStyle.Bold)
         Dim noteFont As New Font("Arial", 8, FontStyle.Italic)
 
-        ' === Table Layout (平衡版，表格居中) ===
+        ' === Table Layout ===
         Dim tableTop As Single = marginBounds.Top + 150
         Dim tableWidth As Single = 700
         Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
 
-        ' 各栏位置
+        ' === Width of Column ===
         Dim colX() As Single = {
         leftMargin,           ' Product ID
         leftMargin + 150,     ' Product Name
@@ -410,7 +423,7 @@ Public Class ReportForm
             r("ProductName").ToString(),
             r("StockQty").ToString(),
             Format(CDec(r("UnitPrice")), "0.00")
-        }
+            }
 
             For i As Integer = 0 To values.Length - 1
                 Dim cellText As String = values(i)
@@ -440,10 +453,10 @@ Public Class ReportForm
                              currentY)
                 End If
             Next
-            currentY += 20
+            currentY += 30
         Next
 
-        ' === 底部说明文字 ===
+        ' === Remark ===
         Dim noteText As String = "*Red numbers indicate low stock levels that need to be restocked as soon as possible"
         g.DrawString(noteText, noteFont, Brushes.Black, leftMargin, currentY + 20)
 
@@ -457,7 +470,7 @@ Public Class ReportForm
         Dim bodyFont As New Font("Arial", 9)
 
         ' === Layout ===
-        Dim tableTop As Single = marginBounds.Top + 180
+        Dim tableTop As Single = marginBounds.Top + 150
         Dim tableWidth As Single = 680 ' 增加宽度，列间更宽
         Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
 
@@ -504,7 +517,7 @@ Public Class ReportForm
                              currentY)
             Next
 
-            currentY += 20
+            currentY += 30
         Next
 
         ' === 底线 ===
