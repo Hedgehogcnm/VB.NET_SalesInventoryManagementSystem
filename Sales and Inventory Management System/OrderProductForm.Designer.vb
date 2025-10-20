@@ -29,6 +29,11 @@ Partial Class OrderProductForm
         OrderQuantityTextBox = New TextBox()
         OrderButton = New Button()
         CancelButton = New Button()
+        ViewOrderButton = New Button()
+        Label4 = New Label()
+        ProductIDLabel = New Label()
+        Label5 = New Label()
+        Label6 = New Label()
         SuspendLayout()
         ' 
         ' Label1
@@ -63,7 +68,7 @@ Partial Class OrderProductForm
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(344, 191)
+        Label3.Location = New Point(344, 241)
         Label3.Name = "Label3"
         Label3.Size = New Size(165, 23)
         Label3.TabIndex = 3
@@ -71,7 +76,7 @@ Partial Class OrderProductForm
         ' 
         ' OrderQuantityTextBox
         ' 
-        OrderQuantityTextBox.Location = New Point(515, 190)
+        OrderQuantityTextBox.Location = New Point(515, 241)
         OrderQuantityTextBox.Name = "OrderQuantityTextBox"
         OrderQuantityTextBox.Size = New Size(125, 27)
         OrderQuantityTextBox.TabIndex = 4
@@ -94,11 +99,63 @@ Partial Class OrderProductForm
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
         ' 
+        ' ViewOrderButton
+        ' 
+        ViewOrderButton.Location = New Point(28, 44)
+        ViewOrderButton.Name = "ViewOrderButton"
+        ViewOrderButton.Size = New Size(94, 29)
+        ViewOrderButton.TabIndex = 7
+        ViewOrderButton.Text = "View Order List"
+        ViewOrderButton.UseVisualStyleBackColor = True
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label4.Location = New Point(344, 190)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(106, 23)
+        Label4.TabIndex = 8
+        Label4.Text = "Product ID: "
+        ' 
+        ' ProductIDLabel
+        ' 
+        ProductIDLabel.AutoSize = True
+        ProductIDLabel.Location = New Point(458, 193)
+        ProductIDLabel.Name = "ProductIDLabel"
+        ProductIDLabel.Size = New Size(0, 20)
+        ProductIDLabel.TabIndex = 9
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label5.Location = New Point(295, 306)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(98, 23)
+        Label5.TabIndex = 10
+        Label5.Text = "Unit Price: "
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label6.Location = New Point(556, 306)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(103, 23)
+        Label6.TabIndex = 11
+        Label6.Text = "Total Price: "
+        ' 
         ' OrderProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1014, 454)
+        Controls.Add(Label6)
+        Controls.Add(Label5)
+        Controls.Add(ProductIDLabel)
+        Controls.Add(Label4)
+        Controls.Add(ViewOrderButton)
         Controls.Add(CancelButton)
         Controls.Add(OrderButton)
         Controls.Add(OrderQuantityTextBox)
@@ -119,4 +176,9 @@ Partial Class OrderProductForm
     Friend WithEvents OrderQuantityTextBox As TextBox
     Friend WithEvents OrderButton As Button
     Friend WithEvents CancelButton As Button
+    Friend WithEvents ViewOrderButton As Button
+    Friend WithEvents Label4 As Label
+    Friend WithEvents ProductIDLabel As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
 End Class
