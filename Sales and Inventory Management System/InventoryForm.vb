@@ -177,43 +177,39 @@ Public Class InventoryForm
 
         ' Confirm deletion
         Dim confirm As DialogResult = MessageBox.Show(
-            "Are you sure you want to delete this product?",
-            "Confirm Delete",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-        )
+        "Are you sure you want to delete this product and its related orders?",
+        "Confirm Delete",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    )
 
         If confirm = DialogResult.No Then Return
 
         Try
             ConnectDB()
 
-            ' --- Step 1: Check if product has related inventory movements ---
-            Dim checkSql As String = "SELECT COUNT(*) FROM tb_inventorymovements WHERE p_id = @ProductID"
-            Using checkCmd As New MySqlCommand(checkSql, conn)
-                checkCmd.Parameters.AddWithValue("@ProductID", ProductID)
-                Dim relatedCount As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
-
-                If relatedCount > 0 Then
-                    MessageBox.Show(
-                        "❌ This product cannot be deleted because it is linked to inventory movement records." & vbCrLf &
-                        "Please remove related inventory records first.",
-                        "Delete Blocked",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    )
-                    Return
-                End If
+            ' Step 1: Delete related orders first (foreign key constraint issue)
+            Dim deleteOrdersSql As String = "DELETE FROM tb_orders WHERE p_id = @ProductID"
+            Using deleteCmd As New MySqlCommand(deleteOrdersSql, conn)
+                deleteCmd.Parameters.AddWithValue("@ProductID", ProductID)
+                deleteCmd.ExecuteNonQuery()
             End Using
 
-            ' --- Step 2: Proceed with product deletion if safe ---
-            Dim deleteSql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
-            Using deleteCmd As New MySqlCommand(deleteSql, conn)
+            ' Step 2: Delete related inventory movement records if any
+            Dim deleteMovementsSql As String = "DELETE FROM tb_inventorymovements WHERE p_id = @ProductID"
+            Using deleteCmd As New MySqlCommand(deleteMovementsSql, conn)
                 deleteCmd.Parameters.AddWithValue("@ProductID", ProductID)
-                Dim rowsAffected As Integer = deleteCmd.ExecuteNonQuery()
+                deleteCmd.ExecuteNonQuery()
+            End Using
+
+            ' Step 3: Delete the product from tb_products
+            Dim deleteProductSql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
+            Using deleteProductCmd As New MySqlCommand(deleteProductSql, conn)
+                deleteProductCmd.Parameters.AddWithValue("@ProductID", ProductID)
+                Dim rowsAffected As Integer = deleteProductCmd.ExecuteNonQuery()
 
                 If rowsAffected > 0 Then
-                    MessageBox.Show("✅ Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("✅ Product and related orders deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     LoadProduct() ' Refresh DataGridView
                 Else
                     MessageBox.Show("⚠️ No product found with that ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -221,11 +217,12 @@ Public Class InventoryForm
             End Using
 
         Catch ex As Exception
-            MessageBox.Show("❌ Error deleting product: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("❌ Error deleting product and related orders: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
     End Sub
+
 
     Private Sub OrderProductButton_Click(sender As Object, e As EventArgs) Handles OrderProductButton.Click
         OrderProductForm.ShowDialog()
