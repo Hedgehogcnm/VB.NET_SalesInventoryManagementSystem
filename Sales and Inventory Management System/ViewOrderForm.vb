@@ -30,48 +30,38 @@ Public Class ViewOrderForm
                 .EnableHeadersVisualStyles = False
             End With
 
-            ' --- Custom header names ---
+            ' --- Rename headers ---
             OrderDataGridView.Columns("o_id").HeaderText = "Order ID"
             OrderDataGridView.Columns("p_id").HeaderText = "Product ID"
             OrderDataGridView.Columns("u_id").HeaderText = "User ID"
             OrderDataGridView.Columns("sup_id").HeaderText = "Supplier ID"
             OrderDataGridView.Columns("o_qty").HeaderText = "Order Quantity"
             OrderDataGridView.Columns("o_total").HeaderText = "Order Total"
+            OrderDataGridView.Columns("o_status").HeaderText = "Order Status"
 
-            ' --- Always use the same ComboBox options ---
-            Dim statusCombo As New DataGridViewComboBoxColumn()
-            statusCombo.HeaderText = "Order Status"
-            statusCombo.Name = "o_status"
-            statusCombo.DataPropertyName = "o_status"
-            statusCombo.Items.AddRange(" ", "Ordered", "Received", "Cancelled")
-            statusCombo.DefaultCellStyle.NullValue = " "
+            ' --- Replace o_status column with ComboBox version ---
+            Dim comboColumn As New DataGridViewComboBoxColumn()
+            comboColumn.HeaderText = "Order Status"
+            comboColumn.Name = "o_status"
+            comboColumn.DataPropertyName = "o_status"
+            comboColumn.FlatStyle = FlatStyle.Flat
+            comboColumn.Items.AddRange("ordered", "received", "cancelled")
 
-            ' --- Replace the old o_status column safely ---
-            If OrderDataGridView.Columns.Contains("o_status") Then
-                OrderDataGridView.Columns.Remove("o_status")
-            End If
-            OrderDataGridView.Columns.Add(statusCombo)
+            Dim oldCol As DataGridViewColumn = OrderDataGridView.Columns("o_status")
+            Dim colIndex As Integer = oldCol.Index
+            OrderDataGridView.Columns.Remove(oldCol)
+            OrderDataGridView.Columns.Insert(colIndex, comboColumn)
 
-            ' --- Normalize database values to match ComboBox options ---
+            ' --- Normalize all rows ---
             For Each row As DataGridViewRow In OrderDataGridView.Rows
-                If row.Cells("o_status").Value IsNot Nothing Then
-                    Dim val As String = row.Cells("o_status").Value.ToString().Trim()
-                    Select Case val.ToLower()
-                        Case "", " ", "null"
-                            row.Cells("o_status").Value = " "
-                        Case "ordered"
-                            row.Cells("o_status").Value = "Ordered"
-                        Case "received"
-                            row.Cells("o_status").Value = "Received"
-                        Case "cancelled"
-                            row.Cells("o_status").Value = "Cancelled"
-                        Case Else
-                            row.Cells("o_status").Value = " "
-                    End Select
-                Else
-                    row.Cells("o_status").Value = " "
+                Dim val As Object = row.Cells("o_status").Value
+                If val Is Nothing OrElse String.IsNullOrWhiteSpace(val.ToString()) Then
+                    row.Cells("o_status").Value = "ordered"
                 End If
             Next
+
+            ' ✅ Clear any selected row after binding
+            OrderDataGridView.ClearSelection()
 
         Catch ex As Exception
             MessageBox.Show("❌ Failed to load orders: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -80,13 +70,13 @@ Public Class ViewOrderForm
         End Try
     End Sub
 
-
-    ' --- Prevent ComboBox crash ---
+    ' --- Prevent DataError crash ---
     Private Sub OrderDataGridView_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)
+        e.ThrowException = False
         e.Cancel = True
     End Sub
 
-    ' --- ConfirmButton click handler ---
+    ' --- Confirm Button ---
     Private Sub ConfirmButton_Click(sender As Object, e As EventArgs) Handles ConfirmButton.Click
         If OrderDataGridView.SelectedRows.Count = 0 Then
             MessageBox.Show("Please select an order to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -96,9 +86,10 @@ Public Class ViewOrderForm
         Dim selectedRow As DataGridViewRow = OrderDataGridView.SelectedRows(0)
         Dim orderID As Integer = Convert.ToInt32(selectedRow.Cells("o_id").Value)
         Dim productID As Integer = Convert.ToInt32(selectedRow.Cells("p_id").Value)
+        Dim quantity As Integer = Convert.ToInt32(selectedRow.Cells("o_qty").Value)
         Dim newStatus As String = selectedRow.Cells("o_status").Value.ToString()
 
-        ' --- Retrieve product name ---
+        ' --- Get product name for display ---
         Dim productName As String = ""
         Try
             ConnectDB()
@@ -106,11 +97,7 @@ Public Class ViewOrderForm
             Using cmd As New MySqlCommand(sqlProduct, conn)
                 cmd.Parameters.AddWithValue("@p_id", productID)
                 Dim result = cmd.ExecuteScalar()
-                If result IsNot Nothing Then
-                    productName = result.ToString()
-                Else
-                    productName = "Unknown Product"
-                End If
+                productName = If(result IsNot Nothing, result.ToString(), "Unknown Product")
             End Using
         Catch
             productName = "Unknown Product"
@@ -118,7 +105,7 @@ Public Class ViewOrderForm
             conn.Close()
         End Try
 
-        ' --- Confirmation message ---
+        ' --- Confirm update ---
         Dim confirmMsg As String = $"Confirm change status for '{productName}' (Product ID: {productID}) to '{newStatus}'?"
         Dim response As DialogResult = MessageBox.Show(confirmMsg, "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
@@ -131,11 +118,22 @@ Public Class ViewOrderForm
                     cmd.Parameters.AddWithValue("@orderID", orderID)
                     cmd.ExecuteNonQuery()
                 End Using
+                conn.Close()
+
+                ' ✅ If status changed to "received", increase product stock
 
                 MessageBox.Show($"✅ Order status updated successfully for '{productName}' (Product ID: {productID}).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' 🔄 Automatically refresh the grid after update
+                ' ✅ Refresh orders grid
                 LoadOrders()
+
+                ' ✅ If InventoryForm is open, refresh its product list automatically
+                For Each f As Form In Application.OpenForms
+                    If TypeOf f Is InventoryForm Then
+                        Dim invForm As InventoryForm = CType(f, InventoryForm)
+                        invForm.RefreshProductListFromOtherForm()
+                    End If
+                Next
 
             Catch ex As Exception
                 MessageBox.Show("❌ Failed to update order: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

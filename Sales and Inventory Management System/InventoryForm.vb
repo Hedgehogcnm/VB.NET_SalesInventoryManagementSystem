@@ -1,5 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class InventoryForm
+    Public Sub RefreshProductListFromOtherForm()
+        LoadProduct()
+    End Sub
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
         Dim Sales As New SalesForm()
         Sales.Show()
@@ -56,20 +59,6 @@ Public Class InventoryForm
             ' Adjust DataGridView style
             ProductListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
             ProductListDataGridView.EnableHeadersVisualStyles = False
-            'ProductListDataGridView.ColumnHeadersDefaultCellStyle.Font = New Font(ProductListDataGridView.Font, FontStyle.Bold)
-            'ProductListDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            'ProductListDataGridView.Columns("p_id").Width = 60
-            'ProductListDataGridView.Columns("sup_id").Width = 170
-            'ProductListDataGridView.Columns("p_name").Width = 80
-            'ProductListDataGridView.Columns("p_stock").Width = 60
-            'ProductListDataGridView.Columns("p_minStock").Width = 60
-            'ProductListDataGridView.Columns("p_costPrice").Width = 60
-            'ProductListDataGridView.Columns("p_sellPrice").Width = 60
-            'ProductListDataGridView.Columns("p_costPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            'ProductListDataGridView.Columns("p_sellPrice").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            'ProductListDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            ProductListDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = ProductListDataGridView.ColumnHeadersDefaultCellStyle.BackColor
-            ProductListDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = ProductListDataGridView.ColumnHeadersDefaultCellStyle.ForeColor
             ProductListDataGridView.MultiSelect = True
             ProductListDataGridView.ReadOnly = True
             ProductListDataGridView.AllowUserToAddRows = False
@@ -99,6 +88,7 @@ Public Class InventoryForm
             End If
         Next
     End Sub
+
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
         Dim searchValue As String = ProductSearchTextBox.Text.Trim()
