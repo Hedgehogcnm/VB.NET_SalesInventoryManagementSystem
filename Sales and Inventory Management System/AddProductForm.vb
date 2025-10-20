@@ -28,12 +28,6 @@ Public Class AddProductForm
             Exit Sub
         End If
 
-        ' --- Numeric fields ---
-        Dim ProductStock As Integer
-        If Not Integer.TryParse(ProductStockTextBox.Text, ProductStock) Then
-            MessageBox.Show("Please enter a valid number for Product Stock.")
-            Exit Sub
-        End If
 
         Dim ProductMinStock As Integer
         If Not Integer.TryParse(ProductMinStockTextBox.Text, ProductMinStock) Then
@@ -57,15 +51,14 @@ Public Class AddProductForm
             ConnectDB()
 
             ' --- Insert into database ---
-            Dim sql As String = "INSERT INTO tb_products (p_id, sup_id, p_name, p_category, p_stock, p_minStock, p_costPrice, p_sellPrice) " &
-                                "VALUES (@ProductID, @SupplierID, @ProductName, @ProductCategory, @ProductStock, @ProductMinStock, @ProductCostPrice, @ProductSellPrice)"
+            Dim sql As String = "INSERT INTO tb_products (p_id, sup_id, p_name, p_category, p_minStock, p_costPrice, p_sellPrice) " &
+                                "VALUES (@ProductID, @SupplierID, @ProductName, @ProductCategory, @ProductMinStock, @ProductCostPrice, @ProductSellPrice)"
 
             Using cmd As New MySqlCommand(sql, conn)
                 cmd.Parameters.AddWithValue("@ProductID", ProductID)
                 cmd.Parameters.AddWithValue("@SupplierID", SupplierID)
                 cmd.Parameters.AddWithValue("@ProductName", ProductName)
                 cmd.Parameters.AddWithValue("@ProductCategory", ProductCategory)
-                cmd.Parameters.AddWithValue("@ProductStock", ProductStock)
                 cmd.Parameters.AddWithValue("@ProductMinStock", ProductMinStock)
                 cmd.Parameters.AddWithValue("@ProductCostPrice", ProductCostPrice)
                 cmd.Parameters.AddWithValue("@ProductSellPrice", ProductSellPrice)

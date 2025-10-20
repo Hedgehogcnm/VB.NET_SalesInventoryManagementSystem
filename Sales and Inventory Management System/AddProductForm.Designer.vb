@@ -27,13 +27,11 @@ Partial Class AddProductForm
         Label3 = New Label()
         Label4 = New Label()
         Label5 = New Label()
-        Label6 = New Label()
         Label7 = New Label()
         Label8 = New Label()
         Label9 = New Label()
         ProductNameTextBox = New TextBox()
         ProductCategoryComboBox = New ComboBox()
-        ProductStockTextBox = New TextBox()
         ProductMinStockTextBox = New TextBox()
         ProductCostPriceTextBox = New TextBox()
         ProductSellPriceTextBox = New TextBox()
@@ -94,21 +92,11 @@ Partial Class AddProductForm
         Label5.TabIndex = 4
         Label5.Text = "Product Category:"
         ' 
-        ' Label6
-        ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label6.Location = New Point(480, 106)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(129, 23)
-        Label6.TabIndex = 5
-        Label6.Text = "Product Stock:"
-        ' 
         ' Label7
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label7.Location = New Point(397, 165)
+        Label7.Location = New Point(397, 108)
         Label7.Name = "Label7"
         Label7.Size = New Size(212, 23)
         Label7.TabIndex = 6
@@ -118,7 +106,7 @@ Partial Class AddProductForm
         ' 
         Label8.AutoSize = True
         Label8.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label8.Location = New Point(447, 229)
+        Label8.Location = New Point(447, 166)
         Label8.Name = "Label8"
         Label8.Size = New Size(162, 23)
         Label8.TabIndex = 7
@@ -128,7 +116,7 @@ Partial Class AddProductForm
         ' 
         Label9.AutoSize = True
         Label9.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label9.Location = New Point(453, 295)
+        Label9.Location = New Point(453, 228)
         Label9.Name = "Label9"
         Label9.Size = New Size(156, 23)
         Label9.TabIndex = 8
@@ -150,30 +138,23 @@ Partial Class AddProductForm
         ProductCategoryComboBox.Size = New Size(151, 28)
         ProductCategoryComboBox.TabIndex = 11
         ' 
-        ' ProductStockTextBox
-        ' 
-        ProductStockTextBox.Location = New Point(615, 105)
-        ProductStockTextBox.Name = "ProductStockTextBox"
-        ProductStockTextBox.Size = New Size(125, 27)
-        ProductStockTextBox.TabIndex = 12
-        ' 
         ' ProductMinStockTextBox
         ' 
-        ProductMinStockTextBox.Location = New Point(615, 165)
+        ProductMinStockTextBox.Location = New Point(615, 108)
         ProductMinStockTextBox.Name = "ProductMinStockTextBox"
         ProductMinStockTextBox.Size = New Size(125, 27)
         ProductMinStockTextBox.TabIndex = 13
         ' 
         ' ProductCostPriceTextBox
         ' 
-        ProductCostPriceTextBox.Location = New Point(615, 229)
+        ProductCostPriceTextBox.Location = New Point(615, 166)
         ProductCostPriceTextBox.Name = "ProductCostPriceTextBox"
         ProductCostPriceTextBox.Size = New Size(125, 27)
         ProductCostPriceTextBox.TabIndex = 14
         ' 
         ' ProductSellPriceTextBox
         ' 
-        ProductSellPriceTextBox.Location = New Point(615, 295)
+        ProductSellPriceTextBox.Location = New Point(615, 228)
         ProductSellPriceTextBox.Name = "ProductSellPriceTextBox"
         ProductSellPriceTextBox.Size = New Size(125, 27)
         ProductSellPriceTextBox.TabIndex = 15
@@ -232,13 +213,11 @@ Partial Class AddProductForm
         Controls.Add(ProductSellPriceTextBox)
         Controls.Add(ProductCostPriceTextBox)
         Controls.Add(ProductMinStockTextBox)
-        Controls.Add(ProductStockTextBox)
         Controls.Add(ProductCategoryComboBox)
         Controls.Add(ProductNameTextBox)
         Controls.Add(Label9)
         Controls.Add(Label8)
         Controls.Add(Label7)
-        Controls.Add(Label6)
         Controls.Add(Label5)
         Controls.Add(Label4)
         Controls.Add(Label3)
@@ -256,13 +235,11 @@ Partial Class AddProductForm
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents ProductNameTextBox As TextBox
     Friend WithEvents ProductCategoryComboBox As ComboBox
-    Friend WithEvents ProductStockTextBox As TextBox
     Friend WithEvents ProductMinStockTextBox As TextBox
     Friend WithEvents ProductCostPriceTextBox As TextBox
     Friend WithEvents ProductSellPriceTextBox As TextBox
