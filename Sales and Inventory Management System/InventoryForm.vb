@@ -9,28 +9,28 @@ Public Class InventoryForm
         Me.Close()
     End Sub
 
-    Private Sub InventoryToolStripMenuItem_Click_1(sender As Object, e As EventArgs)
+    Private Sub InventoryToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
         Dim Inventory As New InventoryForm
-        Inventory.Show
-        Close
+        Inventory.Show()
+        Close()
     End Sub
 
-    Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupplierToolStripMenuItem.Click
         Dim Supplier As New SupplierForm
-        Supplier.Show
-        Close
+        Supplier.Show()
+        Close()
     End Sub
 
-    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Dim Report As New ReportForm
-        Report.Show
-        Close
+        Report.Show()
+        Close()
     End Sub
 
-    Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
         Dim login As New LoginForm
-        login.Show
-        Close
+        login.Show()
+        Close()
     End Sub
 
     Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load

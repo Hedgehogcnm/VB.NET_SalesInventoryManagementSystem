@@ -27,12 +27,14 @@ Partial Class LoginForm
         usernameTextBox = New TextBox()
         passwordTextBox = New TextBox()
         loginButton = New Button()
+        PictureBox1 = New PictureBox()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(491, 261)
+        Label1.Location = New Point(967, 336)
         Label1.Name = "Label1"
         Label1.Size = New Size(78, 20)
         Label1.TabIndex = 0
@@ -41,7 +43,7 @@ Partial Class LoginForm
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(491, 315)
+        Label2.Location = New Point(967, 390)
         Label2.Name = "Label2"
         Label2.Size = New Size(73, 20)
         Label2.TabIndex = 1
@@ -49,33 +51,44 @@ Partial Class LoginForm
         ' 
         ' usernameTextBox
         ' 
-        usernameTextBox.Location = New Point(635, 265)
+        usernameTextBox.Location = New Point(1111, 340)
         usernameTextBox.Name = "usernameTextBox"
         usernameTextBox.Size = New Size(125, 27)
         usernameTextBox.TabIndex = 2
         ' 
         ' passwordTextBox
         ' 
-        passwordTextBox.Location = New Point(635, 312)
+        passwordTextBox.Location = New Point(1111, 387)
         passwordTextBox.Name = "passwordTextBox"
         passwordTextBox.Size = New Size(125, 27)
         passwordTextBox.TabIndex = 3
         ' 
         ' loginButton
         ' 
-        loginButton.Location = New Point(573, 387)
+        loginButton.Location = New Point(1049, 462)
         loginButton.Name = "loginButton"
         loginButton.Size = New Size(94, 29)
         loginButton.TabIndex = 4
         loginButton.Text = "Log In"
         loginButton.UseVisualStyleBackColor = True
         ' 
+        ' PictureBox1
+        ' 
+        PictureBox1.Image = My.Resources.Resources.logo__500_
+        PictureBox1.Location = New Point(278, 171)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(500, 500)
+        PictureBox1.TabIndex = 5
+        PictureBox1.TabStop = False
+        ' 
         ' LoginForm
         ' 
         AcceptButton = loginButton
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.SeaShell
         ClientSize = New Size(1502, 773)
+        Controls.Add(PictureBox1)
         Controls.Add(loginButton)
         Controls.Add(passwordTextBox)
         Controls.Add(usernameTextBox)
@@ -83,8 +96,8 @@ Partial Class LoginForm
         Controls.Add(Label1)
         Name = "LoginForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "Login Form"
         WindowState = FormWindowState.Maximized
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -94,5 +107,6 @@ Partial Class LoginForm
     Friend WithEvents usernameTextBox As TextBox
     Friend WithEvents passwordTextBox As TextBox
     Friend WithEvents loginButton As Button
+    Friend WithEvents PictureBox1 As PictureBox
 
 End Class

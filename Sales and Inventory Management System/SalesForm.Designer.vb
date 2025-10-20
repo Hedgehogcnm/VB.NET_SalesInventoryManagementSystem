@@ -23,7 +23,6 @@ Partial Class SalesForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SalesForm))
         ContextMenuStrip1 = New ContextMenuStrip(components)
         TableLayoutPanelTotal = New TableLayoutPanel()
         Panel1 = New Panel()
@@ -56,7 +55,7 @@ Partial Class SalesForm
         ComboBoxCategory = New ComboBox()
         ButtonSearch = New Button()
         Panel8 = New Panel()
-        Label4 = New Label()
+        LabelForm = New Label()
         TableLayoutPanelTotal.SuspendLayout()
         Panel1.SuspendLayout()
         Panel4.SuspendLayout()
@@ -86,7 +85,7 @@ Partial Class SalesForm
         TableLayoutPanelTotal.Controls.Add(Panel5, 0, 3)
         TableLayoutPanelTotal.Controls.Add(Panel6, 0, 4)
         TableLayoutPanelTotal.Dock = DockStyle.Right
-        TableLayoutPanelTotal.Location = New Point(880, 60)
+        TableLayoutPanelTotal.Location = New Point(798, 60)
         TableLayoutPanelTotal.Name = "TableLayoutPanelTotal"
         TableLayoutPanelTotal.RowCount = 5
         TableLayoutPanelTotal.RowStyles.Add(New RowStyle(SizeType.Percent, 8.952703F))
@@ -278,24 +277,24 @@ Partial Class SalesForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.Size = New Size(150, 773)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
         ' LogoToolStripMenuItem
         ' 
         LogoToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        LogoToolStripMenuItem.Image = CType(resources.GetObject("LogoToolStripMenuItem.Image"), Image)
+        LogoToolStripMenuItem.Image = My.Resources.Resources.logo_75_
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(67, 62)
+        LogoToolStripMenuItem.Size = New Size(149, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
         SalesToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         SalesToolStripMenuItem.Font = New Font("Segoe UI", 9F)
-        SalesToolStripMenuItem.Image = CType(resources.GetObject("SalesToolStripMenuItem.Image"), Image)
+        SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         SalesToolStripMenuItem.Size = New Size(149, 80)
@@ -305,7 +304,7 @@ Partial Class SalesForm
         ' InventoryToolStripMenuItem
         ' 
         InventoryToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        InventoryToolStripMenuItem.Image = CType(resources.GetObject("InventoryToolStripMenuItem.Image"), Image)
+        InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         InventoryToolStripMenuItem.Size = New Size(149, 80)
@@ -314,7 +313,7 @@ Partial Class SalesForm
         ' SupplierToolStripMenuItem
         ' 
         SupplierToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        SupplierToolStripMenuItem.Image = CType(resources.GetObject("SupplierToolStripMenuItem.Image"), Image)
+        SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         SupplierToolStripMenuItem.Size = New Size(149, 80)
@@ -323,7 +322,7 @@ Partial Class SalesForm
         ' ReportToolStripMenuItem
         ' 
         ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ReportToolStripMenuItem.Image = CType(resources.GetObject("ReportToolStripMenuItem.Image"), Image)
+        ReportToolStripMenuItem.Image = My.Resources.Resources.report
         ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
@@ -334,7 +333,7 @@ Partial Class SalesForm
         ' 
         LogOutToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         LogOutToolStripMenuItem.Font = New Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        LogOutToolStripMenuItem.Image = CType(resources.GetObject("LogOutToolStripMenuItem.Image"), Image)
+        LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         LogOutToolStripMenuItem.Size = New Size(149, 80)
@@ -346,9 +345,9 @@ Partial Class SalesForm
         Panel3.Controls.Add(TableLayoutPanelTotal)
         Panel3.Controls.Add(Panel8)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(68, 0)
+        Panel3.Location = New Point(150, 0)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(1434, 773)
+        Panel3.Size = New Size(1352, 773)
         Panel3.TabIndex = 6
         ' 
         ' TableLayoutPanel2
@@ -363,7 +362,7 @@ Partial Class SalesForm
         TableLayoutPanel2.RowCount = 2
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 8.623298F))
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 91.3767F))
-        TableLayoutPanel2.Size = New Size(880, 713)
+        TableLayoutPanel2.Size = New Size(798, 713)
         TableLayoutPanel2.TabIndex = 5
         ' 
         ' FlowLayoutPanelSales
@@ -372,7 +371,7 @@ Partial Class SalesForm
         FlowLayoutPanelSales.Dock = DockStyle.Fill
         FlowLayoutPanelSales.Location = New Point(3, 64)
         FlowLayoutPanelSales.Name = "FlowLayoutPanelSales"
-        FlowLayoutPanelSales.Size = New Size(874, 646)
+        FlowLayoutPanelSales.Size = New Size(792, 646)
         FlowLayoutPanelSales.TabIndex = 1
         ' 
         ' TableLayoutPanel1
@@ -390,7 +389,7 @@ Partial Class SalesForm
         TableLayoutPanel1.RowCount = 2
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 38.18182F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 61.81818F))
-        TableLayoutPanel1.Size = New Size(874, 55)
+        TableLayoutPanel1.Size = New Size(792, 55)
         TableLayoutPanel1.TabIndex = 2
         ' 
         ' ComboBoxCategory
@@ -399,7 +398,7 @@ Partial Class SalesForm
         ComboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxCategory.FormattingEnabled = True
         ComboBoxCategory.Items.AddRange(New Object() {"All", "Building Materials", "Electrical", "Hand Tools", "Paint & Adhesives", "Plumbing", "Power Tools", "Safety Equipment"})
-        ComboBoxCategory.Location = New Point(551, 24)
+        ComboBoxCategory.Location = New Point(479, 24)
         ComboBoxCategory.Name = "ComboBoxCategory"
         ComboBoxCategory.Size = New Size(131, 28)
         ComboBoxCategory.TabIndex = 0
@@ -407,7 +406,7 @@ Partial Class SalesForm
         ' ButtonSearch
         ' 
         ButtonSearch.Anchor = AnchorStyles.None
-        ButtonSearch.Location = New Point(699, 24)
+        ButtonSearch.Location = New Point(617, 24)
         ButtonSearch.Name = "ButtonSearch"
         ButtonSearch.Size = New Size(115, 28)
         ButtonSearch.TabIndex = 1
@@ -417,24 +416,24 @@ Partial Class SalesForm
         ' Panel8
         ' 
         Panel8.BackColor = Color.SeaShell
-        Panel8.Controls.Add(Label4)
+        Panel8.Controls.Add(LabelForm)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1434, 60)
+        Panel8.Size = New Size(1352, 60)
         Panel8.TabIndex = 6
         ' 
-        ' Label4
+        ' LabelForm
         ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
-        Label4.Location = New Point(15, 10)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(86, 40)
-        Label4.TabIndex = 1
-        Label4.Text = "Sales"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
-        Label4.UseMnemonic = False
+        LabelForm.AutoSize = True
+        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
+        LabelForm.Location = New Point(15, 10)
+        LabelForm.Name = "LabelForm"
+        LabelForm.Size = New Size(86, 40)
+        LabelForm.TabIndex = 1
+        LabelForm.Text = "Sales"
+        LabelForm.TextAlign = ContentAlignment.MiddleLeft
+        LabelForm.UseMnemonic = False
         ' 
         ' SalesForm
         ' 
@@ -495,7 +494,7 @@ Partial Class SalesForm
     Friend WithEvents Panel7 As Panel
     Friend WithEvents LabelTotal As Label
     Friend WithEvents Panel8 As Panel
-    Friend WithEvents Label4 As Label
+    Friend WithEvents LabelForm As Label
     Friend WithEvents LogoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Panel10 As Panel
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel

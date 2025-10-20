@@ -4,33 +4,33 @@ Imports MySql.Data.MySqlClient
 
 Public Class ReportForm
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
-        Dim Sales As New SalesForm()
+        Dim Sales As New SalesForm
         Sales.Show()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub InventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
-        Dim Inventory As New InventoryForm()
+        Dim Inventory As New InventoryForm
         Inventory.Show()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupplierToolStripMenuItem.Click
-        Dim Supplier As New SupplierForm()
+        Dim Supplier As New SupplierForm
         Supplier.Show()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
-        Dim Report As New ReportForm()
+        Dim Report As New ReportForm
         Report.Show()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
-        Dim login As New LoginForm()
+        Dim login As New LoginForm
         login.Show()
-        Me.Close()
+        Close()
     End Sub
 
     Private WithEvents PrintDoc As New PrintDocument

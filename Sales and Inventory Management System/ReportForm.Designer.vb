@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ReportForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -17,120 +17,190 @@ Partial Class ReportForm
     'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         MenuStrip1 = New MenuStrip()
+        LogoToolStripMenuItem = New ToolStripMenuItem()
         SalesToolStripMenuItem = New ToolStripMenuItem()
         InventoryToolStripMenuItem = New ToolStripMenuItem()
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
-        ToDateTimePicker = New DateTimePicker()
-        Label2 = New Label()
-        Label3 = New Label()
-        FromDateTimePicker = New DateTimePicker()
-        PrintButton = New Button()
+        PanelMain = New Panel()
         ReportPanel = New Panel()
-        SaleReportButton = New Button()
-        InventoryReportButton = New Button()
+        PrintButton = New Button()
+        FromDateTimePicker = New DateTimePicker()
+        Label3 = New Label()
+        Label2 = New Label()
+        ToDateTimePicker = New DateTimePicker()
         Panel1 = New Panel()
         InventoryTrackingButton = New Button()
+        SaleReportButton = New Button()
+        InventoryReportButton = New Button()
+        Panel8 = New Panel()
+        LabelForm = New Label()
         MenuStrip1.SuspendLayout()
+        PanelMain.SuspendLayout()
         Panel1.SuspendLayout()
+        Panel8.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
         ' 
-        MenuStrip1.ImageScalingSize = New Size(20, 20)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.BackColor = Color.SeaShell
+        MenuStrip1.BackgroundImageLayout = ImageLayout.None
+        MenuStrip1.Dock = DockStyle.Left
+        MenuStrip1.ImageScalingSize = New Size(40, 40)
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(1348, 28)
-        MenuStrip1.TabIndex = 0
+        MenuStrip1.Padding = New Padding(0)
+        MenuStrip1.RenderMode = ToolStripRenderMode.Professional
+        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
+        ' 
+        ' LogoToolStripMenuItem
+        ' 
+        LogoToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        LogoToolStripMenuItem.Image = My.Resources.Resources.logo_75_
+        LogoToolStripMenuItem.ImageTransparentColor = Color.White
+        LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
+        LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
+        LogoToolStripMenuItem.Size = New Size(67, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
+        SalesToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
-        SalesToolStripMenuItem.Size = New Size(57, 24)
-        SalesToolStripMenuItem.Text = "Sales"
+        SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        SalesToolStripMenuItem.Size = New Size(67, 80)
+        SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
         ' 
+        InventoryToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
-        InventoryToolStripMenuItem.Size = New Size(84, 24)
-        InventoryToolStripMenuItem.Text = "Inventory"
+        InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        InventoryToolStripMenuItem.Size = New Size(67, 80)
+        InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
         ' 
+        SupplierToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
-        SupplierToolStripMenuItem.Size = New Size(78, 24)
-        SupplierToolStripMenuItem.Text = "Supplier"
+        SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        SupplierToolStripMenuItem.Size = New Size(67, 80)
+        SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
         ' 
+        ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ReportToolStripMenuItem.Image = My.Resources.Resources.report
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        ReportToolStripMenuItem.Size = New Size(68, 24)
-        ReportToolStripMenuItem.Text = "Report"
+        ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.ToolTipText = "Report"
         ' 
         ' LogOutToolStripMenuItem
         ' 
+        LogOutToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
-        LogOutToolStripMenuItem.Size = New Size(76, 24)
-        LogOutToolStripMenuItem.Text = "Log Out"
+        LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
-        ' ToDateTimePicker
+        ' PanelMain
         ' 
-        ToDateTimePicker.Location = New Point(633, 57)
-        ToDateTimePicker.Name = "ToDateTimePicker"
-        ToDateTimePicker.Size = New Size(262, 27)
-        ToDateTimePicker.TabIndex = 2
+        PanelMain.Controls.Add(ReportPanel)
+        PanelMain.Controls.Add(PrintButton)
+        PanelMain.Controls.Add(FromDateTimePicker)
+        PanelMain.Controls.Add(Label3)
+        PanelMain.Controls.Add(Label2)
+        PanelMain.Controls.Add(ToDateTimePicker)
+        PanelMain.Controls.Add(Panel1)
+        PanelMain.Controls.Add(Panel8)
+        PanelMain.Dock = DockStyle.Fill
+        PanelMain.Location = New Point(68, 0)
+        PanelMain.Name = "PanelMain"
+        PanelMain.Size = New Size(1434, 773)
+        PanelMain.TabIndex = 6
         ' 
-        ' Label2
+        ' ReportPanel
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(589, 62)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(28, 20)
-        Label2.TabIndex = 3
-        Label2.Text = "To:"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(243, 59)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(46, 20)
-        Label3.TabIndex = 4
-        Label3.Text = "From:"
-        ' 
-        ' FromDateTimePicker
-        ' 
-        FromDateTimePicker.Location = New Point(295, 57)
-        FromDateTimePicker.Name = "FromDateTimePicker"
-        FromDateTimePicker.Size = New Size(260, 27)
-        FromDateTimePicker.TabIndex = 5
+        ReportPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        ReportPanel.BackColor = SystemColors.ActiveBorder
+        ReportPanel.Location = New Point(179, 120)
+        ReportPanel.Name = "ReportPanel"
+        ReportPanel.Size = New Size(1157, 616)
+        ReportPanel.TabIndex = 11
         ' 
         ' PrintButton
         ' 
-        PrintButton.Location = New Point(931, 55)
+        PrintButton.Location = New Point(931, 70)
         PrintButton.Name = "PrintButton"
         PrintButton.Size = New Size(94, 29)
         PrintButton.TabIndex = 7
         PrintButton.Text = "Print"
         PrintButton.UseVisualStyleBackColor = True
         ' 
-        ' ReportPanel
+        ' FromDateTimePicker
         ' 
-        ReportPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        ReportPanel.BackColor = SystemColors.ActiveBorder
-        ReportPanel.Location = New Point(179, 105)
-        ReportPanel.Name = "ReportPanel"
-        ReportPanel.Size = New Size(1157, 616)
-        ReportPanel.TabIndex = 11
+        FromDateTimePicker.Location = New Point(295, 72)
+        FromDateTimePicker.Name = "FromDateTimePicker"
+        FromDateTimePicker.Size = New Size(260, 27)
+        FromDateTimePicker.TabIndex = 5
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(243, 74)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(46, 20)
+        Label3.TabIndex = 4
+        Label3.Text = "From:"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(589, 77)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(28, 20)
+        Label2.TabIndex = 3
+        Label2.Text = "To:"
+        ' 
+        ' ToDateTimePicker
+        ' 
+        ToDateTimePicker.Location = New Point(633, 72)
+        ToDateTimePicker.Name = "ToDateTimePicker"
+        ToDateTimePicker.Size = New Size(262, 27)
+        ToDateTimePicker.TabIndex = 2
+        ' 
+        ' Panel1
+        ' 
+        Panel1.BackColor = SystemColors.ControlLight
+        Panel1.Controls.Add(InventoryTrackingButton)
+        Panel1.Controls.Add(SaleReportButton)
+        Panel1.Controls.Add(InventoryReportButton)
+        Panel1.Dock = DockStyle.Left
+        Panel1.Location = New Point(0, 60)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(169, 713)
+        Panel1.TabIndex = 14
+        ' 
+        ' InventoryTrackingButton
+        ' 
+        InventoryTrackingButton.Location = New Point(17, 142)
+        InventoryTrackingButton.Name = "InventoryTrackingButton"
+        InventoryTrackingButton.Size = New Size(135, 54)
+        InventoryTrackingButton.TabIndex = 14
+        InventoryTrackingButton.Text = "Inventory Tracking Report"
+        InventoryTrackingButton.UseVisualStyleBackColor = True
         ' 
         ' SaleReportButton
         ' 
@@ -150,66 +220,68 @@ Partial Class ReportForm
         InventoryReportButton.Text = "Inventory Report"
         InventoryReportButton.UseVisualStyleBackColor = True
         ' 
-        ' Panel1
+        ' Panel8
         ' 
-        Panel1.BackColor = SystemColors.ControlLight
-        Panel1.Controls.Add(InventoryTrackingButton)
-        Panel1.Controls.Add(SaleReportButton)
-        Panel1.Controls.Add(InventoryReportButton)
-        Panel1.Dock = DockStyle.Left
-        Panel1.Location = New Point(0, 28)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(169, 693)
-        Panel1.TabIndex = 14
+        Panel8.BackColor = Color.SeaShell
+        Panel8.Controls.Add(LabelForm)
+        Panel8.Dock = DockStyle.Top
+        Panel8.Location = New Point(0, 0)
+        Panel8.Name = "Panel8"
+        Panel8.Size = New Size(1434, 60)
+        Panel8.TabIndex = 0
         ' 
-        ' InventoryTrackingButton
+        ' LabelForm
         ' 
-        InventoryTrackingButton.Location = New Point(17, 142)
-        InventoryTrackingButton.Name = "InventoryTrackingButton"
-        InventoryTrackingButton.Size = New Size(135, 54)
-        InventoryTrackingButton.TabIndex = 14
-        InventoryTrackingButton.Text = "Inventory Tracking Report"
-        InventoryTrackingButton.UseVisualStyleBackColor = True
+        LabelForm.AutoSize = True
+        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
+        LabelForm.Location = New Point(15, 10)
+        LabelForm.Name = "LabelForm"
+        LabelForm.Size = New Size(111, 40)
+        LabelForm.TabIndex = 1
+        LabelForm.Text = "Report"
+        LabelForm.TextAlign = ContentAlignment.MiddleLeft
+        LabelForm.UseMnemonic = False
         ' 
         ' ReportForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1348, 721)
-        Controls.Add(Panel1)
-        Controls.Add(ReportPanel)
-        Controls.Add(PrintButton)
-        Controls.Add(FromDateTimePicker)
-        Controls.Add(Label3)
-        Controls.Add(Label2)
-        Controls.Add(ToDateTimePicker)
+        ClientSize = New Size(1502, 773)
+        Controls.Add(PanelMain)
         Controls.Add(MenuStrip1)
-        MainMenuStrip = MenuStrip1
         Name = "ReportForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "ReportForm"
         WindowState = FormWindowState.Maximized
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
+        PanelMain.ResumeLayout(False)
+        PanelMain.PerformLayout()
         Panel1.ResumeLayout(False)
+        Panel8.ResumeLayout(False)
+        Panel8.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
+
     End Sub
 
     Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents LogoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SalesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InventoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SupplierToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PanelMain As Panel
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents LabelForm As Label
     Friend WithEvents ToDateTimePicker As DateTimePicker
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents FromDateTimePicker As DateTimePicker
     Friend WithEvents PrintButton As Button
     Friend WithEvents ReportPanel As Panel
-    Friend WithEvents SaleReportButton As Button
-    Friend WithEvents InventoryReportButton As Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents InventoryTrackingButton As Button
+    Friend WithEvents SaleReportButton As Button
+    Friend WithEvents InventoryReportButton As Button
 End Class

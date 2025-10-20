@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class InventoryForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -17,14 +17,16 @@ Partial Class InventoryForm
     'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New ComponentModel.Container()
-        ContextMenuStrip1 = New ContextMenuStrip(components)
-        Label1 = New Label()
+        MenuStrip1 = New MenuStrip()
+        LogoToolStripMenuItem = New ToolStripMenuItem()
+        SalesToolStripMenuItem = New ToolStripMenuItem()
+        InventoryToolStripMenuItem = New ToolStripMenuItem()
+        SupplierToolStripMenuItem = New ToolStripMenuItem()
+        ReportToolStripMenuItem = New ToolStripMenuItem()
+        LogOutToolStripMenuItem = New ToolStripMenuItem()
+        PanelMain = New Panel()
         ProductListDataGridView = New DataGridView()
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
@@ -32,36 +34,114 @@ Partial Class InventoryForm
         AddProductButton = New Button()
         EditProductButton = New Button()
         DeleteProductButton = New Button()
+        Panel8 = New Panel()
+        LabelForm = New Label()
+        MenuStrip1.SuspendLayout()
+        PanelMain.SuspendLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
+        Panel8.SuspendLayout()
         SuspendLayout()
         ' 
-        ' ContextMenuStrip1
+        ' MenuStrip1
         ' 
-        ContextMenuStrip1.ImageScalingSize = New Size(20, 20)
-        ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(61, 4)
+        MenuStrip1.BackColor = Color.SeaShell
+        MenuStrip1.BackgroundImageLayout = ImageLayout.None
+        MenuStrip1.Dock = DockStyle.Left
+        MenuStrip1.ImageScalingSize = New Size(40, 40)
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.Location = New Point(0, 0)
+        MenuStrip1.Name = "MenuStrip1"
+        MenuStrip1.Padding = New Padding(0)
+        MenuStrip1.RenderMode = ToolStripRenderMode.Professional
+        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.TabIndex = 5
+        MenuStrip1.Text = "MenuStrip1"
         ' 
-        ' Label1
+        ' LogoToolStripMenuItem
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(236, 38)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(104, 20)
-        Label1.TabIndex = 1
-        Label1.Text = "inventory teng"
+        LogoToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        LogoToolStripMenuItem.Image = My.Resources.Resources.logo_75_
+        LogoToolStripMenuItem.ImageTransparentColor = Color.White
+        LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
+        LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
+        LogoToolStripMenuItem.Size = New Size(67, 62)
+        ' 
+        ' SalesToolStripMenuItem
+        ' 
+        SalesToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SalesToolStripMenuItem.Font = New Font("Segoe UI", 9.0F)
+        SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
+        SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
+        SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        SalesToolStripMenuItem.Size = New Size(67, 80)
+        SalesToolStripMenuItem.ToolTipText = "Sales"
+        ' 
+        ' InventoryToolStripMenuItem
+        ' 
+        InventoryToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
+        InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
+        InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        InventoryToolStripMenuItem.Size = New Size(67, 80)
+        InventoryToolStripMenuItem.ToolTipText = "Inventory"
+        ' 
+        ' SupplierToolStripMenuItem
+        ' 
+        SupplierToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
+        SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
+        SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        SupplierToolStripMenuItem.Size = New Size(67, 80)
+        SupplierToolStripMenuItem.ToolTipText = "Supplier"
+        ' 
+        ' ReportToolStripMenuItem
+        ' 
+        ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ReportToolStripMenuItem.Image = My.Resources.Resources.report
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
+        ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
+        ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.ToolTipText = "Report"
+        ' 
+        ' LogOutToolStripMenuItem
+        ' 
+        LogOutToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
+        LogOutToolStripMenuItem.Font = New Font("Segoe UI", 9.0F)
+        LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
+        LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
+        LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.ToolTipText = "Log Out"
+        ' 
+        ' PanelMain
+        ' 
+        PanelMain.Controls.Add(ProductListDataGridView)
+        PanelMain.Controls.Add(SearchProductButton)
+        PanelMain.Controls.Add(ProductSearchTextBox)
+        PanelMain.Controls.Add(OrderProductButton)
+        PanelMain.Controls.Add(AddProductButton)
+        PanelMain.Controls.Add(EditProductButton)
+        PanelMain.Controls.Add(DeleteProductButton)
+        PanelMain.Controls.Add(Panel8)
+        PanelMain.Dock = DockStyle.Fill
+        PanelMain.Location = New Point(68, 0)
+        PanelMain.Name = "PanelMain"
+        PanelMain.Size = New Size(1434, 773)
+        PanelMain.TabIndex = 6
         ' 
         ' ProductListDataGridView
         ' 
         ProductListDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        ProductListDataGridView.Location = New Point(148, 97)
+        ProductListDataGridView.Location = New Point(163, 132)
         ProductListDataGridView.Name = "ProductListDataGridView"
         ProductListDataGridView.RowHeadersWidth = 51
-        ProductListDataGridView.Size = New Size(776, 416)
+        ProductListDataGridView.Size = New Size(1141, 730)
         ProductListDataGridView.TabIndex = 3
         ' 
         ' SearchProductButton
         ' 
-        SearchProductButton.Location = New Point(830, 54)
+        SearchProductButton.Location = New Point(1210, 86)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -70,14 +150,14 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(630, 55)
+        ProductSearchTextBox.Location = New Point(1010, 87)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
         ProductSearchTextBox.Size = New Size(180, 27)
         ProductSearchTextBox.TabIndex = 5
         ' 
         ' OrderProductButton
         ' 
-        OrderProductButton.Location = New Point(27, 97)
+        OrderProductButton.Location = New Point(42, 132)
         OrderProductButton.Name = "OrderProductButton"
         OrderProductButton.Size = New Size(94, 50)
         OrderProductButton.TabIndex = 6
@@ -86,7 +166,7 @@ Partial Class InventoryForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(27, 179)
+        AddProductButton.Location = New Point(42, 214)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 48)
         AddProductButton.TabIndex = 7
@@ -95,7 +175,7 @@ Partial Class InventoryForm
         ' 
         ' EditProductButton
         ' 
-        EditProductButton.Location = New Point(27, 257)
+        EditProductButton.Location = New Point(42, 292)
         EditProductButton.Name = "EditProductButton"
         EditProductButton.Size = New Size(94, 50)
         EditProductButton.TabIndex = 8
@@ -104,36 +184,67 @@ Partial Class InventoryForm
         ' 
         ' DeleteProductButton
         ' 
-        DeleteProductButton.Location = New Point(27, 338)
+        DeleteProductButton.Location = New Point(42, 373)
         DeleteProductButton.Name = "DeleteProductButton"
         DeleteProductButton.Size = New Size(94, 65)
         DeleteProductButton.TabIndex = 9
         DeleteProductButton.Text = "Delete Product"
         DeleteProductButton.UseVisualStyleBackColor = True
         ' 
+        ' Panel8
+        ' 
+        Panel8.BackColor = Color.SeaShell
+        Panel8.Controls.Add(LabelForm)
+        Panel8.Dock = DockStyle.Top
+        Panel8.Location = New Point(0, 0)
+        Panel8.Name = "Panel8"
+        Panel8.Size = New Size(1434, 60)
+        Panel8.TabIndex = 0
+        ' 
+        ' LabelForm
+        ' 
+        LabelForm.AutoSize = True
+        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
+        LabelForm.Location = New Point(15, 10)
+        LabelForm.Name = "LabelForm"
+        LabelForm.Size = New Size(152, 40)
+        LabelForm.TabIndex = 1
+        LabelForm.Text = "Inventory"
+        LabelForm.TextAlign = ContentAlignment.MiddleLeft
+        LabelForm.UseMnemonic = False
+        ' 
         ' InventoryForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1502, 773)
-        Controls.Add(DeleteProductButton)
-        Controls.Add(EditProductButton)
-        Controls.Add(AddProductButton)
-        Controls.Add(OrderProductButton)
-        Controls.Add(ProductSearchTextBox)
-        Controls.Add(SearchProductButton)
-        Controls.Add(ProductListDataGridView)
-        Controls.Add(Label1)
+        Controls.Add(PanelMain)
+        Controls.Add(MenuStrip1)
         Name = "InventoryForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "InventoryForm"
         WindowState = FormWindowState.Maximized
+        MenuStrip1.ResumeLayout(False)
+        MenuStrip1.PerformLayout()
+        PanelMain.ResumeLayout(False)
+        PanelMain.PerformLayout()
         CType(ProductListDataGridView, ComponentModel.ISupportInitialize).EndInit()
+        Panel8.ResumeLayout(False)
+        Panel8.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
+
     End Sub
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents Label1 As Label
+
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents LogoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SalesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents InventoryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SupplierToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LogOutToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PanelMain As Panel
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents LabelForm As Label
     Friend WithEvents ProductListDataGridView As DataGridView
     Friend WithEvents SearchProductButton As Button
     Friend WithEvents ProductSearchTextBox As TextBox
