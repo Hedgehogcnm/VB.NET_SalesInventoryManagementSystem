@@ -32,17 +32,13 @@ Partial Class ReportForm
         Label2 = New Label()
         Label3 = New Label()
         FromDateTimePicker = New DateTimePicker()
-        GenerateButton = New Button()
         PrintButton = New Button()
-        ReportDataGridView = New DataGridView()
         ReportPanel = New Panel()
         SaleReportButton = New Button()
         InventoryReportButton = New Button()
         Panel1 = New Panel()
         InventoryTrackingButton = New Button()
         MenuStrip1.SuspendLayout()
-        CType(ReportDataGridView, ComponentModel.ISupportInitialize).BeginInit()
-        ReportPanel.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -118,15 +114,6 @@ Partial Class ReportForm
         FromDateTimePicker.Size = New Size(260, 27)
         FromDateTimePicker.TabIndex = 5
         ' 
-        ' GenerateButton
-        ' 
-        GenerateButton.Location = New Point(610, 193)
-        GenerateButton.Name = "GenerateButton"
-        GenerateButton.Size = New Size(94, 29)
-        GenerateButton.TabIndex = 6
-        GenerateButton.Text = "Generate"
-        GenerateButton.UseVisualStyleBackColor = True
-        ' 
         ' PrintButton
         ' 
         PrintButton.Location = New Point(931, 55)
@@ -136,23 +123,13 @@ Partial Class ReportForm
         PrintButton.Text = "Print"
         PrintButton.UseVisualStyleBackColor = True
         ' 
-        ' ReportDataGridView
-        ' 
-        ReportDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        ReportDataGridView.Location = New Point(88, 115)
-        ReportDataGridView.Name = "ReportDataGridView"
-        ReportDataGridView.RowHeadersWidth = 51
-        ReportDataGridView.Size = New Size(445, 215)
-        ReportDataGridView.TabIndex = 8
-        ' 
         ' ReportPanel
         ' 
         ReportPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        ReportPanel.Controls.Add(ReportDataGridView)
-        ReportPanel.Controls.Add(GenerateButton)
+        ReportPanel.BackColor = SystemColors.ActiveBorder
         ReportPanel.Location = New Point(179, 105)
         ReportPanel.Name = "ReportPanel"
-        ReportPanel.Size = New Size(1169, 616)
+        ReportPanel.Size = New Size(1157, 616)
         ReportPanel.TabIndex = 11
         ' 
         ' SaleReportButton
@@ -214,8 +191,6 @@ Partial Class ReportForm
         WindowState = FormWindowState.Maximized
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
-        CType(ReportDataGridView, ComponentModel.ISupportInitialize).EndInit()
-        ReportPanel.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
@@ -231,9 +206,7 @@ Partial Class ReportForm
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents FromDateTimePicker As DateTimePicker
-    Friend WithEvents GenerateButton As Button
     Friend WithEvents PrintButton As Button
-    Friend WithEvents ReportDataGridView As DataGridView
     Friend WithEvents ReportPanel As Panel
     Friend WithEvents SaleReportButton As Button
     Friend WithEvents InventoryReportButton As Button
