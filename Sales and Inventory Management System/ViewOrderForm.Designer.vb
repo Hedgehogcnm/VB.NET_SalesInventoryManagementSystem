@@ -24,16 +24,17 @@ Partial Class ViewOrderForm
     Private Sub InitializeComponent()
         OrderDataGridView = New DataGridView()
         Label1 = New Label()
+        ConfirmButton = New Button()
         CType(OrderDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' OrderDataGridView
         ' 
         OrderDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        OrderDataGridView.Location = New Point(144, 71)
+        OrderDataGridView.Location = New Point(119, 70)
         OrderDataGridView.Name = "OrderDataGridView"
         OrderDataGridView.RowHeadersWidth = 51
-        OrderDataGridView.Size = New Size(738, 332)
+        OrderDataGridView.Size = New Size(769, 332)
         OrderDataGridView.TabIndex = 0
         ' 
         ' Label1
@@ -46,11 +47,21 @@ Partial Class ViewOrderForm
         Label1.TabIndex = 1
         Label1.Text = "Order List"
         ' 
+        ' ConfirmButton
+        ' 
+        ConfirmButton.Location = New Point(692, 439)
+        ConfirmButton.Name = "ConfirmButton"
+        ConfirmButton.Size = New Size(94, 29)
+        ConfirmButton.TabIndex = 2
+        ConfirmButton.Text = "Confirm"
+        ConfirmButton.UseVisualStyleBackColor = True
+        ' 
         ' ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1065, 450)
+        ClientSize = New Size(1062, 503)
+        Controls.Add(ConfirmButton)
         Controls.Add(Label1)
         Controls.Add(OrderDataGridView)
         Name = "ViewOrderForm"
@@ -62,4 +73,5 @@ Partial Class ViewOrderForm
 
     Friend WithEvents OrderDataGridView As DataGridView
     Friend WithEvents Label1 As Label
+    Friend WithEvents ConfirmButton As Button
 End Class
