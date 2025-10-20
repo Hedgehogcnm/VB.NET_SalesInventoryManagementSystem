@@ -35,6 +35,10 @@ Public Class SalesForm
         GenerateInvoiceNo()
         ComboBoxCategory.SelectedIndex = 0
         ButtonSearch_Click(Nothing, Nothing)
+
+        ' Remove the blue highlight focus border
+        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
+
     End Sub
 
     'Genarate Invoice Number
@@ -401,6 +405,25 @@ Public Class CartItem
     Public ReadOnly Property Total As Decimal
         Get
             Return Price * Quantity
+        End Get
+    End Property
+End Class
+
+Public Class NoHighlightColorTable
+    Inherits ProfessionalColorTable
+    Public Overrides ReadOnly Property MenuItemSelected As Color
+        Get
+            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
+        End Get
+    End Property
+    Public Overrides ReadOnly Property MenuItemSelectedGradientBegin As Color
+        Get
+            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
+        End Get
+    End Property
+    Public Overrides ReadOnly Property MenuItemSelectedGradientEnd As Color
+        Get
+            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
         End Get
     End Property
 End Class
