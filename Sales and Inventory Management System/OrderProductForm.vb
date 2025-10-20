@@ -3,28 +3,35 @@
 Public Class OrderProductForm
 
     Private Sub OrderProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSupplierComboBox()
+        LoadProductNames() ' 👈 Load product names when form starts
     End Sub
 
-    Private Sub LoadSupplierComboBox()
+    ' --- Load product names into ComboBox ---
+    Private Sub LoadProductNames()
         Try
-            ConnectDB() ' your existing function to open "conn"
+            ConnectDB() ' Make sure your ConnectDB() function opens the MySQL connection
 
-            Dim sql As String = "SELECT sup_id, sup_name FROM tb_suppliers ORDER BY sup_name ASC"
+            ' SQL query to get all product names
+            Dim sql As String = "SELECT p_name FROM tb_products ORDER BY p_name ASC"
             Dim da As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
             da.Fill(dt)
 
-            ' --- Bind to ComboBox ---
-            SupplierComboBox.DataSource = dt
-            SupplierComboBox.DisplayMember = "sup_name"   ' 👈 only show supplier name
-            SupplierComboBox.ValueMember = "sup_id"       ' 👈 internally store supplier ID
-            SupplierComboBox.SelectedIndex = -1           ' 👈 optional: start with blank
+            ' Bind the product names to the ComboBox
+            ProductNameComboBox.DataSource = dt
+            ProductNameComboBox.DisplayMember = "p_name" ' What the user sees
+            ProductNameComboBox.ValueMember = "p_name"   ' What is stored internally
+            ProductNameComboBox.SelectedIndex = -1       ' No selection at start
 
         Catch ex As Exception
-            MessageBox.Show("❌ Failed to load suppliers: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("❌ Failed to load product names: " & ex.Message)
         Finally
             conn.Close()
         End Try
+    End Sub
+
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+        Me.Close()
+        InventoryForm.Show() ' ✅ Show inventory form again normally
     End Sub
 End Class

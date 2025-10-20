@@ -38,6 +38,9 @@ Public Class ReportForm
     Private Preview As New PrintPreviewDialog
     Private PrintDlg As New PrintDialog
     Dim bm As Bitmap
+    Private currentPreview As PrintPreviewControl
+    Private reportTitle As String = ""
+    Private reportData As DataTable
 
     Private Sub ReportForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ConnectDB()
@@ -86,17 +89,6 @@ Public Class ReportForm
         End Try
     End Sub
 
-    Private Sub PageSetupButton_Click(sender As Object, e As EventArgs) Handles PageSetupButton.Click
-        If PageSetup.ShowDialog() = DialogResult.OK Then
-            PrintDoc.DefaultPageSettings = PageSetup.PageSettings
-        End If
-    End Sub
-
-    Private Sub PrintPreviewButton_Click(sender As Object, e As EventArgs) Handles PrintPreviewButton.Click
-        Preview.Document = PrintDoc
-        Preview.ShowDialog()
-    End Sub
-
     Private Sub PrintButton_Click(sender As Object, e As EventArgs) Handles PrintButton.Click
         Try
             If PrintDlg.ShowDialog = DialogResult.OK Then
@@ -108,62 +100,414 @@ Public Class ReportForm
         End Try
     End Sub
 
-    Private Sub PrintDoc_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDoc.PrintPage
-        ' Capture DataGridView as an image
-        bm = New Bitmap(Me.ReportDataGridView.Width, Me.ReportDataGridView.Height)
-        ReportDataGridView.DrawToBitmap(bm, New Rectangle(0, 0, ReportDataGridView.Width, ReportDataGridView.Height))
+    Private Sub SaleReportButton_Click(sender As Object, e As EventArgs) Handles SaleReportButton.Click
+        reportTitle = "Sales Report"
+        LoadReport("
+        SELECT 
+            s.s_invoiceNo AS InvoiceNo,
+            s.s_dateTime AS DateTime,
+            s.s_customer AS Customer,
+            p.p_name AS ProductName,
+            d.sd_qty AS Quantity,
+            d.sd_total AS Subtotal
+        FROM tb_sales s
+        INNER JOIN tb_sales_detail d ON s.s_id = d.s_id
+        INNER JOIN tb_products p ON d.p_id = p.p_id
+    ")
+    End Sub
 
-        ' Fonts
-        Dim titleFont As New Font("Arial", 16, FontStyle.Bold)
-        Dim companyFont As New Font("Arial", 14, FontStyle.Bold)
-        Dim infoFont As New Font("Arial", 10, FontStyle.Regular)
-        Dim smallFont As New Font("Arial", 8, FontStyle.Regular)
+    Private Sub InventoryReportButton_Click(sender As Object, e As EventArgs) Handles InventoryReportButton.Click
+        reportTitle = "Inventory Report"
+        LoadReport("
+        SELECT 
+            p.p_id AS ProductID,
+            p.p_name AS ProductName,
+            p.p_stock AS StockQty,
+            p.p_sellPrice AS UnitPrice
+        FROM tb_products p
+        ORDER BY p.p_name ASC
+    ")
+    End Sub
 
-        Dim formatCenter As New StringFormat() With {
-            .Alignment = StringAlignment.Center,
-            .LineAlignment = StringAlignment.Center
+    Private Sub InventoryTrackingButton_Click(sender As Object, e As EventArgs) Handles InventoryTrackingButton.Click
+        reportTitle = "Inventory Tracking Report"
+        LoadReport("
+        SELECT 
+            p.p_id AS ProductID,
+            p.p_name AS ProductName,
+            t.im_dateTime AS LastUpdate,
+            t.im_qtyChange AS QuantityMoved,
+            t.im_note AS Remark
+        FROM tb_products p
+        INNER JOIN tb_inventorymovements t ON p.p_id = t.p_id
+    ")
+    End Sub
+
+
+    '=== General Loading Report ===
+    Private Sub LoadReport(query As String)
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            ' === 日期栏位根据报表类型自动选择 ===
+            Dim dateColumn As String = ""
+            If reportTitle.Contains("Sales") Then
+                dateColumn = "s.s_dateTime"
+            ElseIf reportTitle.Contains("Inventory Tracking") Then
+                dateColumn = "t.im_dateTime"
+            End If
+
+            ' === 加入日期范围过滤 ===
+            If dateColumn <> "" Then
+                ' 先移除尾部的分号，避免拼接错误
+                If query.Trim().EndsWith(";") Then
+                    query = query.Trim().Substring(0, query.Trim().Length - 1)
+                End If
+
+                ' 如果 query 里已经有 WHERE，就加 AND；否则加 WHERE
+                If query.ToUpper().Contains("WHERE") Then
+                    query &= $" AND {dateColumn} BETWEEN @from AND @to"
+                Else
+                    query &= $" WHERE {dateColumn} BETWEEN @from AND @to"
+                End If
+
+                ' 确保 ORDER BY 放在最后
+                If Not query.ToUpper().Contains("ORDER BY") Then
+                    query &= $" ORDER BY {dateColumn} ASC"
+                End If
+
+                query &= ";"
+            End If
+
+            ' === 执行 SQL ===
+            Dim cmd As New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@from", FromDateTimePicker.Value.Date)
+            cmd.Parameters.AddWithValue("@to", ToDateTimePicker.Value.Date.AddDays(1).AddSeconds(-1))
+
+            Dim da As New MySqlDataAdapter(cmd)
+            reportData = New DataTable()
+            da.Fill(reportData)
+            conn.Close()
+
+            If reportData.Rows.Count = 0 Then
+                MessageBox.Show("No data found for the selected date range.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            ' === Print Preview ===
+            AddHandler PrintDoc.PrintPage, AddressOf PrintDoc_PrintPage
+            currentPreview = New PrintPreviewControl() With {
+            .Document = PrintDoc,
+            .Dock = DockStyle.Fill,
+            .Zoom = 1.0
         }
 
-        Dim centerX As Single = e.PageBounds.Width / 2
+            ReportPanel.Controls.Clear()
+            ReportPanel.Controls.Add(currentPreview)
+            currentPreview.Refresh()
 
-        '=== Insert logo ===
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Load Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+    Private Sub PrintDoc_PrintPage(sender As Object, e As Printing.PrintPageEventArgs)
+        Dim g As Graphics = e.Graphics
+        Dim left As Integer = 60
+        Dim y As Integer = 80
+        Dim marginBounds = e.MarginBounds
+        Dim centerX As Single = marginBounds.Left + marginBounds.Width / 2
+
+        '=== Font ===
+        Dim reportTitleFont As New Font("Arial", 23, FontStyle.Bold)
+        Dim companyFont As New Font("Arial", 14, FontStyle.Bold)
+        Dim companyTitleFont As New Font("Arial", 12, FontStyle.Bold)
+        Dim infoFont As New Font("Arial", 10)
+        Dim smallFont As New Font("Arial", 8)
+        Dim formatCenter As New StringFormat() With {.Alignment = StringAlignment.Center}
+
+        '=== LOGO ===
         Try
-            Dim logoPath As String = Application.StartupPath & "\VBlogo.png"
-            logoPath = IO.Path.GetFullPath(logoPath)
-
+            Dim logoPath As String = IO.Path.Combine(Application.StartupPath, "VBlogo.png")
             If IO.File.Exists(logoPath) Then
                 Dim logo As Image = Image.FromFile(logoPath)
-                Dim logoWidth As Integer = 180
-                Dim logoHeight As Integer = 90
-                Dim logoX As Integer = (e.PageBounds.Width - logoWidth) \ 2
-                e.Graphics.DrawImage(logo, logoX, 30, logoWidth, logoHeight)
-            Else
-                e.Graphics.DrawString("Logo not found", infoFont, Brushes.Red, centerX, 50, formatCenter)
+
+                ' 让 Logo 水平居中（以 marginBounds 为基准）
+                Dim logoWidth As Integer = 120
+                Dim logoHeight As Integer = 60
+                Dim logoX As Integer = CInt(centerX - (logoWidth / 2))  ' ✅ 改这里，用 centerX 居中
+                Dim logoY As Integer = 20
+                g.DrawImage(logo, logoX, logoY, logoWidth, logoHeight)
             End If
-        Catch ex As Exception
-            e.Graphics.DrawString("Error loading logo: " & ex.Message, infoFont, Brushes.Red, centerX, 50, formatCenter)
+        Catch
+            g.DrawString("LOGO MISSING", infoFont, Brushes.Red, centerX, 30, formatCenter)
         End Try
 
-        '=== Company information ===
-        Dim companyName As String = "GEARTRACK"
-        Dim companyAddr As String = "No. 88, Jalan Teknologi, Skudai, Johor, Malaysia"
-        Dim companyContact As String = "Tel: +60 13-7323888 | Email: geartrack@gmail.com"
+        '=== Company Info ===
+        g.DrawString("GEARTRACK SDN BHD", companyTitleFont, Brushes.Black, centerX, y + 5, formatCenter)
+        g.DrawString("No. 88, Jalan Teknologi, Skudai, Johor, Malaysia", infoFont, Brushes.Black, centerX, y + 30, formatCenter)
+        g.DrawString("Tel: +60 13-7323888 | Email: geartrack@gmail.com", infoFont, Brushes.Black, centerX, y + 50, formatCenter)
 
-        Dim textY As Integer = 140
-        e.Graphics.DrawString(companyName, companyFont, Brushes.Black, centerX, textY, formatCenter)
-        e.Graphics.DrawString(companyAddr, infoFont, Brushes.Black, centerX, textY + 25, formatCenter)
-        e.Graphics.DrawString(companyContact, infoFont, Brushes.Black, centerX, textY + 45, formatCenter)
+        y += 90
+        g.DrawString(reportTitle, reportTitleFont, Brushes.Black, centerX, y, formatCenter)
+        y += 40
 
-        '=== Report title ===
-        e.Graphics.DrawString("Inventory Report", titleFont, Brushes.Black, centerX, textY + 85, formatCenter)
-        e.Graphics.DrawString("From: " & FromDateTimePicker.Text & "    To: " & ToDateTimePicker.Text,
-                              infoFont, Brushes.Black, centerX, textY + 110, formatCenter)
 
-        '=== Draw DataGridView content ===
-        e.Graphics.DrawImage(bm, 50, textY + 140)
+        ' Invoke database based on reportTitle
+        If reportTitle = "Sales Report" Then
+            DrawSalesReport(g, marginBounds)
+        ElseIf reportTitle = "Inventory Report" Then
+            DrawInventoryReport(g, marginBounds)
+        Else
+            DrawInventoryTracking(g, marginBounds)
+        End If
 
         '=== Footer ===
-        e.Graphics.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
-                              smallFont, Brushes.Black, 50, e.MarginBounds.Bottom + 30)
+        g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, e.MarginBounds.Bottom + 30)
+    End Sub
+
+    Private Sub DrawSalesReport(g As Graphics, marginBounds As RectangleF)
+        ' === Font ===
+        Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
+        Dim bodyFont As New Font("Arial", 9)
+        Dim smallFont As New Font("Arial", 8)
+
+        ' === Table Center ===
+        Dim tableWidth As Integer = 700
+        Dim tableLeft As Integer = CInt((marginBounds.Left + marginBounds.Right - tableWidth) / 2)
+        Dim tableTop As Integer = marginBounds.Top + 150
+
+        ' === Column ===
+        Dim colX() As Integer = {
+        tableLeft,           ' Invoice
+        tableLeft + 130,     ' Date
+        tableLeft + 260,     ' Customer
+        tableLeft + 390,     ' Product
+        tableLeft + 510,     ' Qty
+        tableLeft + 620      ' Subtotal
+    }
+
+        ' === Subtotal Right-Aligned===
+        Dim rightEdge As Integer = tableLeft + tableWidth - 15
+
+        ' === Center-Aligned ===
+        Dim centerAlign As New StringFormat() With {.Alignment = StringAlignment.Center}
+        Dim rightAlign As New StringFormat() With {.Alignment = StringAlignment.Far}
+
+        ' === Table Header ===
+        g.DrawLine(Pens.Black, tableLeft, tableTop, tableLeft + tableWidth, tableTop)
+        Dim headers() As String = {"Invoice", "Date & Time", "Customer", "Product Name", "Quantity", "Subtotal"}
+
+        For i As Integer = 0 To headers.Length - 1
+            If i = headers.Length - 1 Then
+                g.DrawString(headers(i), headerFont, Brushes.Black, CInt(rightEdge), tableTop + 5, rightAlign)
+            Else
+                Dim nextX As Integer = colX(i + 1)
+                Dim xCenter As Integer = CInt((colX(i) + nextX) / 2)
+                g.DrawString(headers(i), headerFont, Brushes.Black, xCenter, tableTop + 5, centerAlign)
+            End If
+        Next
+
+        g.DrawLine(Pens.Black, tableLeft, tableTop + 25, tableLeft + tableWidth, tableTop + 25)
+
+        ' === Table Content ===
+        Dim currentY As Integer = tableTop + 40
+        Dim lineHeight As Integer = 30
+        Dim totalQty As Integer = 0
+        Dim totalAmount As Decimal = 0
+
+        If reportData IsNot Nothing AndAlso reportData.Rows.Count > 0 Then
+            For Each r As DataRow In reportData.Rows
+                Try
+                    Dim invoice As String = r("InvoiceNo").ToString()
+                    Dim dt As String = r("DateTime").ToString()
+                    Dim cust As String = r("Customer").ToString()
+                    Dim prod As String = r("ProductName").ToString()
+
+                    If prod.Contains("("c) Then prod = prod.Substring(0, prod.IndexOf("("c)).Trim
+                    Dim parsed As DateTime
+                    If DateTime.TryParse(dt, parsed) Then dt = parsed.ToString("dd/MM/yy HH:mm")
+                    If cust.Length > 18 Then cust = cust.Substring(0, 18) & "..."
+                    If prod.Length > 18 Then prod = prod.Substring(0, 18) & "..."
+
+                    Dim qty As Integer = CInt(r("Quantity"))
+                    Dim subtotal As Decimal = CDec(r("Subtotal"))
+
+                    g.DrawString(invoice, bodyFont, Brushes.Black, CInt((colX(0) + colX(1)) / 2), currentY, centerAlign)
+                    g.DrawString(dt, smallFont, Brushes.Black, CInt((colX(1) + colX(2)) / 2), currentY, centerAlign)
+                    g.DrawString(cust, bodyFont, Brushes.Black, CInt((colX(2) + colX(3)) / 2), currentY, centerAlign)
+                    g.DrawString(prod, bodyFont, Brushes.Black, CInt((colX(3) + colX(4)) / 2), currentY, centerAlign)
+                    g.DrawString(qty.ToString(), bodyFont, Brushes.Black, CInt((colX(4) + colX(5)) / 2), currentY, centerAlign)
+                    g.DrawString(subtotal.ToString("0.00"), bodyFont, Brushes.Black, CInt(rightEdge), currentY, rightAlign)
+
+                    totalQty += qty
+                    totalAmount += subtotal
+                    currentY += lineHeight
+                Catch
+                    ' Ignore newLine
+                End Try
+            Next
+        Else
+            g.DrawString("No data found.", bodyFont, Brushes.Red, CInt(tableLeft + tableWidth / 2), tableTop + 60, centerAlign)
+        End If
+
+        ' === Table Summary ===
+        currentY += 5
+        g.DrawLine(Pens.Black, tableLeft, currentY, tableLeft + tableWidth, currentY)
+        currentY += 20
+
+        g.DrawString("Total:", headerFont, Brushes.Black, CInt((colX(3) + colX(4)) / 2), currentY, centerAlign)
+        g.DrawString(totalQty.ToString(), headerFont, Brushes.Black, CInt((colX(4) + colX(5)) / 2), currentY, centerAlign)
+        g.DrawString(totalAmount.ToString("0.00"), headerFont, Brushes.Black, CInt(rightEdge), currentY, rightAlign)
+    End Sub
+
+    Private Sub DrawInventoryReport(g As Graphics, marginBounds As RectangleF)
+        ' === Fonts ===
+        Dim infoFont As New Font("Arial", 9)
+        Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
+        Dim bodyFont As New Font("Arial", 9)
+        Dim bodyFontBold As New Font("Arial", 9, FontStyle.Bold)
+        Dim noteFont As New Font("Arial", 8, FontStyle.Italic)
+
+        ' === Table Layout (平衡版，表格居中) ===
+        Dim tableTop As Single = marginBounds.Top + 150
+        Dim tableWidth As Single = 700
+        Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
+
+        ' 各栏位置
+        Dim colX() As Single = {
+        leftMargin,           ' Product ID
+        leftMargin + 150,     ' Product Name
+        leftMargin + 470,     ' Stock Qty
+        leftMargin + 600      ' Unit Price
+    }
+
+        ' === Order By Product ID ===
+        reportData.DefaultView.Sort = "ProductID ASC"
+        Dim sortedData As DataTable = reportData.DefaultView.ToTable()
+
+        ' === Table Header ===
+        g.DrawLine(Pens.Black, leftMargin, tableTop, leftMargin + tableWidth, tableTop)
+        Dim headers() As String = {"Product ID", "Product Name", "Stock Quantity", "Unit Price"}
+
+        For i As Integer = 0 To headers.Length - 1
+            Dim headerText As String = headers(i)
+            Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+            Dim headerCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+            g.DrawString(headerText, headerFont, Brushes.Black,
+                     headerCenterX - (g.MeasureString(headerText, headerFont).Width / 2),
+                     tableTop + 5)
+        Next
+
+        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
+
+        ' === Table Rows ===
+        Dim currentY As Single = tableTop + 35
+        For Each r As DataRow In sortedData.Rows
+            Dim values() As String = {
+            r("ProductID").ToString(),
+            r("ProductName").ToString(),
+            r("StockQty").ToString(),
+            Format(CDec(r("UnitPrice")), "0.00")
+        }
+
+            For i As Integer = 0 To values.Length - 1
+                Dim cellText As String = values(i)
+                Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+
+                ' === Check Stock Quantity（Stock Qty < 20 → Red + Bold）===
+                Dim brushColor As Brush = Brushes.Black
+                Dim textFont As Font = bodyFont
+                If i = 2 Then
+                    Dim qty As Integer
+                    If Integer.TryParse(cellText, qty) AndAlso qty < 20 Then
+                        brushColor = Brushes.Red
+                        textFont = bodyFontBold
+                    End If
+                End If
+
+                ' === Table Content ===
+                If i = 3 Then
+                    ' Unit Price Right-Aligned
+                    Dim textWidth As Single = g.MeasureString(cellText, bodyFont).Width
+                    Dim rightEdge As Single = leftMargin + tableWidth - 35
+                    g.DrawString(cellText, bodyFont, Brushes.Black, rightEdge - textWidth, currentY)
+                Else
+                    Dim cellCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+                    g.DrawString(cellText, textFont, brushColor,
+                             cellCenterX - (g.MeasureString(cellText, textFont).Width / 2),
+                             currentY)
+                End If
+            Next
+            currentY += 20
+        Next
+
+        ' === 底部说明文字 ===
+        Dim noteText As String = "*Red numbers indicate low stock levels that need to be restocked as soon as possible"
+        g.DrawString(noteText, noteFont, Brushes.Black, leftMargin, currentY + 20)
+
+        ' === Bottom Line ===
+        g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
+    End Sub
+
+    Private Sub DrawInventoryTracking(g As Graphics, marginBounds As RectangleF)
+        ' === Fonts ===
+        Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
+        Dim bodyFont As New Font("Arial", 9)
+
+        ' === Layout ===
+        Dim tableTop As Single = marginBounds.Top + 180
+        Dim tableWidth As Single = 680 ' 增加宽度，列间更宽
+        Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
+
+        ' === 各栏位位置（拉宽列距） ===
+        Dim colX() As Single = {
+            leftMargin,           ' Last Update
+            leftMargin + 200,     ' Product ID
+            leftMargin + 320,     ' Quantity Moved
+            leftMargin + 480      ' Remark
+        }
+
+        ' === 表头 ===
+        Dim headers() As String = {"Last Update", "Product ID", "Quantity Moved", "Remark"}
+        g.DrawLine(Pens.Black, leftMargin, tableTop, leftMargin + tableWidth, tableTop)
+
+        For i As Integer = 0 To headers.Length - 1
+            Dim headerText As String = headers(i)
+            Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+            Dim headerCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+            g.DrawString(headerText, headerFont, Brushes.Black,
+                         headerCenterX - (g.MeasureString(headerText, headerFont).Width / 2),
+                         tableTop + 5)
+        Next
+
+        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
+
+        ' === 数据 ===
+        Dim currentY As Single = tableTop + 35
+        For Each r As DataRow In reportData.Rows
+            Dim values() As String = {
+                r("LastUpdate").ToString(),
+                r("ProductID").ToString(),
+                r("QuantityMoved").ToString(),
+                r("Remark").ToString()
+            }
+
+            For i As Integer = 0 To values.Length - 1
+                Dim cellText As String = values(i)
+                Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+
+                Dim cellCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
+                g.DrawString(cellText, bodyFont, Brushes.Black,
+                             cellCenterX - (g.MeasureString(cellText, bodyFont).Width / 2),
+                             currentY)
+            Next
+
+            currentY += 20
+        Next
+
+        ' === 底线 ===
+        g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
     End Sub
 End Class

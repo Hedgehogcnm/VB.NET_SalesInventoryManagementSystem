@@ -38,9 +38,10 @@ Partial Class AddProductForm
         ProductCostPriceTextBox = New TextBox()
         ProductSellPriceTextBox = New TextBox()
         AddProductButton = New Button()
-        ProductIDTextBox = New TextBox()
         SupplierIDComboBox = New ComboBox()
         CancelButton = New Button()
+        ProductIDLabel = New Label()
+        ProductIDTextBox = New TextBox()
         SuspendLayout()
         ' 
         ' Label1
@@ -186,13 +187,6 @@ Partial Class AddProductForm
         AddProductButton.Text = "Add"
         AddProductButton.UseVisualStyleBackColor = True
         ' 
-        ' ProductIDTextBox
-        ' 
-        ProductIDTextBox.Location = New Point(204, 105)
-        ProductIDTextBox.Name = "ProductIDTextBox"
-        ProductIDTextBox.Size = New Size(151, 27)
-        ProductIDTextBox.TabIndex = 17
-        ' 
         ' SupplierIDComboBox
         ' 
         SupplierIDComboBox.FormattingEnabled = True
@@ -210,14 +204,30 @@ Partial Class AddProductForm
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
         ' 
+        ' ProductIDLabel
+        ' 
+        ProductIDLabel.AutoSize = True
+        ProductIDLabel.Location = New Point(214, 108)
+        ProductIDLabel.Name = "ProductIDLabel"
+        ProductIDLabel.Size = New Size(0, 20)
+        ProductIDLabel.TabIndex = 20
+        ' 
+        ' ProductIDTextBox
+        ' 
+        ProductIDTextBox.Location = New Point(204, 106)
+        ProductIDTextBox.Name = "ProductIDTextBox"
+        ProductIDTextBox.Size = New Size(151, 27)
+        ProductIDTextBox.TabIndex = 21
+        ' 
         ' AddProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(ProductIDTextBox)
+        Controls.Add(ProductIDLabel)
         Controls.Add(CancelButton)
         Controls.Add(SupplierIDComboBox)
-        Controls.Add(ProductIDTextBox)
         Controls.Add(AddProductButton)
         Controls.Add(ProductSellPriceTextBox)
         Controls.Add(ProductCostPriceTextBox)
@@ -236,6 +246,7 @@ Partial Class AddProductForm
         Controls.Add(Label1)
         Name = "AddProductForm"
         Text = "AddProductForm"
+        WindowState = FormWindowState.Maximized
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -256,7 +267,8 @@ Partial Class AddProductForm
     Friend WithEvents ProductCostPriceTextBox As TextBox
     Friend WithEvents ProductSellPriceTextBox As TextBox
     Friend WithEvents AddProductButton As Button
-    Friend WithEvents ProductIDTextBox As TextBox
     Friend WithEvents SupplierIDComboBox As ComboBox
     Friend WithEvents CancelButton As Button
+    Friend WithEvents ProductIDLabel As Label
+    Friend WithEvents ProductIDTextBox As TextBox
 End Class
