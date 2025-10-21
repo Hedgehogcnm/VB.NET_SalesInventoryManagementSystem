@@ -151,14 +151,11 @@ Public Class OrderProductForm
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
         Me.Close()
-        InventoryForm.Show()
     End Sub
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        Me.Hide()
         Dim viewForm As New ViewOrderForm()
         viewForm.ShowDialog()
-        Me.Show()
     End Sub
 
 End Class

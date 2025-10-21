@@ -25,6 +25,7 @@ Partial Class ViewOrderForm
         OrderDataGridView = New DataGridView()
         Label1 = New Label()
         ConfirmButton = New Button()
+        CancelButton = New Button()
         CType(OrderDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -43,28 +44,39 @@ Partial Class ViewOrderForm
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
         Label1.Location = New Point(438, 19)
         Label1.Name = "Label1"
-        Label1.Size = New Size(131, 35)
+        Label1.Size = New Size(176, 35)
         Label1.TabIndex = 1
-        Label1.Text = "Order List"
+        Label1.Text = "Order History"
         ' 
         ' ConfirmButton
         ' 
-        ConfirmButton.Location = New Point(692, 439)
+        ConfirmButton.Location = New Point(794, 444)
         ConfirmButton.Name = "ConfirmButton"
         ConfirmButton.Size = New Size(94, 29)
         ConfirmButton.TabIndex = 2
         ConfirmButton.Text = "Confirm"
         ConfirmButton.UseVisualStyleBackColor = True
         ' 
+        ' CancelButton
+        ' 
+        CancelButton.Location = New Point(654, 444)
+        CancelButton.Name = "CancelButton"
+        CancelButton.Size = New Size(94, 29)
+        CancelButton.TabIndex = 3
+        CancelButton.Text = "Cancel"
+        CancelButton.UseVisualStyleBackColor = True
+        ' 
         ' ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1062, 503)
+        Controls.Add(CancelButton)
         Controls.Add(ConfirmButton)
         Controls.Add(Label1)
         Controls.Add(OrderDataGridView)
         Name = "ViewOrderForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ViewOrder"
         CType(OrderDataGridView, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -74,4 +86,5 @@ Partial Class ViewOrderForm
     Friend WithEvents OrderDataGridView As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents ConfirmButton As Button
+    Friend WithEvents CancelButton As Button
 End Class

@@ -224,8 +224,8 @@ Partial Class AddProductForm
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "AddProductForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "AddProductForm"
-        WindowState = FormWindowState.Maximized
         ResumeLayout(False)
         PerformLayout()
     End Sub

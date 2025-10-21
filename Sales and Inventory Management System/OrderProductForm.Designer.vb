@@ -184,6 +184,7 @@ Partial Class OrderProductForm
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "OrderProductForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "OrderProductForm"
         ResumeLayout(False)
         PerformLayout()
