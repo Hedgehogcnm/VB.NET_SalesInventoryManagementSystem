@@ -27,6 +27,7 @@ Partial Class InventoryForm
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
+        ViewOrderButton = New Button()
         ProductListFlowLayoutPanel = New FlowLayoutPanel()
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
@@ -112,6 +113,7 @@ Partial Class InventoryForm
         ' 
         ' PanelMain
         ' 
+        PanelMain.Controls.Add(ViewOrderButton)
         PanelMain.Controls.Add(ProductListFlowLayoutPanel)
         PanelMain.Controls.Add(SearchProductButton)
         PanelMain.Controls.Add(ProductSearchTextBox)
@@ -122,6 +124,15 @@ Partial Class InventoryForm
         PanelMain.Name = "PanelMain"
         PanelMain.Size = New Size(1434, 773)
         PanelMain.TabIndex = 6
+        ' 
+        ' ViewOrderButton
+        ' 
+        ViewOrderButton.Location = New Point(59, 216)
+        ViewOrderButton.Name = "ViewOrderButton"
+        ViewOrderButton.Size = New Size(94, 45)
+        ViewOrderButton.TabIndex = 11
+        ViewOrderButton.Text = "View Order"
+        ViewOrderButton.UseVisualStyleBackColor = True
         ' 
         ' ProductListFlowLayoutPanel
         ' 
@@ -212,4 +223,5 @@ Partial Class InventoryForm
     Friend WithEvents ProductSearchTextBox As TextBox
     Friend WithEvents AddProductButton As Button
     Friend WithEvents ProductListFlowLayoutPanel As FlowLayoutPanel
+    Friend WithEvents ViewOrderButton As Button
 End Class

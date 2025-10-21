@@ -99,7 +99,4 @@ Public Class OrderProductForm
         Me.Close()
     End Sub
 
-    Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        ViewOrderForm.Show()
-    End Sub
 End Class

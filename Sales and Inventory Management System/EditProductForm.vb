@@ -1,7 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.IO
 
 Public Class EditProductForm
     Public Property ProductID As Integer
+    Private ProductImagePath As String = "" ' store selected image path
 
     Private Sub EditProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadProductDetails()
@@ -30,6 +32,22 @@ Public Class EditProductForm
                         EditProductCostPriceTextBox.Text = reader("p_costPrice").ToString()
                         EditProductSellPriceTextBox.Text = reader("p_sellPrice").ToString()
 
+                        ' === Load Image ===
+                        If Not IsDBNull(reader("p_image")) Then
+                            Dim imgBytes() As Byte = CType(reader("p_image"), Byte())
+                            Using ms As New MemoryStream(imgBytes)
+                                ProductPictureBox.Image = Image.FromStream(ms)
+                            End Using
+                        Else
+                            ' show fallback image if no image in db
+                            Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
+                            If IO.File.Exists(fallbackPath) Then
+                                ProductPictureBox.Image = Image.FromFile(fallbackPath)
+                            Else
+                                ProductPictureBox.BackColor = Color.LightGray
+                            End If
+                        End If
+
                     Else
                         MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Me.Close()
@@ -42,6 +60,18 @@ Public Class EditProductForm
         Finally
             conn.Close()
         End Try
+    End Sub
+
+    ' === Change Image Button ===
+    Private Sub ChangeImageButton_Click(sender As Object, e As EventArgs) Handles ChangeImageButton.Click
+        Dim ofd As New OpenFileDialog()
+        ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+        ofd.Title = "Select Product Image"
+
+        If ofd.ShowDialog() = DialogResult.OK Then
+            ProductImagePath = ofd.FileName
+            ProductPictureBox.Image = Image.FromFile(ProductImagePath)
+        End If
     End Sub
 
     ' === Save Button Click ===
@@ -58,7 +88,8 @@ Public Class EditProductForm
                     p_minStock=@minStock, 
                     p_costPrice=@cost, 
                     p_sellPrice=@sell, 
-                    sup_id=@sup 
+                    sup_id=@sup, 
+                    p_image=@img
                 WHERE p_id=@id
             "
 
@@ -71,6 +102,22 @@ Public Class EditProductForm
                 cmd.Parameters.AddWithValue("@sell", Decimal.Parse(EditProductSellPriceTextBox.Text))
                 cmd.Parameters.AddWithValue("@sup", Integer.Parse(SupplierIDLabel.Text))
                 cmd.Parameters.AddWithValue("@id", Integer.Parse(ProductIDLabel.Text))
+
+                ' === Handle Image Save ===
+                If ProductImagePath <> "" Then
+                    ' new image selected → convert to bytes
+                    Dim imgBytes() As Byte = File.ReadAllBytes(ProductImagePath)
+                    cmd.Parameters.Add("@img", MySqlDbType.Blob).Value = imgBytes
+                ElseIf ProductPictureBox.Image IsNot Nothing Then
+                    ' keep existing image
+                    Using ms As New MemoryStream()
+                        ProductPictureBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png)
+                        cmd.Parameters.Add("@img", MySqlDbType.Blob).Value = ms.ToArray()
+                    End Using
+                Else
+                    ' if no image, set NULL
+                    cmd.Parameters.AddWithValue("@img", DBNull.Value)
+                End If
 
                 cmd.ExecuteNonQuery()
             End Using
@@ -91,4 +138,5 @@ Public Class EditProductForm
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
+
 End Class

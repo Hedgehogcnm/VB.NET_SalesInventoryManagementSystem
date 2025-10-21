@@ -284,27 +284,56 @@ Public Class InventoryForm
     End Sub
 
     ' === DELETE PRODUCT ===
+    ' === DELETE PRODUCT + RELATED INVENTORY MOVEMENTS ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
-            $"Are you sure you want to delete '{productName}' (ID: {productID})?",
-            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+        "This will also remove all related inventory movement records.",
+        "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
         If confirm = DialogResult.Yes Then
             Try
                 ConnectDB()
-                Using cmd As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn)
-                    cmd.Parameters.AddWithValue("@pid", productID)
-                    cmd.ExecuteNonQuery()
+
+                ' Use a transaction for data safety
+                Using transaction As MySqlTransaction = conn.BeginTransaction()
+                    Try
+                        ' 1️⃣ Delete from tb_inventorymovements first (foreign key safety)
+                        Using cmdDeleteMovements As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
+                            cmdDeleteMovements.Parameters.AddWithValue("@pid", productID)
+                            cmdDeleteMovements.ExecuteNonQuery()
+                        End Using
+
+                        ' 2️⃣ Delete from tb_products
+                        Using cmdDeleteProduct As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
+                            cmdDeleteProduct.Parameters.AddWithValue("@pid", productID)
+                            cmdDeleteProduct.ExecuteNonQuery()
+                        End Using
+
+                        ' ✅ Commit both deletions
+                        transaction.Commit()
+
+                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and its related inventory records have been deleted.",
+                                    "Deleted Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        LoadProductCards()
+
+                    Catch ex As Exception
+                        ' Rollback if anything fails
+                        transaction.Rollback()
+                        MessageBox.Show("❌ Failed to delete product and related data: " & ex.Message,
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 End Using
-                MessageBox.Show($"✅ Product '{productName}' deleted successfully!")
-                LoadProductCards()
+
             Catch ex As Exception
-                MessageBox.Show("❌ Failed to delete product: " & ex.Message)
+                MessageBox.Show("❌ Database connection failed: " & ex.Message,
+                            "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Finally
                 conn.Close()
             End Try
         End If
     End Sub
+
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         AddProductForm.Show()
@@ -319,4 +348,7 @@ Public Class InventoryForm
         LoadProductCards(searchTerm)
     End Sub
 
+    Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
+        ViewOrderForm.Show()
+    End Sub
 End Class

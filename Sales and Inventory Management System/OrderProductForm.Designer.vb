@@ -28,7 +28,6 @@ Partial Class OrderProductForm
         OrderQuantityTextBox = New TextBox()
         OrderButton = New Button()
         CancelButton = New Button()
-        ViewOrderButton = New Button()
         Label4 = New Label()
         ProductIDLabel = New Label()
         Label5 = New Label()
@@ -92,15 +91,6 @@ Partial Class OrderProductForm
         CancelButton.TabIndex = 6
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
-        ' 
-        ' ViewOrderButton
-        ' 
-        ViewOrderButton.Location = New Point(28, 44)
-        ViewOrderButton.Name = "ViewOrderButton"
-        ViewOrderButton.Size = New Size(94, 29)
-        ViewOrderButton.TabIndex = 7
-        ViewOrderButton.Text = "View Order List"
-        ViewOrderButton.UseVisualStyleBackColor = True
         ' 
         ' Label4
         ' 
@@ -176,7 +166,6 @@ Partial Class OrderProductForm
         Controls.Add(Label5)
         Controls.Add(ProductIDLabel)
         Controls.Add(Label4)
-        Controls.Add(ViewOrderButton)
         Controls.Add(CancelButton)
         Controls.Add(OrderButton)
         Controls.Add(OrderQuantityTextBox)
@@ -196,7 +185,6 @@ Partial Class OrderProductForm
     Friend WithEvents OrderQuantityTextBox As TextBox
     Friend WithEvents OrderButton As Button
     Friend WithEvents CancelButton As Button
-    Friend WithEvents ViewOrderButton As Button
     Friend WithEvents Label4 As Label
     Friend WithEvents ProductIDLabel As Label
     Friend WithEvents Label5 As Label
