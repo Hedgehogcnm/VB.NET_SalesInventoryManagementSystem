@@ -252,35 +252,50 @@ Public Class InventoryForm
     End Sub
 
     ' === DELETE PRODUCT AND RELATED INVENTORY ===
+    ' === DELETE PRODUCT AND RELATED INVENTORY AND ORDERS ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
+        ' Show confirmation dialog before proceeding
         Dim confirm As DialogResult = MessageBox.Show(
-            $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
-            "This will also remove all related inventory movement records.",
-            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+        "This will also remove all related inventory movement records and orders.",
+        "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
+        ' If the user clicks Yes, proceed with deletion
         If confirm = DialogResult.Yes Then
             Try
                 ConnectDB()
+
+                ' Start a transaction to ensure all deletions are done atomically
                 Using transaction As MySqlTransaction = conn.BeginTransaction()
                     Try
-                        ' Delete inventory movement records first
+                        ' Delete related inventory movement records first
                         Using cmdDeleteMovements As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
                             cmdDeleteMovements.Parameters.AddWithValue("@pid", productID)
                             cmdDeleteMovements.ExecuteNonQuery()
                         End Using
 
-                        ' Delete product record
+                        ' Delete related orders for this product
+                        Using cmdDeleteOrders As New MySqlCommand("DELETE FROM tb_orders WHERE p_id = @pid", conn, transaction)
+                            cmdDeleteOrders.Parameters.AddWithValue("@pid", productID)
+                            cmdDeleteOrders.ExecuteNonQuery()
+                        End Using
+
+                        ' Delete the product record from tb_products
                         Using cmdDeleteProduct As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
                             cmdDeleteProduct.Parameters.AddWithValue("@pid", productID)
                             cmdDeleteProduct.ExecuteNonQuery()
                         End Using
 
+                        ' Commit the transaction if everything is successful
                         transaction.Commit()
-                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and related records deleted successfully.")
+                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and related records (inventory and orders) deleted successfully.")
+                        ' Reload the product table after deletion
                         LoadProductTable()
+
                     Catch ex As Exception
+                        ' Rollback the transaction if any part fails
                         transaction.Rollback()
-                        MessageBox.Show("❌ Failed to delete product: " & ex.Message)
+                        MessageBox.Show("❌ Failed to delete product and related records: " & ex.Message)
                     End Try
                 End Using
             Catch ex As Exception
@@ -290,6 +305,8 @@ Public Class InventoryForm
             End Try
         End If
     End Sub
+
+
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         AddProductForm.Show()
