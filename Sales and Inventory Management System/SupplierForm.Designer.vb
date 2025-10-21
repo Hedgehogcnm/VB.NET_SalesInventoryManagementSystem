@@ -150,7 +150,7 @@ Partial Class SupplierForm
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
+        Label2.Font = New Font("Segoe UI", 15.0F, FontStyle.Bold)
         Label2.Location = New Point(318, 95)
         Label2.Name = "Label2"
         Label2.Size = New Size(162, 35)
@@ -170,7 +170,7 @@ Partial Class SupplierForm
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(131, 40)
@@ -181,7 +181,7 @@ Partial Class SupplierForm
         ' 
         ' SupplierForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1502, 773)
         Controls.Add(PanelMain)
