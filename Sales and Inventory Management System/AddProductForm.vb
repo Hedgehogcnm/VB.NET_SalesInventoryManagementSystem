@@ -70,7 +70,6 @@ Public Class AddProductForm
             MessageBox.Show("✅ Product added successfully!")
             Me.DialogResult = DialogResult.OK
             Me.Close()
-            InventoryForm.Show()
 
         Catch ex As Exception
             MessageBox.Show("❌ Error adding product: " & ex.Message)
@@ -106,7 +105,6 @@ Public Class AddProductForm
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
-        InventoryForm.Show()
         Me.Close()
     End Sub
 End Class
