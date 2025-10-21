@@ -27,7 +27,6 @@ Partial Class EditSupplierForm
         Label1 = New Label()
         Label3 = New Label()
         Label4 = New Label()
-        Label5 = New Label()
         Label6 = New Label()
         Label7 = New Label()
         SupplierNameTextBox = New TextBox()
@@ -81,15 +80,6 @@ Partial Class EditSupplierForm
         Label4.Size = New Size(82, 23)
         Label4.TabIndex = 11
         Label4.Text = "Contact :"
-        ' 
-        ' Label5
-        ' 
-        Label5.AutoSize = True
-        Label5.Location = New Point(-1, 422)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(801, 20)
-        Label5.TabIndex = 14
-        Label5.Text = "------------------------------------------------------------------------------------------------------------------------------------"
         ' 
         ' Label6
         ' 
@@ -199,7 +189,6 @@ Partial Class EditSupplierForm
         Controls.Add(SupplierNameTextBox)
         Controls.Add(Label7)
         Controls.Add(Label6)
-        Controls.Add(Label5)
         Controls.Add(Label4)
         Controls.Add(Label3)
         Controls.Add(Label2)
@@ -215,7 +204,6 @@ Partial Class EditSupplierForm
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents SupplierNameTextBox As TextBox

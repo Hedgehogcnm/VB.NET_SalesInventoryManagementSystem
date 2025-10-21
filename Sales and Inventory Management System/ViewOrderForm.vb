@@ -143,4 +143,7 @@ Public Class ViewOrderForm
         End If
     End Sub
 
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+        Me.Close()
+    End Sub
 End Class

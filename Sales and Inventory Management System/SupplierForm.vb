@@ -31,92 +31,123 @@ Public Class SupplierForm
         Close()
     End Sub
 
-    ' When the form loads, call LoadSuppliers to show supplier data
+    ' === Form Load ===
     Private Sub SupplierForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadSuppliers()
     End Sub
 
-    ' Load supplier data from the database into DataGridView
+
+    ' === 加载供应商卡片 ===
     Private Sub LoadSuppliers()
         Try
-            ' Use the existing DBConnection module to connect
             ConnectDB()
-
-            ' SQL query to select supplier details
             Dim sql As String = "SELECT sup_id, sup_name, sup_contact, sup_email, status FROM tb_suppliers"
-
-            ' Data adapter and DataTable to hold results
             Dim da As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
             da.Fill(dt)
+            conn.Close()
 
-            ' Bind the results to DataGridView
-            DataGridViewSupplier.DataSource = dt
+            SupplierFlowLayoutPanel.Controls.Clear()
 
-            ' Adjust DataGridView style
-            DataGridViewSupplier.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
-            DataGridViewSupplier.EnableHeadersVisualStyles = False
-            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Font = New Font(DataGridViewSupplier.Font, FontStyle.Bold)
-            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            DataGridViewSupplier.Columns("sup_id").Width = 60
-            DataGridViewSupplier.Columns("sup_name").Width = 170
-            DataGridViewSupplier.Columns("sup_contact").Width = 80
-            DataGridViewSupplier.Columns("sup_email").Width = 170
-            DataGridViewSupplier.Columns("status").Width = 60
-            DataGridViewSupplier.Columns("sup_id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            DataGridViewSupplier.Columns("sup_contact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            DataGridViewSupplier.Columns("status").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            DataGridViewSupplier.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.SelectionBackColor = DataGridViewSupplier.ColumnHeadersDefaultCellStyle.BackColor
-            DataGridViewSupplier.ColumnHeadersDefaultCellStyle.SelectionForeColor = DataGridViewSupplier.ColumnHeadersDefaultCellStyle.ForeColor
-            DataGridViewSupplier.MultiSelect = True
-            DataGridViewSupplier.ReadOnly = True
-            DataGridViewSupplier.AllowUserToAddRows = False
-
-
-            ' Change column header text
-            DataGridViewSupplier.Columns("sup_id").HeaderText = "Supplier ID"
-            DataGridViewSupplier.Columns("sup_name").HeaderText = "Supplier Name"
-            DataGridViewSupplier.Columns("sup_contact").HeaderText = "Contact"
-            DataGridViewSupplier.Columns("sup_email").HeaderText = "Email"
-            DataGridViewSupplier.Columns("status").HeaderText = "Status"
-
-            ' Add Edit Icon one time in DataGridView Column
-            If Not DataGridViewSupplier.Columns.Contains("EditColumn") Then
-                Dim editColumn As New DataGridViewImageColumn()
-                editColumn.Image = Image.FromFile(IO.Path.Combine(Application.StartupPath, "EditIcon.png"))
-                editColumn.HeaderText = ""
-                editColumn.Name = "EditColumn"
-                editColumn.ImageLayout = DataGridViewImageCellLayout.Zoom
-                DataGridViewSupplier.Columns.Add(editColumn)
-                DataGridViewSupplier.EnableHeadersVisualStyles = False
-                DataGridViewSupplier.Columns("EditColumn").Width = 35
-                DataGridViewSupplier.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            If dt.Rows.Count = 0 Then
+                Dim noDataLbl As New Label With {
+                    .Text = "No suppliers found.",
+                    .Font = New Font("Segoe UI", 11, FontStyle.Italic),
+                    .ForeColor = Color.Gray,
+                    .AutoSize = True,
+                    .Margin = New Padding(20)
+                }
+                SupplierFlowLayoutPanel.Controls.Add(noDataLbl)
+                Exit Sub
             End If
 
+            ' === Create Cards ===
+            For Each row As DataRow In dt.Rows
+                Dim card As New Panel With {
+                    .Width = 260,
+                    .Height = 140,
+                    .BackColor = Color.White,
+                    .Margin = New Padding(15),
+                    .BorderStyle = BorderStyle.FixedSingle
+                }
+
+                ' Name
+                Dim nameLbl As New Label With {
+                    .Text = row("sup_name").ToString(),
+                    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+                    .AutoSize = True,
+                    .Location = New Point(15, 10)
+                }
+
+                ' Email
+                Dim emailLbl As New Label With {
+                    .Text = row("sup_email").ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 35)
+                }
+
+                ' Phone
+                Dim phoneLbl As New Label With {
+                    .Text = "📞 " & row("sup_contact").ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 55)
+                }
+
+                ' Status
+                Dim statusText As String = row("status").ToString()
+                Dim statusColor As Color = If(statusText.ToLower() = "active", Color.SeaGreen, Color.Gray)
+                Dim statusLbl As New Label With {
+                    .Text = "Status: " & statusText,
+                    .Font = New Font("Segoe UI", 9, FontStyle.Italic),
+                    .ForeColor = statusColor,
+                    .AutoSize = True,
+                    .Location = New Point(15, 80)
+                }
+
+                ' Edit Button
+                Dim editBtn As New Button With {
+                    .Text = "Edit ✎",
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .BackColor = Color.LightSteelBlue,
+                    .ForeColor = Color.Black,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Size = New Size(70, 28),
+                    .Location = New Point(170, 100)
+                }
+                editBtn.FlatAppearance.BorderSize = 0
+
+                Dim supID As Integer = Convert.ToInt32(row("sup_id"))
+                AddHandler editBtn.Click, Sub() EditSupplier(supID)
+
+                card.Controls.AddRange({nameLbl, emailLbl, phoneLbl, statusLbl, editBtn})
+                SupplierFlowLayoutPanel.Controls.Add(card)
+            Next
+
         Catch ex As Exception
-            MessageBox.Show("Failed to load suppliers: " & ex.Message)
+            MessageBox.Show("Error loading suppliers: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
-            ' Always close the connection after use
             conn.Close()
         End Try
     End Sub
 
-    Private Sub DataGridViewSupplier_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewSupplier.CellContentClick
-        If e.ColumnIndex = DataGridViewSupplier.Columns("EditColumn").Index AndAlso e.RowIndex >= 0 Then
-            Dim sup_id As Integer = Convert.ToInt32(DataGridViewSupplier.Rows(e.RowIndex).Cells("sup_id").Value)
-            Dim editForm As New EditSupplierForm(sup_id)
-            editForm.ShowDialog()
-            LoadSuppliers()
-            DataGridViewSupplier.ClearSelection()
-        End If
-    End Sub
 
+    ' === 打开添加供应商表单 ===
     Private Sub AddPictureBox_Click(sender As Object, e As EventArgs) Handles AddPictureBox.Click
-        Dim addSupplierID As Integer = DataGridViewSupplier.Rows.Count + 1
+        Dim addSupplierID As Integer = SupplierFlowLayoutPanel.Controls.Count + 1
         Dim addForm As New AddSupplierForm(addSupplierID)
         addForm.ShowDialog()
         LoadSuppliers()
-        DataGridViewSupplier.ClearSelection()
     End Sub
+
+
+    ' === 打开编辑供应商表单 ===
+    Private Sub EditSupplier(sup_id As Integer)
+        Dim editForm As New EditSupplierForm(sup_id)
+        editForm.ShowDialog()
+        LoadSuppliers()
+    End Sub
+
+
 End Class

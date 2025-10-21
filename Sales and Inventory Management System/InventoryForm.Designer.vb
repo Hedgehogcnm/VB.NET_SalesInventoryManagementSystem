@@ -69,7 +69,7 @@ Partial Class InventoryForm
         ' SalesToolStripMenuItem
         ' 
         SalesToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        SalesToolStripMenuItem.Font = New Font("Segoe UI", 9.0F)
+        SalesToolStripMenuItem.Font = New Font("Segoe UI", 9F)
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
@@ -107,7 +107,7 @@ Partial Class InventoryForm
         ' LogOutToolStripMenuItem
         ' 
         LogOutToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
-        LogOutToolStripMenuItem.Font = New Font("Segoe UI", 9.0F)
+        LogOutToolStripMenuItem.Font = New Font("Segoe UI", 9F)
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
@@ -133,15 +133,15 @@ Partial Class InventoryForm
         ' ProductListDataGridView
         ' 
         ProductListDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        ProductListDataGridView.Location = New Point(163, 132)
+        ProductListDataGridView.Location = New Point(281, 132)
         ProductListDataGridView.Name = "ProductListDataGridView"
         ProductListDataGridView.RowHeadersWidth = 51
-        ProductListDataGridView.Size = New Size(1141, 730)
+        ProductListDataGridView.Size = New Size(1072, 730)
         ProductListDataGridView.TabIndex = 3
         ' 
         ' SearchProductButton
         ' 
-        SearchProductButton.Location = New Point(1210, 86)
+        SearchProductButton.Location = New Point(1259, 84)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -150,14 +150,14 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(1010, 87)
+        ProductSearchTextBox.Location = New Point(1059, 85)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
         ProductSearchTextBox.Size = New Size(180, 27)
         ProductSearchTextBox.TabIndex = 5
         ' 
         ' OrderProductButton
         ' 
-        OrderProductButton.Location = New Point(42, 132)
+        OrderProductButton.Location = New Point(115, 132)
         OrderProductButton.Name = "OrderProductButton"
         OrderProductButton.Size = New Size(94, 50)
         OrderProductButton.TabIndex = 6
@@ -166,7 +166,7 @@ Partial Class InventoryForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(42, 214)
+        AddProductButton.Location = New Point(115, 214)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 48)
         AddProductButton.TabIndex = 7
@@ -175,7 +175,7 @@ Partial Class InventoryForm
         ' 
         ' EditProductButton
         ' 
-        EditProductButton.Location = New Point(42, 292)
+        EditProductButton.Location = New Point(115, 292)
         EditProductButton.Name = "EditProductButton"
         EditProductButton.Size = New Size(94, 50)
         EditProductButton.TabIndex = 8
@@ -184,7 +184,7 @@ Partial Class InventoryForm
         ' 
         ' DeleteProductButton
         ' 
-        DeleteProductButton.Location = New Point(42, 373)
+        DeleteProductButton.Location = New Point(115, 373)
         DeleteProductButton.Name = "DeleteProductButton"
         DeleteProductButton.Size = New Size(94, 65)
         DeleteProductButton.TabIndex = 9
@@ -204,7 +204,7 @@ Partial Class InventoryForm
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(152, 40)
@@ -215,7 +215,7 @@ Partial Class InventoryForm
         ' 
         ' InventoryForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1502, 773)
         Controls.Add(PanelMain)

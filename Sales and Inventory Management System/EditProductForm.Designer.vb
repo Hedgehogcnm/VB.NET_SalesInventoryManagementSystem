@@ -236,6 +236,7 @@ Partial Class EditProductForm
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "EditProductForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "EditProductForm"
         ResumeLayout(False)
         PerformLayout()
