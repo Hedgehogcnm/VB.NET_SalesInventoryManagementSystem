@@ -1,19 +1,53 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.IO
 
+
 Public Class InventoryForm
 
+    ' === COLUMN POSITIONS AND WIDTHS ===
+    Private columnWidths() As Integer = {80, 120, 250, 100, 160, 120, 80, 100, 200}
+    Private columnNames() As String = {
+    "Image", "Product ID", "Product Name",
+    "Supplier ID", "Supplier Name", "Category",
+    "Stock", "Min Stock", "Operation"
+}
+
+
     Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetupProductHeader()   ' build header ONCE
         ProductListFlowLayoutPanel.AutoScroll = True
-        ProductListFlowLayoutPanel.WrapContents = True
-        ProductListFlowLayoutPanel.FlowDirection = FlowDirection.LeftToRight
-        LoadProductCards()
+        ProductListFlowLayoutPanel.WrapContents = False
+        ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
+        LoadProductTable()
     End Sub
+
+    Private Sub SetupProductHeader()
+        HeaderPanel.Controls.Clear()
+        HeaderPanel.BackColor = Color.FromArgb(255, 255, 200) ' light yellow like your screenshot
+
+        Dim x As Integer = 10
+        For i = 0 To columnNames.Length - 1
+            Dim lbl As New Label With {
+            .Text = columnNames(i),
+            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+            .AutoSize = False,
+            .TextAlign = ContentAlignment.MiddleCenter,
+            .Width = columnWidths(i),
+            .Location = New Point(x, 8)
+        }
+            HeaderPanel.Controls.Add(lbl)
+            x += columnWidths(i)
+        Next
+    End Sub
+
+
+
 
     Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        LoadProductCards()
+        LoadProductTable()
     End Sub
 
+    ' === NAVIGATION MENU ===
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
         Dim Sales As New SalesForm()
         Sales.Show()
@@ -39,11 +73,11 @@ Public Class InventoryForm
     End Sub
 
     Public Sub RefreshProductListFromOtherForm()
-        LoadProductCards()
+        LoadProductTable()
     End Sub
 
-    ' === LOAD PRODUCT CARDS ===
-    Private Sub LoadProductCards(Optional searchTerm As String = "")
+    ' === LOAD PRODUCT TABLE ===
+    Private Sub LoadProductTable(Optional searchTerm As String = "")
         Try
             ConnectDB()
 
@@ -58,9 +92,7 @@ Public Class InventoryForm
             End If
 
             Dim cmd As New MySqlCommand(sql, conn)
-            If searchTerm <> "" Then
-                cmd.Parameters.AddWithValue("@search", "%" & searchTerm & "%")
-            End If
+            If searchTerm <> "" Then cmd.Parameters.AddWithValue("@search", "%" & searchTerm & "%")
 
             Dim da As New MySqlDataAdapter(cmd)
             Dim dt As New DataTable()
@@ -69,6 +101,9 @@ Public Class InventoryForm
 
             ProductListFlowLayoutPanel.Controls.Clear()
 
+
+
+            ' === NO DATA FOUND ===
             If dt.Rows.Count = 0 Then
                 Dim noDataLbl As New Label With {
                     .Text = "No products found.",
@@ -80,161 +115,109 @@ Public Class InventoryForm
                 ProductListFlowLayoutPanel.Controls.Add(noDataLbl)
                 Exit Sub
             End If
-            ' === CREATE PRODUCT CARDS ===
+
+            ' === TABLE ROWS ===
             For Each row As DataRow In dt.Rows
+                Dim rowPanel As New Panel With {
+                    .Width = ProductListFlowLayoutPanel.Width - 25,
+                    .Height = 80,
+                    .BackColor = Color.White,
+                    .Margin = New Padding(2)
+                }
+
                 Dim stock As Integer = Convert.ToInt32(row("p_stock"))
                 Dim minStock As Integer = Convert.ToInt32(row("p_minStock"))
 
-                ' ✨ Product Card Style - clean white background, no border
-                Dim card As New Panel With {
-        .Width = 300,
-        .Height = 440,
-        .Margin = New Padding(10),
-        .BackColor = Color.White,          ' ✅ Clean white background
-        .BorderStyle = BorderStyle.None,   ' ✅ No border
-        .Padding = New Padding(10)
-    }
-
                 ' 🔴 Low-stock highlight
                 If stock <= minStock Then
-                    card.BackColor = Color.MistyRose
+                    rowPanel.BackColor = Color.MistyRose
                 End If
-
-                ' 🔵 Search highlight
-                If searchTerm <> "" Then
-                    Dim idStr As String = row("p_id").ToString().ToLower()
-                    Dim nameStr As String = row("p_name").ToString().ToLower()
-                    If idStr.Contains(searchTerm.ToLower()) Or nameStr.Contains(searchTerm.ToLower()) Then
-                        card.BackColor = Color.LightBlue
-                    End If
-                End If
-
 
                 ' === Product Image ===
-                Dim picture As New PictureBox With {
-    .Width = 270,
-    .Height = 140,
-    .SizeMode = PictureBoxSizeMode.Zoom,
-    .Location = New Point(15, 10)
-}
+                Dim pic As New PictureBox With {
+                    .Width = 70,
+                    .Height = 60,
+                    .Location = New Point(10, 10),
+                    .SizeMode = PictureBoxSizeMode.Zoom
+                }
 
                 Try
                     If Not IsDBNull(row("p_image")) Then
                         Dim imgBytes() As Byte = CType(row("p_image"), Byte())
                         Using ms As New MemoryStream(imgBytes)
-                            picture.Image = Image.FromStream(ms)
+                            pic.Image = Image.FromStream(ms)
                         End Using
                     Else
-                        ' Fallback if no image in database
-                        Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
-                        If IO.File.Exists(fallbackPath) Then
-                            picture.Image = Image.FromFile(fallbackPath)
+                        Dim fallbackPath As String = Path.Combine(Application.StartupPath, "replace.png")
+                        If File.Exists(fallbackPath) Then
+                            pic.Image = Image.FromFile(fallbackPath)
                         Else
-                            picture.BackColor = Color.LightGray ' safety fallback if image missing
+                            pic.BackColor = Color.LightGray
                         End If
                     End If
-                Catch ex As Exception
-                    ' In case of corrupted or invalid image data, also use fallback
-                    Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
-                    If IO.File.Exists(fallbackPath) Then
-                        picture.Image = Image.FromFile(fallbackPath)
+                Catch
+                    Dim fallbackPath As String = Path.Combine(Application.StartupPath, "replace.png")
+                    If File.Exists(fallbackPath) Then
+                        pic.Image = Image.FromFile(fallbackPath)
                     Else
-                        picture.BackColor = Color.LightGray
+                        pic.BackColor = Color.LightGray
                     End If
                 End Try
 
+                rowPanel.Controls.Add(pic)
 
-                ' === Labels ===
-                Dim nameLbl As New Label With {
-                    .Text = "Name: " & row("p_name").ToString(),
-                    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
-                    .AutoSize = True,
-                    .Location = New Point(15, 160)
+                ' === TEXT FIELDS ===
+                Dim fields() As String = {
+                    row("p_id").ToString(),
+                    row("p_name").ToString(),
+                    row("sup_id").ToString(),
+                    If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
+                    row("p_category").ToString(),
+                    row("p_stock").ToString(),
+                    row("p_minStock").ToString()
                 }
 
-                Dim idLbl As New Label With {
-                    .Text = "Product ID: " & row("p_id").ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 185)
-                }
+                Dim xPos As Integer = 90 ' start a bit after image
+                For i = 0 To fields.Length - 1
+                    Dim lbl As New Label With {
+        .Text = fields(i),
+        .Font = New Font("Segoe UI", 9),
+        .AutoSize = False,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Width = columnWidths(i + 1), ' skip image column
+        .Location = New Point(xPos, 30)
+    }
+                    rowPanel.Controls.Add(lbl)
+                    xPos += columnWidths(i + 1)
+                Next
 
-                Dim supplierNameLbl As New Label With {
-                    .Text = "Supplier Name: " & If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 205)
-                }
 
-                Dim supplierLbl As New Label With {
-                    .Text = "Supplier ID: " & row("sup_id").ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 225)
-                }
-
-                Dim categoryLbl As New Label With {
-                    .Text = "Category: " & row("p_category").ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 245)
-                }
-
-                Dim stockLbl As New Label With {
-                    .Text = "Stock: " & stock.ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 265)
-                }
-
-                Dim minStockLbl As New Label With {
-                    .Text = "Min Stock: " & minStock.ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 285)
-                }
-
-                If stock <= minStock Then
-                    stockLbl.ForeColor = Color.Red
-                    minStockLbl.ForeColor = Color.Red
-                    stockLbl.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-                End If
-
-                Dim priceLbl As New Label With {
-                    .Text = "Price: RM " & Convert.ToDecimal(row("p_sellPrice")).ToString("N2"),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 305)
-                }
-
-                ' === Buttons ===
+                ' === OPERATIONS ===
+                Dim operationStartX As Integer = xPos
                 Dim editBtn As New Button With {
-                    .Text = "Edit ✏️",
-                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .Text = "Edit",
                     .BackColor = Color.LightSkyBlue,
                     .FlatStyle = FlatStyle.Flat,
-                    .Size = New Size(80, 30),
-                    .Location = New Point(25, 380)
+                    .Width = 60,
+                    .Location = New Point(operationStartX, 25)
                 }
                 editBtn.FlatAppearance.BorderSize = 0
 
                 Dim orderBtn As New Button With {
-                    .Text = "Order ⬆️",
-                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .Text = "Order",
                     .BackColor = Color.LightGreen,
                     .FlatStyle = FlatStyle.Flat,
-                    .Size = New Size(80, 30),
-                    .Location = New Point(110, 380)
+                    .Width = 60,
+                    .Location = New Point(operationStartX + 70, 25)
                 }
                 orderBtn.FlatAppearance.BorderSize = 0
 
                 Dim deleteBtn As New Button With {
-                    .Text = "Delete 🗑️",
-                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .Text = "Delete",
                     .BackColor = Color.LightCoral,
                     .FlatStyle = FlatStyle.Flat,
-                    .Size = New Size(80, 30),
-                    .Location = New Point(195, 380)
+                    .Width = 60,
+                    .Location = New Point(operationStartX + 140, 25)
                 }
                 deleteBtn.FlatAppearance.BorderSize = 0
 
@@ -245,7 +228,7 @@ Public Class InventoryForm
                                               Dim editForm As New EditProductForm()
                                               editForm.ProductID = productID
                                               If editForm.ShowDialog() = DialogResult.OK Then
-                                                  LoadProductCards()
+                                                  LoadProductTable()
                                               End If
                                           End Sub
 
@@ -260,20 +243,11 @@ Public Class InventoryForm
                                                 DeleteProduct(productID, productName)
                                             End Sub
 
-                card.Controls.Add(picture)
-                card.Controls.Add(nameLbl)
-                card.Controls.Add(idLbl)
-                card.Controls.Add(supplierNameLbl)
-                card.Controls.Add(supplierLbl)
-                card.Controls.Add(categoryLbl)
-                card.Controls.Add(stockLbl)
-                card.Controls.Add(minStockLbl)
-                card.Controls.Add(priceLbl)
-                card.Controls.Add(editBtn)
-                card.Controls.Add(orderBtn)
-                card.Controls.Add(deleteBtn)
+                rowPanel.Controls.Add(editBtn)
+                rowPanel.Controls.Add(orderBtn)
+                rowPanel.Controls.Add(deleteBtn)
 
-                ProductListFlowLayoutPanel.Controls.Add(card)
+                ProductListFlowLayoutPanel.Controls.Add(rowPanel)
             Next
 
         Catch ex As Exception
@@ -283,57 +257,45 @@ Public Class InventoryForm
         End Try
     End Sub
 
-    ' === DELETE PRODUCT ===
-    ' === DELETE PRODUCT + RELATED INVENTORY MOVEMENTS ===
+    ' === DELETE PRODUCT AND RELATED INVENTORY ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
-        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
-        "This will also remove all related inventory movement records.",
-        "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+            "This will also remove all related inventory movement records.",
+            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
         If confirm = DialogResult.Yes Then
             Try
                 ConnectDB()
-
-                ' Use a transaction for data safety
                 Using transaction As MySqlTransaction = conn.BeginTransaction()
                     Try
-                        ' 1️⃣ Delete from tb_inventorymovements first (foreign key safety)
+                        ' Delete inventory movement records first
                         Using cmdDeleteMovements As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
                             cmdDeleteMovements.Parameters.AddWithValue("@pid", productID)
                             cmdDeleteMovements.ExecuteNonQuery()
                         End Using
 
-                        ' 2️⃣ Delete from tb_products
+                        ' Delete product record
                         Using cmdDeleteProduct As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
                             cmdDeleteProduct.Parameters.AddWithValue("@pid", productID)
                             cmdDeleteProduct.ExecuteNonQuery()
                         End Using
 
-                        ' ✅ Commit both deletions
                         transaction.Commit()
-
-                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and its related inventory records have been deleted.",
-                                    "Deleted Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        LoadProductCards()
-
+                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and related records deleted successfully.")
+                        LoadProductTable()
                     Catch ex As Exception
-                        ' Rollback if anything fails
                         transaction.Rollback()
-                        MessageBox.Show("❌ Failed to delete product and related data: " & ex.Message,
-                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show("❌ Failed to delete product: " & ex.Message)
                     End Try
                 End Using
-
             Catch ex As Exception
-                MessageBox.Show("❌ Database connection failed: " & ex.Message,
-                            "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("❌ Connection error: " & ex.Message)
             Finally
                 conn.Close()
             End Try
         End If
     End Sub
-
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         AddProductForm.Show()
@@ -341,11 +303,7 @@ Public Class InventoryForm
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
         Dim searchTerm As String = ProductSearchTextBox.Text.Trim()
-        If searchTerm = "" Then
-            LoadProductCards()
-            Exit Sub
-        End If
-        LoadProductCards(searchTerm)
+        LoadProductTable(searchTerm)
     End Sub
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click

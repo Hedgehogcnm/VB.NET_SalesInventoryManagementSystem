@@ -27,6 +27,7 @@ Partial Class InventoryForm
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
+        HeaderPanel = New Panel()
         ViewOrderButton = New Button()
         ProductListFlowLayoutPanel = New FlowLayoutPanel()
         SearchProductButton = New Button()
@@ -113,6 +114,7 @@ Partial Class InventoryForm
         ' 
         ' PanelMain
         ' 
+        PanelMain.Controls.Add(HeaderPanel)
         PanelMain.Controls.Add(ViewOrderButton)
         PanelMain.Controls.Add(ProductListFlowLayoutPanel)
         PanelMain.Controls.Add(SearchProductButton)
@@ -125,9 +127,17 @@ Partial Class InventoryForm
         PanelMain.Size = New Size(1434, 773)
         PanelMain.TabIndex = 6
         ' 
+        ' HeaderPanel
+        ' 
+        HeaderPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
+        HeaderPanel.Location = New Point(176, 145)
+        HeaderPanel.Name = "HeaderPanel"
+        HeaderPanel.Size = New Size(1425, 48)
+        HeaderPanel.TabIndex = 12
+        ' 
         ' ViewOrderButton
         ' 
-        ViewOrderButton.Location = New Point(59, 216)
+        ViewOrderButton.Location = New Point(59, 229)
         ViewOrderButton.Name = "ViewOrderButton"
         ViewOrderButton.Size = New Size(94, 45)
         ViewOrderButton.TabIndex = 11
@@ -136,9 +146,9 @@ Partial Class InventoryForm
         ' 
         ' ProductListFlowLayoutPanel
         ' 
-        ProductListFlowLayoutPanel.Location = New Point(204, 132)
+        ProductListFlowLayoutPanel.Location = New Point(176, 199)
         ProductListFlowLayoutPanel.Name = "ProductListFlowLayoutPanel"
-        ProductListFlowLayoutPanel.Size = New Size(1196, 907)
+        ProductListFlowLayoutPanel.Size = New Size(1445, 840)
         ProductListFlowLayoutPanel.TabIndex = 10
         ' 
         ' SearchProductButton
@@ -159,7 +169,7 @@ Partial Class InventoryForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(59, 132)
+        AddProductButton.Location = New Point(59, 145)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 48)
         AddProductButton.TabIndex = 7
@@ -224,4 +234,5 @@ Partial Class InventoryForm
     Friend WithEvents AddProductButton As Button
     Friend WithEvents ProductListFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents ViewOrderButton As Button
+    Friend WithEvents HeaderPanel As Panel
 End Class
