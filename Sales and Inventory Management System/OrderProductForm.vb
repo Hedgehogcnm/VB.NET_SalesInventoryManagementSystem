@@ -2,54 +2,22 @@
 
 Public Class OrderProductForm
 
+    ' --- Properties to receive data from InventoryForm ---
+    Public Property SelectedProductID As Integer
+    Public Property SelectedProductName As String
+
     Private currentUnitPrice As Decimal = 0D
     Private currentSupplierID As Integer = 0
 
     Private Sub OrderProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadProductNames()
-    End Sub
+        ' Show product name immediately
+        ProductNameLabel.Text = SelectedProductName
+        ProductIDLabel.Text = SelectedProductID.ToString()
 
-    ' --- Load product names into ComboBox ---
-    Private Sub LoadProductNames()
-        Try
-            ConnectDB()
-
-            Dim sql As String = "SELECT p_id, p_name FROM tb_products ORDER BY p_name ASC"
-            Dim da As New MySqlDataAdapter(sql, conn)
-            Dim dt As New DataTable()
-            da.Fill(dt)
-
-            ProductNameComboBox.DataSource = dt
-            ProductNameComboBox.DisplayMember = "p_name"
-            ProductNameComboBox.ValueMember = "p_id"
-            ProductNameComboBox.SelectedIndex = -1
-
-        Catch ex As Exception
-            MessageBox.Show("❌ Failed to load product names: " & ex.Message)
-        Finally
-            conn.Close()
-        End Try
-    End Sub
-
-    ' --- When a product is selected ---
-    Private Sub ProductNameComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProductNameComboBox.SelectedIndexChanged
-        Try
-            If ProductNameComboBox.SelectedIndex <> -1 Then
-                Dim selectedID As Integer = Convert.ToInt32(ProductNameComboBox.SelectedValue)
-                ProductIDLabel.Text = selectedID.ToString()
-
-                ' 🔍 Get supplier ID and unit price
-                LoadProductDetails(selectedID)
-            Else
-                ProductIDLabel.Text = ""
-                UnitPriceLabel.Text = "RM 0.00"
-                TotalPriceLabel.Text = "RM 0.00"
-                currentUnitPrice = 0
-                currentSupplierID = 0
-            End If
-        Catch
-            ' ignore when datasource changes
-        End Try
+        ' Load product details like supplier & cost
+        If SelectedProductID > 0 Then
+            LoadProductDetails(SelectedProductID)
+        End If
     End Sub
 
     ' --- Load supplier ID & unit price ---
@@ -73,9 +41,6 @@ Public Class OrderProductForm
                 End Using
             End Using
 
-            ' Update total price immediately if quantity already entered
-            UpdateTotalPrice()
-
         Catch ex As Exception
             MessageBox.Show("❌ Failed to load product details: " & ex.Message)
         Finally
@@ -83,12 +48,8 @@ Public Class OrderProductForm
         End Try
     End Sub
 
-    ' --- Recalculate total when quantity changes ---
+    ' --- Update total price when quantity changes ---
     Private Sub OrderQuantityTextBox_TextChanged(sender As Object, e As EventArgs) Handles OrderQuantityTextBox.TextChanged
-        UpdateTotalPrice()
-    End Sub
-
-    Private Sub UpdateTotalPrice()
         Dim qty As Integer
         If Integer.TryParse(OrderQuantityTextBox.Text, qty) AndAlso qty > 0 Then
             Dim total = qty * currentUnitPrice
@@ -98,33 +59,24 @@ Public Class OrderProductForm
         End If
     End Sub
 
-    ' --- ORDER BUTTON CLICK ---
+    ' --- Place order ---
     Private Sub OrderButton_Click(sender As Object, e As EventArgs) Handles OrderButton.Click
-        ' ✅ Validate product selection
-        If ProductNameComboBox.SelectedIndex = -1 Then
-            MessageBox.Show("Please select a product before ordering.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        ' ✅ Validate quantity
         Dim quantity As Integer
         If Not Integer.TryParse(OrderQuantityTextBox.Text, quantity) OrElse quantity <= 0 Then
-            MessageBox.Show("Please enter a valid product quantity (greater than 0).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        Dim productID As Integer = Convert.ToInt32(ProductNameComboBox.SelectedValue)
-        Dim userID As Integer = 1 ' 🔧 example fixed user ID
         Dim total As Decimal = quantity * currentUnitPrice
         Dim status As String = "ordered"
+        Dim userID As Integer = 1 ' replace with logged-in user later
 
         Try
             ConnectDB()
-
-            Dim insertQuery As String = "INSERT INTO tb_orders (p_id, u_id, sup_id, o_qty, o_total, o_status)
-                                         VALUES (@pid, @uid, @sid, @qty, @total, @status)"
-            Using cmd As New MySqlCommand(insertQuery, conn)
-                cmd.Parameters.AddWithValue("@pid", productID)
+            Dim sql As String = "INSERT INTO tb_orders (p_id, u_id, sup_id, o_qty, o_total, o_status)
+                                 VALUES (@pid, @uid, @sid, @qty, @total, @status)"
+            Using cmd As New MySqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@pid", SelectedProductID)
                 cmd.Parameters.AddWithValue("@uid", userID)
                 cmd.Parameters.AddWithValue("@sid", currentSupplierID)
                 cmd.Parameters.AddWithValue("@qty", quantity)
@@ -134,13 +86,7 @@ Public Class OrderProductForm
             End Using
 
             MessageBox.Show("✅ Order placed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            ' Clear fields
-            ProductNameComboBox.SelectedIndex = -1
-            OrderQuantityTextBox.Clear()
-            ProductIDLabel.Text = ""
-            UnitPriceLabel.Text = "RM 0.00"
-            TotalPriceLabel.Text = "RM 0.00"
+            Me.Close()
 
         Catch ex As Exception
             MessageBox.Show("❌ Failed to place order: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -154,8 +100,6 @@ Public Class OrderProductForm
     End Sub
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        Dim viewForm As New ViewOrderForm()
-        viewForm.ShowDialog()
+        ViewOrderForm.Show()
     End Sub
-
 End Class

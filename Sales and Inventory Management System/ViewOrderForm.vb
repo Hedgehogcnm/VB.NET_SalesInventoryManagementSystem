@@ -39,7 +39,7 @@ Public Class ViewOrderForm
             OrderDataGridView.Columns("o_total").HeaderText = "Order Total"
             OrderDataGridView.Columns("o_status").HeaderText = "Order Status"
 
-            ' --- Replace o_status column with ComboBox version ---
+            ' --- Replace o_status column with ComboBox ---
             Dim comboColumn As New DataGridViewComboBoxColumn()
             comboColumn.HeaderText = "Order Status"
             comboColumn.Name = "o_status"
@@ -52,7 +52,7 @@ Public Class ViewOrderForm
             OrderDataGridView.Columns.Remove(oldCol)
             OrderDataGridView.Columns.Insert(colIndex, comboColumn)
 
-            ' --- Normalize all rows ---
+            ' --- Set default values ---
             For Each row As DataGridViewRow In OrderDataGridView.Rows
                 Dim val As Object = row.Cells("o_status").Value
                 If val Is Nothing OrElse String.IsNullOrWhiteSpace(val.ToString()) Then
@@ -60,7 +60,6 @@ Public Class ViewOrderForm
                 End If
             Next
 
-            ' ✅ Clear any selected row after binding
             OrderDataGridView.ClearSelection()
 
         Catch ex As Exception
@@ -89,7 +88,7 @@ Public Class ViewOrderForm
         Dim quantity As Integer = Convert.ToInt32(selectedRow.Cells("o_qty").Value)
         Dim newStatus As String = selectedRow.Cells("o_status").Value.ToString()
 
-        ' --- Get product name for display ---
+        ' --- Get product name ---
         Dim productName As String = ""
         Try
             ConnectDB()
@@ -105,29 +104,27 @@ Public Class ViewOrderForm
             conn.Close()
         End Try
 
-        ' --- Confirm update ---
+        ' --- Ask for confirmation ---
         Dim confirmMsg As String = $"Confirm change status for '{productName}' (Product ID: {productID}) to '{newStatus}'?"
         Dim response As DialogResult = MessageBox.Show(confirmMsg, "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If response = DialogResult.Yes Then
             Try
                 ConnectDB()
+
+                ' --- Update order status ---
                 Dim sqlUpdate As String = "UPDATE tb_orders SET o_status = @status WHERE o_id = @orderID"
                 Using cmd As New MySqlCommand(sqlUpdate, conn)
                     cmd.Parameters.AddWithValue("@status", newStatus)
                     cmd.Parameters.AddWithValue("@orderID", orderID)
                     cmd.ExecuteNonQuery()
                 End Using
-                conn.Close()
-
-                ' ✅ If status changed to "received", increase product stock
 
                 MessageBox.Show($"✅ Order status updated successfully for '{productName}' (Product ID: {productID}).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' ✅ Refresh orders grid
+                ' --- Refresh grid and inventory form ---
                 LoadOrders()
 
-                ' ✅ If InventoryForm is open, refresh its product list automatically
                 For Each f As Form In Application.OpenForms
                     If TypeOf f Is InventoryForm Then
                         Dim invForm As InventoryForm = CType(f, InventoryForm)
@@ -146,4 +143,5 @@ Public Class ViewOrderForm
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
         Me.Close()
     End Sub
+
 End Class

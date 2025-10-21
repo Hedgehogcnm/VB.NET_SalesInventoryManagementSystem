@@ -1,8 +1,19 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.IO
+
 Public Class InventoryForm
-    Public Sub RefreshProductListFromOtherForm()
-        LoadProduct()
+
+    Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ProductListFlowLayoutPanel.AutoScroll = True
+        ProductListFlowLayoutPanel.WrapContents = True
+        ProductListFlowLayoutPanel.FlowDirection = FlowDirection.LeftToRight
+        LoadProductCards()
     End Sub
+
+    Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        LoadProductCards()
+    End Sub
+
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
         Dim Sales As New SalesForm()
         Sales.Show()
@@ -10,220 +21,302 @@ Public Class InventoryForm
     End Sub
 
     Private Sub InventoryToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
-        Dim Inventory As New InventoryForm
+        Dim Inventory As New InventoryForm()
         Inventory.Show()
-        Close()
+        Me.Close()
     End Sub
 
     Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupplierToolStripMenuItem.Click
-        Dim Supplier As New SupplierForm
+        Dim Supplier As New SupplierForm()
         Supplier.Show()
-        Close()
+        Me.Close()
     End Sub
 
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
-        Dim Report As New ReportForm
+        Dim Report As New ReportForm()
         Report.Show()
-        Close()
+        Me.Close()
     End Sub
 
-    Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
-        Dim login As New LoginForm
-        login.Show()
-        Close()
+    Public Sub RefreshProductListFromOtherForm()
+        LoadProductCards()
     End Sub
 
-    Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadProduct()
-
-        ' Make the whole row selected when a cell is clicked
-        With ProductListDataGridView
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            .MultiSelect = False
-            .ReadOnly = True
-        End With
-    End Sub
-
-    Private Sub LoadProduct()
+    ' === LOAD PRODUCT CARDS ===
+    Private Sub LoadProductCards(Optional searchTerm As String = "")
         Try
             ConnectDB()
 
-            Dim sql As String = "SELECT p_id, sup_id, p_name, p_category, p_stock, p_minStock, p_costPrice, p_sellPrice FROM tb_products"
+            Dim sql As String =
+                "SELECT p.p_id, p.sup_id, s.sup_name, p.p_name, p.p_category, p.p_stock, 
+                        p.p_minStock, p.p_costPrice, p.p_sellPrice, p.p_image
+                 FROM tb_products p
+                 LEFT JOIN tb_suppliers s ON p.sup_id = s.sup_id"
 
-            Dim da As New MySqlDataAdapter(sql, conn)
+            If searchTerm <> "" Then
+                sql &= " WHERE p.p_name LIKE @search OR p.p_id LIKE @search"
+            End If
+
+            Dim cmd As New MySqlCommand(sql, conn)
+            If searchTerm <> "" Then
+                cmd.Parameters.AddWithValue("@search", "%" & searchTerm & "%")
+            End If
+
+            Dim da As New MySqlDataAdapter(cmd)
             Dim dt As New DataTable()
             da.Fill(dt)
+            conn.Close()
 
-            ProductListDataGridView.DataSource = dt
+            ProductListFlowLayoutPanel.Controls.Clear()
 
-            ' Adjust DataGridView style
-            ProductListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-            ProductListDataGridView.EnableHeadersVisualStyles = False
-            ProductListDataGridView.MultiSelect = True
-            ProductListDataGridView.ReadOnly = True
-            ProductListDataGridView.AllowUserToAddRows = False
+            If dt.Rows.Count = 0 Then
+                Dim noDataLbl As New Label With {
+                    .Text = "No products found.",
+                    .Font = New Font("Segoe UI", 11, FontStyle.Italic),
+                    .ForeColor = Color.Gray,
+                    .AutoSize = True,
+                    .Margin = New Padding(20)
+                }
+                ProductListFlowLayoutPanel.Controls.Add(noDataLbl)
+                Exit Sub
+            End If
+            ' === CREATE PRODUCT CARDS ===
+            For Each row As DataRow In dt.Rows
+                Dim stock As Integer = Convert.ToInt32(row("p_stock"))
+                Dim minStock As Integer = Convert.ToInt32(row("p_minStock"))
 
-            ' Change column header text
-            ProductListDataGridView.Columns("p_id").HeaderText = "Product ID"
-            ProductListDataGridView.Columns("sup_id").HeaderText = "Supplier ID"
-            ProductListDataGridView.Columns("p_name").HeaderText = "Product Name"
-            ProductListDataGridView.Columns("p_stock").HeaderText = "Product Stock"
-            ProductListDataGridView.Columns("p_minStock").HeaderText = "Product Minimum Stock"
-            ProductListDataGridView.Columns("p_costPrice").HeaderText = "Product Cost Price"
-            ProductListDataGridView.Columns("p_sellPrice").HeaderText = "Product Sell Price"
-        Catch ex As Exception
-            MessageBox.Show("Failed to load products: " & ex.Message)
-        End Try
+                ' ✨ Product Card Style - clean white background, no border
+                Dim card As New Panel With {
+        .Width = 300,
+        .Height = 440,
+        .Margin = New Padding(10),
+        .BackColor = Color.White,          ' ✅ Clean white background
+        .BorderStyle = BorderStyle.None,   ' ✅ No border
+        .Padding = New Padding(10)
+    }
 
-        For Each row As DataGridViewRow In ProductListDataGridView.Rows
-            If Not row.IsNewRow Then
-                Dim stock As Integer = Convert.ToInt32(row.Cells("p_stock").Value)
-                Dim minStock As Integer = Convert.ToInt32(row.Cells("p_minStock").Value)
+                ' 🔴 Low-stock highlight
+                If stock <= minStock Then
+                    card.BackColor = Color.MistyRose
+                End If
+
+                ' 🔵 Search highlight
+                If searchTerm <> "" Then
+                    Dim idStr As String = row("p_id").ToString().ToLower()
+                    Dim nameStr As String = row("p_name").ToString().ToLower()
+                    If idStr.Contains(searchTerm.ToLower()) Or nameStr.Contains(searchTerm.ToLower()) Then
+                        card.BackColor = Color.LightBlue
+                    End If
+                End If
+
+
+                ' === Product Image ===
+                Dim picture As New PictureBox With {
+    .Width = 270,
+    .Height = 140,
+    .SizeMode = PictureBoxSizeMode.Zoom,
+    .Location = New Point(15, 10)
+}
+
+                Try
+                    If Not IsDBNull(row("p_image")) Then
+                        Dim imgBytes() As Byte = CType(row("p_image"), Byte())
+                        Using ms As New MemoryStream(imgBytes)
+                            picture.Image = Image.FromStream(ms)
+                        End Using
+                    Else
+                        ' Fallback if no image in database
+                        Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
+                        If IO.File.Exists(fallbackPath) Then
+                            picture.Image = Image.FromFile(fallbackPath)
+                        Else
+                            picture.BackColor = Color.LightGray ' safety fallback if image missing
+                        End If
+                    End If
+                Catch ex As Exception
+                    ' In case of corrupted or invalid image data, also use fallback
+                    Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
+                    If IO.File.Exists(fallbackPath) Then
+                        picture.Image = Image.FromFile(fallbackPath)
+                    Else
+                        picture.BackColor = Color.LightGray
+                    End If
+                End Try
+
+
+                ' === Labels ===
+                Dim nameLbl As New Label With {
+                    .Text = "Name: " & row("p_name").ToString(),
+                    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+                    .AutoSize = True,
+                    .Location = New Point(15, 160)
+                }
+
+                Dim idLbl As New Label With {
+                    .Text = "Product ID: " & row("p_id").ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 185)
+                }
+
+                Dim supplierNameLbl As New Label With {
+                    .Text = "Supplier Name: " & If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 205)
+                }
+
+                Dim supplierLbl As New Label With {
+                    .Text = "Supplier ID: " & row("sup_id").ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 225)
+                }
+
+                Dim categoryLbl As New Label With {
+                    .Text = "Category: " & row("p_category").ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 245)
+                }
+
+                Dim stockLbl As New Label With {
+                    .Text = "Stock: " & stock.ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 265)
+                }
+
+                Dim minStockLbl As New Label With {
+                    .Text = "Min Stock: " & minStock.ToString(),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 285)
+                }
 
                 If stock <= minStock Then
-                    row.DefaultCellStyle.ForeColor = Color.Red
-                Else
-                    row.DefaultCellStyle.ForeColor = Color.Black ' normal color
+                    stockLbl.ForeColor = Color.Red
+                    minStockLbl.ForeColor = Color.Red
+                    stockLbl.Font = New Font("Segoe UI", 9, FontStyle.Bold)
                 End If
-            End If
-        Next
-    End Sub
 
+                Dim priceLbl As New Label With {
+                    .Text = "Price: RM " & Convert.ToDecimal(row("p_sellPrice")).ToString("N2"),
+                    .Font = New Font("Segoe UI", 9),
+                    .AutoSize = True,
+                    .Location = New Point(15, 305)
+                }
 
-    Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
-        Dim searchValue As String = ProductSearchTextBox.Text.Trim()
+                ' === Buttons ===
+                Dim editBtn As New Button With {
+                    .Text = "Edit ✏️",
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .BackColor = Color.LightSkyBlue,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Size = New Size(80, 30),
+                    .Location = New Point(25, 380)
+                }
+                editBtn.FlatAppearance.BorderSize = 0
 
-        ' --- Validate input ---
-        If String.IsNullOrEmpty(searchValue) Then
-            MessageBox.Show("Please enter a Product ID or Product Name to search.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return
-        End If
+                Dim orderBtn As New Button With {
+                    .Text = "Order ⬆️",
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .BackColor = Color.LightGreen,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Size = New Size(80, 30),
+                    .Location = New Point(110, 380)
+                }
+                orderBtn.FlatAppearance.BorderSize = 0
 
-        Dim found As Boolean = False
+                Dim deleteBtn As New Button With {
+                    .Text = "Delete 🗑️",
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .BackColor = Color.LightCoral,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Size = New Size(80, 30),
+                    .Location = New Point(195, 380)
+                }
+                deleteBtn.FlatAppearance.BorderSize = 0
 
-        ' --- Loop through DataGridView rows to find match ---
-        For Each row As DataGridViewRow In ProductListDataGridView.Rows
-            If Not row.IsNewRow Then
-                Dim productID As String = row.Cells("p_id").Value.ToString()
-                Dim productName As String = row.Cells("p_name").Value.ToString()
+                Dim productID As Integer = Convert.ToInt32(row("p_id"))
+                Dim productName As String = row("p_name").ToString()
 
-                ' Compare case-insensitively
-                If productID.Equals(searchValue, StringComparison.OrdinalIgnoreCase) OrElse
-               productName.IndexOf(searchValue, StringComparison.OrdinalIgnoreCase) >= 0 Then
+                AddHandler editBtn.Click, Sub()
+                                              Dim editForm As New EditProductForm()
+                                              editForm.ProductID = productID
+                                              If editForm.ShowDialog() = DialogResult.OK Then
+                                                  LoadProductCards()
+                                              End If
+                                          End Sub
 
-                    ' Select the found row
-                    row.Selected = True
-                    ProductListDataGridView.FirstDisplayedScrollingRowIndex = row.Index
-                    found = True
-                    Exit For
-                End If
-            End If
-        Next
+                AddHandler orderBtn.Click, Sub()
+                                               Dim orderForm As New OrderProductForm()
+                                               orderForm.SelectedProductID = productID
+                                               orderForm.SelectedProductName = productName
+                                               orderForm.ShowDialog()
+                                           End Sub
 
-        ' --- If not found ---
-        If Not found Then
-            MessageBox.Show("No product found with that ID or Name.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
-    End Sub
+                AddHandler deleteBtn.Click, Sub()
+                                                DeleteProduct(productID, productName)
+                                            End Sub
 
+                card.Controls.Add(picture)
+                card.Controls.Add(nameLbl)
+                card.Controls.Add(idLbl)
+                card.Controls.Add(supplierNameLbl)
+                card.Controls.Add(supplierLbl)
+                card.Controls.Add(categoryLbl)
+                card.Controls.Add(stockLbl)
+                card.Controls.Add(minStockLbl)
+                card.Controls.Add(priceLbl)
+                card.Controls.Add(editBtn)
+                card.Controls.Add(orderBtn)
+                card.Controls.Add(deleteBtn)
 
-    Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
-        ' Open Add Product form as a dialog
-        Dim addForm As New AddProductForm()
-
-        ' Show the form and check if product was saved
-        If addForm.ShowDialog() = DialogResult.OK Then
-            ' Refresh product list automatically
-            LoadProduct()
-        End If
-    End Sub
-
-    Private Sub EditProductButton_Click(sender As Object, e As EventArgs) Handles EditProductButton.Click
-        If ProductListDataGridView.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select a product to edit.")
-            Return
-        End If
-
-        Dim row As DataGridViewRow = ProductListDataGridView.SelectedRows(0)
-        Dim editForm As New EditProductForm()
-
-        editForm.ProductID = Convert.ToInt32(row.Cells("p_id").Value)
-        editForm.SupplierID = Convert.ToInt32(row.Cells("sup_id").Value)
-        editForm.ProductName = row.Cells("p_name").Value.ToString()
-        editForm.ProductCategory = row.Cells("p_category").Value.ToString()
-        editForm.ProductStock = Convert.ToInt32(row.Cells("p_stock").Value)
-        editForm.ProductMinStock = Convert.ToInt32(row.Cells("p_minStock").Value)
-        editForm.ProductCostPrice = Convert.ToDecimal(row.Cells("p_costPrice").Value)
-        editForm.ProductSellPrice = Convert.ToDecimal(row.Cells("p_sellPrice").Value)
-
-        ' Show as dialog, refresh if saved
-        If editForm.ShowDialog() = DialogResult.OK Then
-            LoadProduct()
-        End If
-    End Sub
-
-
-    Private Sub DeleteProductButton_Click(sender As Object, e As EventArgs) Handles DeleteProductButton.Click
-        ' Check if a row is selected
-        If ProductListDataGridView.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-
-        ' Get Product ID from selected row
-        Dim ProductID As Integer = Convert.ToInt32(ProductListDataGridView.SelectedRows(0).Cells("p_id").Value)
-
-        ' Confirm deletion
-        Dim confirm As DialogResult = MessageBox.Show(
-        "Are you sure you want to delete this product and its related orders?",
-        "Confirm Delete",
-        MessageBoxButtons.YesNo,
-        MessageBoxIcon.Question
-    )
-
-        If confirm = DialogResult.No Then Return
-
-        Try
-            ConnectDB()
-
-            ' Step 1: Delete related orders first (foreign key constraint issue)
-            Dim deleteOrdersSql As String = "DELETE FROM tb_orders WHERE p_id = @ProductID"
-            Using deleteCmd As New MySqlCommand(deleteOrdersSql, conn)
-                deleteCmd.Parameters.AddWithValue("@ProductID", ProductID)
-                deleteCmd.ExecuteNonQuery()
-            End Using
-
-            ' Step 2: Delete related inventory movement records if any
-            Dim deleteMovementsSql As String = "DELETE FROM tb_inventorymovements WHERE p_id = @ProductID"
-            Using deleteCmd As New MySqlCommand(deleteMovementsSql, conn)
-                deleteCmd.Parameters.AddWithValue("@ProductID", ProductID)
-                deleteCmd.ExecuteNonQuery()
-            End Using
-
-            ' Step 3: Delete the product from tb_products
-            Dim deleteProductSql As String = "DELETE FROM tb_products WHERE p_id = @ProductID"
-            Using deleteProductCmd As New MySqlCommand(deleteProductSql, conn)
-                deleteProductCmd.Parameters.AddWithValue("@ProductID", ProductID)
-                Dim rowsAffected As Integer = deleteProductCmd.ExecuteNonQuery()
-
-                If rowsAffected > 0 Then
-                    MessageBox.Show("✅ Product and related orders deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    LoadProduct() ' Refresh DataGridView
-                Else
-                    MessageBox.Show("⚠️ No product found with that ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End If
-            End Using
+                ProductListFlowLayoutPanel.Controls.Add(card)
+            Next
 
         Catch ex As Exception
-            MessageBox.Show("❌ Error deleting product and related orders: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("❌ Error loading products: " & ex.Message)
         Finally
             conn.Close()
         End Try
     End Sub
 
-    Private Sub OrderProductButton_Click(sender As Object, e As EventArgs) Handles OrderProductButton.Click
-        OrderProductForm.ShowDialog()
+    ' === DELETE PRODUCT ===
+    Private Sub DeleteProduct(productID As Integer, productName As String)
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Are you sure you want to delete '{productName}' (ID: {productID})?",
+            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+        If confirm = DialogResult.Yes Then
+            Try
+                ConnectDB()
+                Using cmd As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn)
+                    cmd.Parameters.AddWithValue("@pid", productID)
+                    cmd.ExecuteNonQuery()
+                End Using
+                MessageBox.Show($"✅ Product '{productName}' deleted successfully!")
+                LoadProductCards()
+            Catch ex As Exception
+                MessageBox.Show("❌ Failed to delete product: " & ex.Message)
+            Finally
+                conn.Close()
+            End Try
+        End If
     End Sub
 
+    Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
+        AddProductForm.Show()
+    End Sub
+
+    Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
+        Dim searchTerm As String = ProductSearchTextBox.Text.Trim()
+        If searchTerm = "" Then
+            LoadProductCards()
+            Exit Sub
+        End If
+        LoadProductCards(searchTerm)
+    End Sub
 
 End Class

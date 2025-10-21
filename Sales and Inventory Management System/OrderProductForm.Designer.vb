@@ -24,7 +24,6 @@ Partial Class OrderProductForm
     Private Sub InitializeComponent()
         Label1 = New Label()
         Label2 = New Label()
-        ProductNameComboBox = New ComboBox()
         Label3 = New Label()
         OrderQuantityTextBox = New TextBox()
         OrderButton = New Button()
@@ -36,6 +35,7 @@ Partial Class OrderProductForm
         Label6 = New Label()
         UnitPriceLabel = New Label()
         TotalPriceLabel = New Label()
+        ProductNameLabel = New Label()
         SuspendLayout()
         ' 
         ' Label1
@@ -57,14 +57,6 @@ Partial Class OrderProductForm
         Label2.Size = New Size(135, 23)
         Label2.TabIndex = 1
         Label2.Text = "Product Name: "
-        ' 
-        ' ProductNameComboBox
-        ' 
-        ProductNameComboBox.FormattingEnabled = True
-        ProductNameComboBox.Location = New Point(458, 85)
-        ProductNameComboBox.Name = "ProductNameComboBox"
-        ProductNameComboBox.Size = New Size(210, 28)
-        ProductNameComboBox.TabIndex = 2
         ' 
         ' Label3
         ' 
@@ -164,11 +156,20 @@ Partial Class OrderProductForm
         TotalPriceLabel.Size = New Size(0, 20)
         TotalPriceLabel.TabIndex = 13
         ' 
+        ' ProductNameLabel
+        ' 
+        ProductNameLabel.AutoSize = True
+        ProductNameLabel.Location = New Point(458, 89)
+        ProductNameLabel.Name = "ProductNameLabel"
+        ProductNameLabel.Size = New Size(0, 20)
+        ProductNameLabel.TabIndex = 14
+        ' 
         ' OrderProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1014, 454)
+        Controls.Add(ProductNameLabel)
         Controls.Add(TotalPriceLabel)
         Controls.Add(UnitPriceLabel)
         Controls.Add(Label6)
@@ -180,7 +181,6 @@ Partial Class OrderProductForm
         Controls.Add(OrderButton)
         Controls.Add(OrderQuantityTextBox)
         Controls.Add(Label3)
-        Controls.Add(ProductNameComboBox)
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "OrderProductForm"
@@ -192,7 +192,6 @@ Partial Class OrderProductForm
 
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents ProductNameComboBox As ComboBox
     Friend WithEvents Label3 As Label
     Friend WithEvents OrderQuantityTextBox As TextBox
     Friend WithEvents OrderButton As Button
@@ -204,4 +203,5 @@ Partial Class OrderProductForm
     Friend WithEvents Label6 As Label
     Friend WithEvents UnitPriceLabel As Label
     Friend WithEvents TotalPriceLabel As Label
+    Friend WithEvents ProductNameLabel As Label
 End Class

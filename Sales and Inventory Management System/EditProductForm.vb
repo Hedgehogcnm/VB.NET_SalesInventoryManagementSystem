@@ -1,76 +1,94 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class EditProductForm
-    ' --- Public properties (receive from InventoryForm) ---
     Public Property ProductID As Integer
-    Public Property SupplierID As Integer
-    Public Property ProductName As String
-    Public Property ProductCategory As String
-    Public Property ProductStock As Integer
-    Public Property ProductMinStock As Integer
-    Public Property ProductCostPrice As Decimal
-    Public Property ProductSellPrice As Decimal
 
-    ' --- When form loads, show product info ---
     Private Sub EditProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Show read-only IDs as labels
-        ProductIDLabel.Text = ProductID.ToString()
-        SupplierIDLabel.Text = SupplierID.ToString()
-
-        ' Fill textboxes with editable values
-        EditProductNameTextBox.Text = ProductName
-        ProductCategoryComboBox.SelectedItem = ProductCategory
-        EditProductStockTextBox.Text = ProductStock.ToString()
-        EditProductMinStockTextBox.Text = ProductMinStock.ToString()
-        EditProductCostPriceTextBox.Text = ProductCostPrice.ToString("F2")
-        EditProductSellPriceTextBox.Text = ProductSellPrice.ToString("F2")
+        LoadProductDetails()
     End Sub
 
-    ' --- Save Button Click: Update product info ---
+    ' === Load product data into fields ===
+    Private Sub LoadProductDetails()
+        Try
+            ConnectDB()
+
+            Dim sql As String = "SELECT * FROM tb_products WHERE p_id = @id"
+            Using cmd As New MySqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@id", ProductID)
+
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    If reader.Read() Then
+                        ' ✅ Show Product ID and Supplier ID
+                        ProductIDLabel.Text = reader("p_id").ToString()
+                        SupplierIDLabel.Text = reader("sup_id").ToString()
+
+                        ' ✅ Load all editable fields
+                        EditProductNameTextBox.Text = reader("p_name").ToString()
+                        ProductCategoryComboBox.Text = reader("p_category").ToString()
+                        EditProductStockTextBox.Text = reader("p_stock").ToString()
+                        EditProductMinStockTextBox.Text = reader("p_minStock").ToString()
+                        EditProductCostPriceTextBox.Text = reader("p_costPrice").ToString()
+                        EditProductSellPriceTextBox.Text = reader("p_sellPrice").ToString()
+
+                    Else
+                        MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Me.Close()
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("❌ Failed to load product: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    ' === Save Button Click ===
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
         Try
             ConnectDB()
 
-            Dim sql As String = "UPDATE tb_products SET 
-                                p_name=@name, 
-                                p_category=@category, 
-                                p_stock=@stock, 
-                                p_minStock=@minStock, 
-                                p_costPrice=@costPrice, 
-                                p_sellPrice=@sellPrice
-                             WHERE p_id=@id"
+            Dim sql As String = "
+                UPDATE tb_products 
+                SET 
+                    p_name=@name, 
+                    p_category=@category, 
+                    p_stock=@stock, 
+                    p_minStock=@minStock, 
+                    p_costPrice=@cost, 
+                    p_sellPrice=@sell, 
+                    sup_id=@sup 
+                WHERE p_id=@id
+            "
 
             Using cmd As New MySqlCommand(sql, conn)
                 cmd.Parameters.AddWithValue("@name", EditProductNameTextBox.Text)
-                cmd.Parameters.AddWithValue("@category", ProductCategoryComboBox.SelectedItem)
-                cmd.Parameters.AddWithValue("@stock", EditProductStockTextBox.Text)
-                cmd.Parameters.AddWithValue("@minStock", EditProductMinStockTextBox.Text)
-                cmd.Parameters.AddWithValue("@costPrice", EditProductCostPriceTextBox.Text)
-                cmd.Parameters.AddWithValue("@sellPrice", EditProductSellPriceTextBox.Text)
-                cmd.Parameters.AddWithValue("@id", ProductID)
+                cmd.Parameters.AddWithValue("@category", ProductCategoryComboBox.Text)
+                cmd.Parameters.AddWithValue("@stock", Integer.Parse(EditProductStockTextBox.Text))
+                cmd.Parameters.AddWithValue("@minStock", Integer.Parse(EditProductMinStockTextBox.Text))
+                cmd.Parameters.AddWithValue("@cost", Decimal.Parse(EditProductCostPriceTextBox.Text))
+                cmd.Parameters.AddWithValue("@sell", Decimal.Parse(EditProductSellPriceTextBox.Text))
+                cmd.Parameters.AddWithValue("@sup", Integer.Parse(SupplierIDLabel.Text))
+                cmd.Parameters.AddWithValue("@id", Integer.Parse(ProductIDLabel.Text))
 
-                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
-
-                If rowsAffected > 0 Then
-                    MessageBox.Show("✅ Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.DialogResult = DialogResult.OK  ' <-- Important line
-                    Me.Close()
-                Else
-                    MessageBox.Show("⚠️ No changes were made.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
+                cmd.ExecuteNonQuery()
             End Using
 
+            MessageBox.Show("✅ Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+
         Catch ex As Exception
-            MessageBox.Show("❌ Error updating product: " & ex.Message)
+            MessageBox.Show("❌ Failed to update product: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
-
-        InventoryForm.Show()
     End Sub
 
-    ' --- Cancel Button (optional): close the form ---
+    ' === Cancel Button ===
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+        Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
 End Class
