@@ -2,6 +2,9 @@
 Imports System.Drawing
 
 Public Class ViewOrderForm
+    ' Variable for header panel
+    Private headerPanel As New Panel()
+
     Private Sub ViewOrderForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Enable scrolling for OrderFlowLayoutPanel
         OrderFlowLayoutPanel.AutoScroll = True
@@ -14,13 +17,12 @@ Public Class ViewOrderForm
 
     ' --- Create header row (table-like) ---
     Private Sub CreateHeaderRow()
-        OrderFlowLayoutPanel.Controls.Clear()
-
-        Dim headerPanel As New Panel()
+        ' Create a header panel
         headerPanel.Width = 900
         headerPanel.Height = 35
         headerPanel.BackColor = Color.FromArgb(230, 230, 230)
         headerPanel.Padding = New Padding(5, 8, 5, 5)
+        headerPanel.Location = New Point(0, 0) ' Fixed position at the top
 
         Dim headers As String() = {"Order ID", "User ID", "Product ID", "Product Name", "Supplier ID", "Order Quantity", "Total (RM)", "Status"}
         Dim widths As Integer() = {80, 80, 90, 180, 100, 120, 100, 130}
@@ -38,7 +40,8 @@ Public Class ViewOrderForm
             x += widths(i)
         Next
 
-        OrderFlowLayoutPanel.Controls.Add(headerPanel)
+        ' Add header to the form (not the OrderFlowLayoutPanel)
+        Me.Controls.Add(headerPanel) ' Placed at the top of the form
     End Sub
 
     ' --- Load all orders ---

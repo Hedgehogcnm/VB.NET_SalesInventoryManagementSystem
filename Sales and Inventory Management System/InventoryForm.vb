@@ -1,20 +1,18 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.IO
 
-
 Public Class InventoryForm
 
     ' === COLUMN POSITIONS AND WIDTHS ===
-    Private columnWidths() As Integer = {80, 120, 250, 100, 160, 120, 80, 100, 200}
+    Private columnWidths() As Integer = {80, 120, 250, 100, 160, 120, 80, 100, 120, 120, 200}
     Private columnNames() As String = {
-    "Image", "Product ID", "Product Name",
-    "Supplier ID", "Supplier Name", "Category",
-    "Stock", "Min Stock", "Operation"
-}
-
+        "Image", "Product ID", "Product Name",
+        "Supplier ID", "Supplier Name", "Category",
+        "Stock", "Min Stock", "Cost Price", "Sell Price", "Operation"
+    }
 
     Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetupProductHeader()   ' build header ONCE
+        SetupProductHeader()   ' Build header once
         ProductListFlowLayoutPanel.AutoScroll = True
         ProductListFlowLayoutPanel.WrapContents = False
         ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
@@ -23,25 +21,22 @@ Public Class InventoryForm
 
     Private Sub SetupProductHeader()
         HeaderPanel.Controls.Clear()
-        HeaderPanel.BackColor = Color.FromArgb(255, 255, 200) ' light yellow like your screenshot
+        HeaderPanel.BackColor = Color.FromArgb(255, 255, 200) ' Light yellow
 
         Dim x As Integer = 10
         For i = 0 To columnNames.Length - 1
             Dim lbl As New Label With {
-            .Text = columnNames(i),
-            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-            .AutoSize = False,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Width = columnWidths(i),
-            .Location = New Point(x, 8)
-        }
+                .Text = columnNames(i),
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .AutoSize = False,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Width = columnWidths(i),
+                .Location = New Point(x, 8)
+            }
             HeaderPanel.Controls.Add(lbl)
             x += columnWidths(i)
         Next
     End Sub
-
-
-
 
     Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
         LoadProductTable()
@@ -100,8 +95,6 @@ Public Class InventoryForm
             conn.Close()
 
             ProductListFlowLayoutPanel.Controls.Clear()
-
-
 
             ' === NO DATA FOUND ===
             If dt.Rows.Count = 0 Then
@@ -166,7 +159,7 @@ Public Class InventoryForm
 
                 rowPanel.Controls.Add(pic)
 
-                ' === TEXT FIELDS ===
+                ' === TEXT FIELDS (including cost and sell price) ===
                 Dim fields() As String = {
                     row("p_id").ToString(),
                     row("p_name").ToString(),
@@ -174,23 +167,24 @@ Public Class InventoryForm
                     If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
                     row("p_category").ToString(),
                     row("p_stock").ToString(),
-                    row("p_minStock").ToString()
+                    row("p_minStock").ToString(),
+                    FormatCurrency(row("p_costPrice"), 2),
+                    FormatCurrency(row("p_sellPrice"), 2)
                 }
 
                 Dim xPos As Integer = 90 ' start a bit after image
                 For i = 0 To fields.Length - 1
                     Dim lbl As New Label With {
-        .Text = fields(i),
-        .Font = New Font("Segoe UI", 9),
-        .AutoSize = False,
-        .TextAlign = ContentAlignment.MiddleCenter,
-        .Width = columnWidths(i + 1), ' skip image column
-        .Location = New Point(xPos, 30)
-    }
+                        .Text = fields(i),
+                        .Font = New Font("Segoe UI", 9),
+                        .AutoSize = False,
+                        .TextAlign = ContentAlignment.MiddleCenter,
+                        .Width = columnWidths(i + 1), ' skip image column
+                        .Location = New Point(xPos, 30)
+                    }
                     rowPanel.Controls.Add(lbl)
                     xPos += columnWidths(i + 1)
                 Next
-
 
                 ' === OPERATIONS ===
                 Dim operationStartX As Integer = xPos

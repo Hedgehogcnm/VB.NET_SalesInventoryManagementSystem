@@ -26,6 +26,7 @@ Partial Class ViewOrderForm
         ConfirmButton = New Button()
         CancelButton = New Button()
         OrderFlowLayoutPanel = New FlowLayoutPanel()
+        headerFlowLayoutPanel = New FlowLayoutPanel()
         SuspendLayout()
         ' 
         ' Label1
@@ -58,16 +59,24 @@ Partial Class ViewOrderForm
         ' 
         ' OrderFlowLayoutPanel
         ' 
-        OrderFlowLayoutPanel.Location = New Point(29, 80)
+        OrderFlowLayoutPanel.Location = New Point(25, 160)
         OrderFlowLayoutPanel.Name = "OrderFlowLayoutPanel"
-        OrderFlowLayoutPanel.Size = New Size(1279, 477)
+        OrderFlowLayoutPanel.Size = New Size(1358, 477)
         OrderFlowLayoutPanel.TabIndex = 4
+        ' 
+        ' headerFlowLayoutPanel
+        ' 
+        headerFlowLayoutPanel.Location = New Point(25, 108)
+        headerFlowLayoutPanel.Name = "headerFlowLayoutPanel"
+        headerFlowLayoutPanel.Size = New Size(1358, 46)
+        headerFlowLayoutPanel.TabIndex = 5
         ' 
         ' ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1438, 678)
+        Controls.Add(headerFlowLayoutPanel)
         Controls.Add(OrderFlowLayoutPanel)
         Controls.Add(CancelButton)
         Controls.Add(ConfirmButton)
@@ -82,4 +91,5 @@ Partial Class ViewOrderForm
     Friend WithEvents ConfirmButton As Button
     Friend WithEvents CancelButton As Button
     Friend WithEvents OrderFlowLayoutPanel As FlowLayoutPanel
+    Friend WithEvents headerFlowLayoutPanel As FlowLayoutPanel
 End Class
