@@ -27,16 +27,14 @@ Partial Class SupplierForm
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
-        DataGridViewSupplier = New DataGridView()
-        AddPictureBox = New PictureBox()
-        Label2 = New Label()
+        SupplierFlowLayoutPanel = New FlowLayoutPanel()
         Panel8 = New Panel()
         LabelForm = New Label()
+        AddPictureBox = New PictureBox()
         MenuStrip1.SuspendLayout()
         PanelMain.SuspendLayout()
-        CType(DataGridViewSupplier, ComponentModel.ISupportInitialize).BeginInit()
-        CType(AddPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         Panel8.SuspendLayout()
+        CType(AddPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -111,9 +109,7 @@ Partial Class SupplierForm
         ' 
         ' PanelMain
         ' 
-        PanelMain.Controls.Add(DataGridViewSupplier)
-        PanelMain.Controls.Add(AddPictureBox)
-        PanelMain.Controls.Add(Label2)
+        PanelMain.Controls.Add(SupplierFlowLayoutPanel)
         PanelMain.Controls.Add(Panel8)
         PanelMain.Dock = DockStyle.Fill
         PanelMain.Location = New Point(68, 0)
@@ -121,46 +117,19 @@ Partial Class SupplierForm
         PanelMain.Size = New Size(1434, 773)
         PanelMain.TabIndex = 6
         ' 
-        ' DataGridViewSupplier
+        ' SupplierFlowLayoutPanel
         ' 
-        DataGridViewSupplier.AllowUserToAddRows = False
-        DataGridViewSupplier.AllowUserToDeleteRows = False
-        DataGridViewSupplier.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        DataGridViewSupplier.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
-        DataGridViewSupplier.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewSupplier.Location = New Point(35, 147)
-        DataGridViewSupplier.Name = "DataGridViewSupplier"
-        DataGridViewSupplier.RowHeadersWidth = 51
-        DataGridViewSupplier.Size = New Size(1274, 578)
-        DataGridViewSupplier.TabIndex = 2
-        ' 
-        ' AddPictureBox
-        ' 
-        AddPictureBox.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        AddPictureBox.BackColor = SystemColors.Control
-        AddPictureBox.BackgroundImageLayout = ImageLayout.Zoom
-        AddPictureBox.Image = My.Resources.Resources.AddIconBlue
-        AddPictureBox.Location = New Point(1262, 92)
-        AddPictureBox.Name = "AddPictureBox"
-        AddPictureBox.Size = New Size(47, 46)
-        AddPictureBox.SizeMode = PictureBoxSizeMode.Zoom
-        AddPictureBox.TabIndex = 7
-        AddPictureBox.TabStop = False
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 15.0F, FontStyle.Bold)
-        Label2.Location = New Point(318, 95)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(162, 35)
-        Label2.TabIndex = 6
-        Label2.Text = "Supplier List"
+        SupplierFlowLayoutPanel.Dock = DockStyle.Fill
+        SupplierFlowLayoutPanel.Location = New Point(0, 60)
+        SupplierFlowLayoutPanel.Name = "SupplierFlowLayoutPanel"
+        SupplierFlowLayoutPanel.Size = New Size(1434, 713)
+        SupplierFlowLayoutPanel.TabIndex = 8
         ' 
         ' Panel8
         ' 
         Panel8.BackColor = Color.SeaShell
         Panel8.Controls.Add(LabelForm)
+        Panel8.Controls.Add(AddPictureBox)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
@@ -179,6 +148,19 @@ Partial Class SupplierForm
         LabelForm.TextAlign = ContentAlignment.MiddleLeft
         LabelForm.UseMnemonic = False
         ' 
+        ' AddPictureBox
+        ' 
+        AddPictureBox.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        AddPictureBox.BackColor = Color.SeaShell
+        AddPictureBox.BackgroundImageLayout = ImageLayout.Zoom
+        AddPictureBox.Image = My.Resources.Resources.AddIconBlue
+        AddPictureBox.Location = New Point(1306, 8)
+        AddPictureBox.Name = "AddPictureBox"
+        AddPictureBox.Size = New Size(47, 46)
+        AddPictureBox.SizeMode = PictureBoxSizeMode.Zoom
+        AddPictureBox.TabIndex = 7
+        AddPictureBox.TabStop = False
+        ' 
         ' SupplierForm
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
@@ -192,11 +174,9 @@ Partial Class SupplierForm
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         PanelMain.ResumeLayout(False)
-        PanelMain.PerformLayout()
-        CType(DataGridViewSupplier, ComponentModel.ISupportInitialize).EndInit()
-        CType(AddPictureBox, ComponentModel.ISupportInitialize).EndInit()
         Panel8.ResumeLayout(False)
         Panel8.PerformLayout()
+        CType(AddPictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
@@ -212,7 +192,6 @@ Partial Class SupplierForm
     Friend WithEvents PanelMain As Panel
     Friend WithEvents Panel8 As Panel
     Friend WithEvents LabelForm As Label
-    Friend WithEvents DataGridViewSupplier As DataGridView
-    Friend WithEvents Label2 As Label
     Friend WithEvents AddPictureBox As PictureBox
+    Friend WithEvents SupplierFlowLayoutPanel As FlowLayoutPanel
 End Class
