@@ -32,7 +32,7 @@ Partial Class ViewOrderForm
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(614, 33)
+        Label1.Location = New Point(590, 27)
         Label1.Name = "Label1"
         Label1.Size = New Size(176, 35)
         Label1.TabIndex = 0
@@ -41,21 +41,21 @@ Partial Class ViewOrderForm
         ' HeaderFlowLayoutPanel
         ' 
         HeaderFlowLayoutPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
-        HeaderFlowLayoutPanel.Location = New Point(46, 92)
+        HeaderFlowLayoutPanel.Location = New Point(75, 87)
         HeaderFlowLayoutPanel.Name = "HeaderFlowLayoutPanel"
-        HeaderFlowLayoutPanel.Size = New Size(1292, 41)
+        HeaderFlowLayoutPanel.Size = New Size(1210, 41)
         HeaderFlowLayoutPanel.TabIndex = 1
         ' 
         ' OrderFlowLayoutPanel
         ' 
-        OrderFlowLayoutPanel.Location = New Point(46, 139)
+        OrderFlowLayoutPanel.Location = New Point(75, 134)
         OrderFlowLayoutPanel.Name = "OrderFlowLayoutPanel"
-        OrderFlowLayoutPanel.Size = New Size(1318, 375)
+        OrderFlowLayoutPanel.Size = New Size(1236, 375)
         OrderFlowLayoutPanel.TabIndex = 2
         ' 
         ' CancelButton
         ' 
-        CancelButton.Location = New Point(1150, 560)
+        CancelButton.Location = New Point(1191, 534)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 3
@@ -66,12 +66,13 @@ Partial Class ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1406, 621)
+        ClientSize = New Size(1360, 621)
         Controls.Add(CancelButton)
         Controls.Add(OrderFlowLayoutPanel)
         Controls.Add(HeaderFlowLayoutPanel)
         Controls.Add(Label1)
         Name = "ViewOrderForm"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ViewOrderForm"
         ResumeLayout(False)
         PerformLayout()

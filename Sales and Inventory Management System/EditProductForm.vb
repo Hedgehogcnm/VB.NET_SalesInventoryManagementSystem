@@ -20,11 +20,11 @@ Public Class EditProductForm
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     If reader.Read() Then
-                        ' ✅ Show Product ID and Supplier ID
+                        ' Show Product ID and Supplier ID
                         ProductIDLabel.Text = reader("p_id").ToString()
                         SupplierIDLabel.Text = reader("sup_id").ToString()
 
-                        ' ✅ Load all editable fields
+                        ' Load editable fields
                         EditProductNameTextBox.Text = reader("p_name").ToString()
                         ProductCategoryComboBox.Text = reader("p_category").ToString()
                         EditProductStockTextBox.Text = reader("p_stock").ToString()
@@ -32,14 +32,14 @@ Public Class EditProductForm
                         EditProductCostPriceTextBox.Text = reader("p_costPrice").ToString()
                         EditProductSellPriceTextBox.Text = reader("p_sellPrice").ToString()
 
-                        ' === Load Image ===
+                        ' Load Image
                         If Not IsDBNull(reader("p_image")) Then
                             Dim imgBytes() As Byte = CType(reader("p_image"), Byte())
                             Using ms As New MemoryStream(imgBytes)
                                 ProductPictureBox.Image = Image.FromStream(ms)
                             End Using
                         Else
-                            ' show fallback image if no image in db
+                            ' fallback image
                             Dim fallbackPath As String = IO.Path.Combine(Application.StartupPath, "replace.png")
                             If IO.File.Exists(fallbackPath) Then
                                 ProductPictureBox.Image = Image.FromFile(fallbackPath)
@@ -47,7 +47,6 @@ Public Class EditProductForm
                                 ProductPictureBox.BackColor = Color.LightGray
                             End If
                         End If
-
                     Else
                         MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Me.Close()
@@ -70,7 +69,10 @@ Public Class EditProductForm
 
         If ofd.ShowDialog() = DialogResult.OK Then
             ProductImagePath = ofd.FileName
-            ProductPictureBox.Image = Image.FromFile(ProductImagePath)
+            ' Load a copy to prevent file lock
+            Using imgTemp As Image = Image.FromFile(ProductImagePath)
+                ProductPictureBox.Image = New Bitmap(imgTemp)
+            End Using
         End If
     End Sub
 
@@ -105,17 +107,19 @@ Public Class EditProductForm
 
                 ' === Handle Image Save ===
                 If ProductImagePath <> "" Then
-                    ' new image selected → convert to bytes
+                    ' new image selected → convert to bytes safely
                     Dim imgBytes() As Byte = File.ReadAllBytes(ProductImagePath)
                     cmd.Parameters.Add("@img", MySqlDbType.Blob).Value = imgBytes
                 ElseIf ProductPictureBox.Image IsNot Nothing Then
-                    ' keep existing image
-                    Using ms As New MemoryStream()
-                        ProductPictureBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png)
-                        cmd.Parameters.Add("@img", MySqlDbType.Blob).Value = ms.ToArray()
+                    ' save existing image safely by creating a copy
+                    Using copyImg As New Bitmap(ProductPictureBox.Image)
+                        Using ms As New MemoryStream()
+                            copyImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png)
+                            cmd.Parameters.Add("@img", MySqlDbType.Blob).Value = ms.ToArray()
+                        End Using
                     End Using
                 Else
-                    ' if no image, set NULL
+                    ' no image → set NULL
                     cmd.Parameters.AddWithValue("@img", DBNull.Value)
                 End If
 

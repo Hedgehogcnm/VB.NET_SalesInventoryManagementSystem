@@ -238,7 +238,7 @@ Partial Class EditProductForm
         ' 
         ChangeImageButton.Location = New Point(924, 358)
         ChangeImageButton.Name = "ChangeImageButton"
-        ChangeImageButton.Size = New Size(181, 29)
+        ChangeImageButton.Size = New Size(181, 37)
         ChangeImageButton.TabIndex = 21
         ChangeImageButton.Text = "Change Product Image"
         ChangeImageButton.UseVisualStyleBackColor = True
