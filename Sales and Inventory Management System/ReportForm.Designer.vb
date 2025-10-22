@@ -137,12 +137,12 @@ Partial Class ReportForm
         ReportPanel.BackColor = SystemColors.ActiveBorder
         ReportPanel.Location = New Point(179, 120)
         ReportPanel.Name = "ReportPanel"
-        ReportPanel.Size = New Size(1157, 616)
+        ReportPanel.Size = New Size(1243, 616)
         ReportPanel.TabIndex = 11
         ' 
         ' PrintButton
         ' 
-        PrintButton.Location = New Point(931, 70)
+        PrintButton.Location = New Point(1327, 76)
         PrintButton.Name = "PrintButton"
         PrintButton.Size = New Size(94, 29)
         PrintButton.TabIndex = 7
@@ -151,7 +151,7 @@ Partial Class ReportForm
         ' 
         ' FromDateTimePicker
         ' 
-        FromDateTimePicker.Location = New Point(295, 72)
+        FromDateTimePicker.Location = New Point(541, 77)
         FromDateTimePicker.Name = "FromDateTimePicker"
         FromDateTimePicker.Size = New Size(260, 27)
         FromDateTimePicker.TabIndex = 5
@@ -159,7 +159,7 @@ Partial Class ReportForm
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(243, 74)
+        Label3.Location = New Point(489, 81)
         Label3.Name = "Label3"
         Label3.Size = New Size(46, 20)
         Label3.TabIndex = 4
@@ -168,7 +168,7 @@ Partial Class ReportForm
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(589, 77)
+        Label2.Location = New Point(895, 81)
         Label2.Name = "Label2"
         Label2.Size = New Size(28, 20)
         Label2.TabIndex = 3
@@ -176,7 +176,7 @@ Partial Class ReportForm
         ' 
         ' ToDateTimePicker
         ' 
-        ToDateTimePicker.Location = New Point(633, 72)
+        ToDateTimePicker.Location = New Point(939, 77)
         ToDateTimePicker.Name = "ToDateTimePicker"
         ToDateTimePicker.Size = New Size(262, 27)
         ToDateTimePicker.TabIndex = 2
@@ -233,7 +233,7 @@ Partial Class ReportForm
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(111, 40)
@@ -244,7 +244,7 @@ Partial Class ReportForm
         ' 
         ' ReportForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1502, 773)
         Controls.Add(PanelMain)
