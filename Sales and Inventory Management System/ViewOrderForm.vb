@@ -94,7 +94,7 @@ Public Class ViewOrderForm
 
 
                 ' --- Define column widths (including Confirm column) ---
-                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 70, 80}
+                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 80, 80}
 
                 ' --- Add labels for order data ---
                 Dim values As String() = {
