@@ -4,7 +4,7 @@ Imports System.IO
 Public Class InventoryForm
 
     ' === COLUMN POSITIONS AND WIDTHS ===
-    Private columnWidths() As Integer = {80, 120, 250, 100, 160, 120, 80, 100, 120, 120, 200}
+    Private columnWidths() As Integer = {80, 120, 210, 100, 160, 120, 80, 100, 110, 110, 200}
     Private columnNames() As String = {
         "Image", "Product ID", "Product Name",
         "Supplier ID", "Supplier Name", "Category",
