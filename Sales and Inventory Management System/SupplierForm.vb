@@ -41,88 +41,130 @@ Public Class SupplierForm
     Private Sub LoadSuppliers()
         Try
             ConnectDB()
-            Dim sql As String = "SELECT sup_id, sup_name, sup_contact, sup_email, status FROM tb_suppliers"
+            ' ✅ 从数据库取出图片栏位 logo_image
+            Dim sql As String = "SELECT sup_id, sup_name, sup_contact, sup_email, status, logo_image FROM tb_suppliers"
             Dim da As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
             da.Fill(dt)
             conn.Close()
 
             SupplierFlowLayoutPanel.Controls.Clear()
+            SupplierFlowLayoutPanel.AutoScroll = True
+            SupplierFlowLayoutPanel.BackColor = Color.FromArgb(248, 249, 252)
 
-            If dt.Rows.Count = 0 Then
-                Dim noDataLbl As New Label With {
-                    .Text = "No suppliers found.",
-                    .Font = New Font("Segoe UI", 11, FontStyle.Italic),
-                    .ForeColor = Color.Gray,
-                    .AutoSize = True,
-                    .Margin = New Padding(20)
-                }
-                SupplierFlowLayoutPanel.Controls.Add(noDataLbl)
-                Exit Sub
-            End If
+            ' === 表头 ===
+            Dim headerPanel As New Panel With {
+            .Width = SupplierFlowLayoutPanel.Width - 40,
+            .Height = 40,
+            .BackColor = Color.FromArgb(240, 242, 247),
+            .Padding = New Padding(10, 10, 10, 10)
+        }
 
-            ' === Create Cards ===
+            Dim headers() As String = {"Company Logo", "Supplier Name", "Email", "Contact", "Status", "Action"}
+            Dim headerWidths() As Integer = {100, 180, 220, 130, 100, 80}
+            Dim xPos As Integer = 10
+
+            For i As Integer = 0 To headers.Length - 1
+                Dim lbl As New Label With {
+                .Text = headers(i),
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .ForeColor = Color.Black,
+                .AutoSize = False,
+                .Width = headerWidths(i),
+                .TextAlign = ContentAlignment.MiddleLeft,
+                .Location = New Point(xPos, 5)
+            }
+                headerPanel.Controls.Add(lbl)
+                xPos += headerWidths(i)
+            Next
+
+            SupplierFlowLayoutPanel.Controls.Add(headerPanel)
+
+            ' === 数据行 ===
             For Each row As DataRow In dt.Rows
-                Dim card As New Panel With {
-                    .Width = 260,
-                    .Height = 140,
-                    .BackColor = Color.White,
-                    .Margin = New Padding(15),
-                    .BorderStyle = BorderStyle.FixedSingle
-                }
+                Dim rowPanel As New Panel With {
+                .Width = SupplierFlowLayoutPanel.Width - 40,
+                .Height = 55,
+                .BackColor = Color.White,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Margin = New Padding(3)
+            }
 
-                ' Name
-                Dim nameLbl As New Label With {
-                    .Text = row("sup_name").ToString(),
-                    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
-                    .AutoSize = True,
-                    .Location = New Point(15, 10)
-                }
+                ' Hover 效果
+                AddHandler rowPanel.MouseEnter, Sub() rowPanel.BackColor = Color.FromArgb(245, 248, 255)
+                AddHandler rowPanel.MouseLeave, Sub() rowPanel.BackColor = Color.White
 
-                ' Email
-                Dim emailLbl As New Label With {
-                    .Text = row("sup_email").ToString(),
+                Dim xPosRow As Integer = 10
+
+                ' === 公司Logo ===
+                Dim logoBox As New PictureBox With {
+                .Width = 80,
+                .Height = 40,
+                .SizeMode = PictureBoxSizeMode.Zoom,
+                .Location = New Point(xPosRow + 5, 7),
+                .BorderStyle = BorderStyle.None
+            }
+
+                Try
+                    ' ✅ 从数据库 BLOB 转回图片
+                    If Not IsDBNull(row("logo_image")) Then
+                        Dim imgData() As Byte = DirectCast(row("logo_image"), Byte())
+                        Using ms As New IO.MemoryStream(imgData)
+                            logoBox.Image = Image.FromStream(ms)
+                        End Using
+                    Else
+                        ' ❌ 如果没图片，就显示灰色背景或默认图
+                        logoBox.BackColor = Color.LightGray
+                    End If
+                Catch
+                    logoBox.BackColor = Color.LightGray
+                End Try
+
+                rowPanel.Controls.Add(logoBox)
+                xPosRow += 100
+
+                ' === 文字列 ===
+                Dim values() As String = {
+                row("sup_name").ToString(),
+                row("sup_email").ToString(),
+                row("sup_contact").ToString(),
+                row("status").ToString()
+            }
+
+                Dim widths() As Integer = {180, 220, 130, 100}
+                For i As Integer = 0 To values.Length - 1
+                    Dim lbl As New Label With {
+                    .Text = values(i),
                     .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 35)
+                    .ForeColor = If(i = 3 AndAlso values(i).ToLower() = "active", Color.SeaGreen,
+                                   If(i = 3, Color.Gray, Color.Black)),
+                    .AutoSize = False,
+                    .Width = widths(i),
+                    .TextAlign = ContentAlignment.MiddleLeft,
+                    .Location = New Point(xPosRow, 15)
                 }
+                    rowPanel.Controls.Add(lbl)
+                    xPosRow += widths(i)
+                Next
 
-                ' Phone
-                Dim phoneLbl As New Label With {
-                    .Text = "📞 " & row("sup_contact").ToString(),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = True,
-                    .Location = New Point(15, 55)
-                }
-
-                ' Status
-                Dim statusText As String = row("status").ToString()
-                Dim statusColor As Color = If(statusText.ToLower() = "active", Color.SeaGreen, Color.Gray)
-                Dim statusLbl As New Label With {
-                    .Text = "Status: " & statusText,
-                    .Font = New Font("Segoe UI", 9, FontStyle.Italic),
-                    .ForeColor = statusColor,
-                    .AutoSize = True,
-                    .Location = New Point(15, 80)
-                }
-
-                ' Edit Button
+                ' === Edit 按钮 ===
                 Dim editBtn As New Button With {
-                    .Text = "Edit ✎",
-                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                    .BackColor = Color.LightSteelBlue,
-                    .ForeColor = Color.Black,
-                    .FlatStyle = FlatStyle.Flat,
-                    .Size = New Size(70, 28),
-                    .Location = New Point(170, 100)
-                }
+                .Text = "Edit",
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .BackColor = Color.FromArgb(230, 238, 255),
+                .ForeColor = Color.FromArgb(30, 60, 140),
+                .FlatStyle = FlatStyle.Flat,
+                .Size = New Size(70, 25),
+                .Location = New Point(xPosRow + 5, 13),
+                .Cursor = Cursors.Hand
+            }
                 editBtn.FlatAppearance.BorderSize = 0
 
                 Dim supID As Integer = Convert.ToInt32(row("sup_id"))
                 AddHandler editBtn.Click, Sub() EditSupplier(supID)
 
-                card.Controls.AddRange({nameLbl, emailLbl, phoneLbl, statusLbl, editBtn})
-                SupplierFlowLayoutPanel.Controls.Add(card)
+                rowPanel.Controls.Add(editBtn)
+                SupplierFlowLayoutPanel.Controls.Add(rowPanel)
             Next
 
         Catch ex As Exception
@@ -131,6 +173,7 @@ Public Class SupplierForm
             conn.Close()
         End Try
     End Sub
+
 
 
     ' === 打开添加供应商表单 ===

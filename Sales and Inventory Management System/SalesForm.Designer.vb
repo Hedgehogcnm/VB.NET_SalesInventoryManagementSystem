@@ -25,7 +25,7 @@ Partial Class SalesForm
         components = New ComponentModel.Container()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         TableLayoutPanelTotal = New TableLayoutPanel()
-        Panel1 = New Panel()
+        PanelRight = New Panel()
         labelInvoiceNo = New Label()
         Panel2 = New Panel()
         Label1 = New Label()
@@ -38,6 +38,7 @@ Partial Class SalesForm
         TextBoxDiscount = New TextBox()
         LabelDiscount = New Label()
         Panel6 = New Panel()
+        Panel9 = New Panel()
         LabelTotal = New Label()
         Panel7 = New Panel()
         Label3 = New Label()
@@ -56,9 +57,8 @@ Partial Class SalesForm
         ButtonSearch = New Button()
         Panel8 = New Panel()
         LabelForm = New Label()
-        Panel9 = New Panel()
         TableLayoutPanelTotal.SuspendLayout()
-        Panel1.SuspendLayout()
+        PanelRight.SuspendLayout()
         Panel4.SuspendLayout()
         Panel5.SuspendLayout()
         Panel6.SuspendLayout()
@@ -80,7 +80,7 @@ Partial Class SalesForm
         TableLayoutPanelTotal.BackColor = Color.AntiqueWhite
         TableLayoutPanelTotal.ColumnCount = 1
         TableLayoutPanelTotal.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
-        TableLayoutPanelTotal.Controls.Add(Panel1, 0, 0)
+        TableLayoutPanelTotal.Controls.Add(PanelRight, 0, 0)
         TableLayoutPanelTotal.Controls.Add(FlowLayoutPanelItem, 0, 1)
         TableLayoutPanelTotal.Controls.Add(Panel4, 0, 2)
         TableLayoutPanelTotal.Controls.Add(Panel5, 0, 3)
@@ -98,17 +98,17 @@ Partial Class SalesForm
         TableLayoutPanelTotal.Size = New Size(554, 713)
         TableLayoutPanelTotal.TabIndex = 4
         ' 
-        ' Panel1
+        ' PanelRight
         ' 
-        Panel1.BackColor = Color.AntiqueWhite
-        Panel1.Controls.Add(labelInvoiceNo)
-        Panel1.Controls.Add(Panel2)
-        Panel1.Controls.Add(Label1)
-        Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(3, 3)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(548, 36)
-        Panel1.TabIndex = 2
+        PanelRight.BackColor = Color.AntiqueWhite
+        PanelRight.Controls.Add(labelInvoiceNo)
+        PanelRight.Controls.Add(Panel2)
+        PanelRight.Controls.Add(Label1)
+        PanelRight.Dock = DockStyle.Fill
+        PanelRight.Location = New Point(3, 3)
+        PanelRight.Name = "PanelRight"
+        PanelRight.Size = New Size(548, 36)
+        PanelRight.TabIndex = 2
         ' 
         ' labelInvoiceNo
         ' 
@@ -237,6 +237,15 @@ Partial Class SalesForm
         Panel6.Name = "Panel6"
         Panel6.Size = New Size(548, 59)
         Panel6.TabIndex = 6
+        ' 
+        ' Panel9
+        ' 
+        Panel9.BackColor = Color.Snow
+        Panel9.Dock = DockStyle.Bottom
+        Panel9.Location = New Point(0, 56)
+        Panel9.Name = "Panel9"
+        Panel9.Size = New Size(548, 3)
+        Panel9.TabIndex = 6
         ' 
         ' LabelTotal
         ' 
@@ -438,15 +447,6 @@ Partial Class SalesForm
         LabelForm.TextAlign = ContentAlignment.MiddleLeft
         LabelForm.UseMnemonic = False
         ' 
-        ' Panel9
-        ' 
-        Panel9.BackColor = Color.Snow
-        Panel9.Dock = DockStyle.Bottom
-        Panel9.Location = New Point(0, 56)
-        Panel9.Name = "Panel9"
-        Panel9.Size = New Size(548, 3)
-        Panel9.TabIndex = 6
-        ' 
         ' SalesForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -459,8 +459,8 @@ Partial Class SalesForm
         StartPosition = FormStartPosition.CenterScreen
         WindowState = FormWindowState.Maximized
         TableLayoutPanelTotal.ResumeLayout(False)
-        Panel1.ResumeLayout(False)
-        Panel1.PerformLayout()
+        PanelRight.ResumeLayout(False)
+        PanelRight.PerformLayout()
         Panel4.ResumeLayout(False)
         Panel4.PerformLayout()
         Panel5.ResumeLayout(False)
@@ -479,7 +479,7 @@ Partial Class SalesForm
     End Sub
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents TableLayoutPanelTotal As TableLayoutPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents PanelRight As Panel
     Friend WithEvents labelInvoiceNo As Label
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label1 As Label
