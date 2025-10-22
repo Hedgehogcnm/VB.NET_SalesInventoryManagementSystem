@@ -309,7 +309,7 @@ Public Class InventoryForm
 
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
-        AddProductForm.Show()
+        AddProductForm.ShowDialog()
     End Sub
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
@@ -318,6 +318,6 @@ Public Class InventoryForm
     End Sub
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        ViewOrderForm.Show()
+        ViewOrderForm.ShowDialog()
     End Sub
 End Class

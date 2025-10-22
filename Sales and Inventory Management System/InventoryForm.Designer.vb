@@ -137,9 +137,9 @@ Partial Class InventoryForm
         ' 
         ' ViewOrderButton
         ' 
-        ViewOrderButton.Location = New Point(129, 85)
+        ViewOrderButton.Location = New Point(147, 81)
         ViewOrderButton.Name = "ViewOrderButton"
-        ViewOrderButton.Size = New Size(94, 45)
+        ViewOrderButton.Size = New Size(105, 49)
         ViewOrderButton.TabIndex = 11
         ViewOrderButton.Text = "View Order"
         ViewOrderButton.UseVisualStyleBackColor = True
@@ -171,7 +171,7 @@ Partial Class InventoryForm
         ' 
         AddProductButton.Location = New Point(15, 81)
         AddProductButton.Name = "AddProductButton"
-        AddProductButton.Size = New Size(94, 48)
+        AddProductButton.Size = New Size(111, 48)
         AddProductButton.TabIndex = 7
         AddProductButton.Text = "Add Product"
         AddProductButton.UseVisualStyleBackColor = True
