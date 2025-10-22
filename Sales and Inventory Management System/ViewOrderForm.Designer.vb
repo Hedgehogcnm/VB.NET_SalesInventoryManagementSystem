@@ -43,7 +43,7 @@ Partial Class ViewOrderForm
         HeaderFlowLayoutPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
         HeaderFlowLayoutPanel.Location = New Point(46, 92)
         HeaderFlowLayoutPanel.Name = "HeaderFlowLayoutPanel"
-        HeaderFlowLayoutPanel.Size = New Size(1318, 41)
+        HeaderFlowLayoutPanel.Size = New Size(1292, 41)
         HeaderFlowLayoutPanel.TabIndex = 1
         ' 
         ' OrderFlowLayoutPanel
@@ -59,7 +59,7 @@ Partial Class ViewOrderForm
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 3
-        CancelButton.Text = "Button1"
+        CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
         ' 
         ' ViewOrderForm

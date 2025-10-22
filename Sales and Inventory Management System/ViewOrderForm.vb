@@ -14,29 +14,36 @@ Public Class ViewOrderForm
     Private Sub SetupOrderHeader()
         HeaderFlowLayoutPanel.Controls.Clear()
 
-        ' Define the widths for each column (Adjust widths as necessary)
-        Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 100}
+        ' Match the padding of OrderFlowLayoutPanel
+        HeaderFlowLayoutPanel.Padding = New Padding(5)
+        HeaderFlowLayoutPanel.Margin = New Padding(0)
+
+        ' Define column widths (same as in LoadOrderData)
+        Dim columnWidths As Integer() = {100, 100, 200, 70, 120, 70, 170, 50, 70}
 
         Dim headers As String() = {
-            "Order ID", "Product ID", "Product Name",
-            "User ID", "Supplier ID", "Quantity",
-            "Total(RM)", "Status"
-        }
+        "Order ID", "Product ID", "Product Name",
+        "User ID", "Supplier ID", "Quantity",
+        "Total(RM)", "Status", "Action"
+    }
 
-        Dim x As Integer = 10
+        ' Start at same X position as rowPanel
+        Dim xPos As Integer = 10
+
         For i As Integer = 0 To headers.Length - 1
             Dim lbl As New Label With {
-                .Text = headers(i),
-                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                .AutoSize = False,
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Width = columnWidths(i),
-                .Location = New Point(x, 8)
-            }
+            .Text = headers(i),
+            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+            .AutoSize = False,
+            .TextAlign = ContentAlignment.MiddleCenter,
+            .Width = columnWidths(i),
+            .Location = New Point(xPos, 10) ' Align Y with rowPanel content
+        }
             HeaderFlowLayoutPanel.Controls.Add(lbl)
-            x += columnWidths(i) ' Adjust based on column widths
+            xPos += columnWidths(i)
         Next
     End Sub
+
 
     ' === LOAD ORDER DATA ===
     Private Sub LoadOrderData()
@@ -71,156 +78,99 @@ Public Class ViewOrderForm
                 Exit Sub
             End If
 
-            ' Define the same column widths for content as headers
-            Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 100}
+
 
             ' Loop through each order and display it in a row
+            ' --- Loop through each order and create a row ---
             For Each row As DataRow In dt.Rows
                 Dim rowPanel As New Panel With {
-                    .Width = OrderFlowLayoutPanel.Width - 25,
-                    .Height = 100, ' Increased height to accommodate the content properly
-                    .BackColor = Color.White,
-                    .Margin = New Padding(2)
+    .Width = OrderFlowLayoutPanel.Width - 25,
+    .Height = 50,
+    .BackColor = Color.White,
+    .Margin = New Padding(2),
+    .Padding = New Padding(5) ' Match header padding
+}
+                Dim xPos As Integer = 10 ' Same as header starting X
+
+
+                ' --- Define column widths (including Confirm column) ---
+                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 70, 80}
+
+                ' --- Add labels for order data ---
+                Dim values As String() = {
+                    row("o_id").ToString(),
+                    row("p_id").ToString(),
+                    row("p_name").ToString(),
+                    row("u_id").ToString(),
+                    row("sup_id").ToString(),
+                    row("o_qty").ToString(),
+                    FormatCurrency(row("o_total"), 2)
                 }
 
-                ' Dynamic position for each content item
-                Dim xPos As Integer = 10
+                For i As Integer = 0 To values.Length - 1
+                    Dim lbl As New Label With {
+                        .Text = values(i),
+                        .Width = columnWidths(i),
+                        .Height = 30,
+                        .TextAlign = ContentAlignment.MiddleCenter,
+                        .Location = New Point(xPos, 10)
+                    }
+                    rowPanel.Controls.Add(lbl)
+                    xPos += columnWidths(i)
+                Next
 
-                ' Order ID
-                Dim orderID As Label = New Label With {
-                    .Text = row("o_id").ToString(),
-                    .Width = columnWidths(0),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(orderID)
-                xPos += columnWidths(0) ' Move to the next column
-
-                ' Product ID
-                Dim productID As Label = New Label With {
-                    .Text = row("p_id").ToString(),
-                    .Width = columnWidths(1),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(productID)
-                xPos += columnWidths(1)
-
-                ' Product Name
-                Dim productName As Label = New Label With {
-                    .Text = row("p_name").ToString(),
-                    .Width = columnWidths(2),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(productName)
-                xPos += columnWidths(2)
-
-                ' User ID
-                Dim userID As Label = New Label With {
-                    .Text = row("u_id").ToString(),
-                    .Width = columnWidths(3),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(userID)
-                xPos += columnWidths(3)
-
-                ' Supplier ID
-                Dim supplierID As Label = New Label With {
-                    .Text = row("sup_id").ToString(),
-                    .Width = columnWidths(4),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(supplierID)
-                xPos += columnWidths(4)
-
-                ' Quantity
-                Dim quantity As Label = New Label With {
-                    .Text = row("o_qty").ToString(),
-                    .Width = columnWidths(5),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(quantity)
-                xPos += columnWidths(5)
-
-                ' Total (RM)
-                Dim total As Label = New Label With {
-                    .Text = FormatCurrency(row("o_total"), 2),
-                    .Width = columnWidths(6),
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(xPos, 25)
-                }
-                rowPanel.Controls.Add(total)
-                xPos += columnWidths(6)
-
-                ' Status (ComboBox)
+                ' --- Status ComboBox ---
                 Dim status As New ComboBox With {
-                    .Width = columnWidths(7) - 50,  ' Adjust width to ensure enough space
-                    .Height = 30,                   ' Set the height to fit the options properly
-                    .Location = New Point(xPos, 25),
+                    .Width = columnWidths(7),
+                    .Height = 30,
+                    .Location = New Point(xPos, 10),
                     .DropDownStyle = ComboBoxStyle.DropDownList
                 }
-
-                ' Add items to the ComboBox
                 status.Items.AddRange(New String() {"ordered", "received", "cancelled"})
-
-                ' Set the selected item based on the current status
                 status.SelectedItem = row("o_status").ToString()
-
-                ' Add event handler to update status on change
-                AddHandler status.SelectedIndexChanged, Sub(sender, e)
-                                                            ' Logic to update status can go here
-                                                        End Sub
-
-                ' Add the ComboBox to the panel
                 rowPanel.Controls.Add(status)
-                xPos += columnWidths(7) - 50 ' Move xPos to the right for the confirm button
+                xPos += columnWidths(7)
 
-                ' Add a gap before the Confirm button
-                xPos += 10  ' This will add a 10px gap between the ComboBox and the button
-
-
-                ' Confirm Button next to the ComboBox
+                ' --- Confirm Button in dedicated column ---
                 Dim confirmButton As New Button With {
                     .Text = "Confirm",
-                    .Width = 75,
-                    .Location = New Point(xPos, 25),
+                    .Width = columnWidths(8),
+                    .Height = 30,
+                    .Location = New Point(xPos, 10),
                     .BackColor = Color.LightSkyBlue,
                     .FlatStyle = FlatStyle.Flat
                 }
 
-                ' Add event handler for the Confirm button
+                ' Event handler to update status
                 AddHandler confirmButton.Click, Sub(sender, e)
                                                     Dim selectedStatus As String = status.SelectedItem.ToString()
-
-                                                    ' Show confirmation message box
                                                     Dim confirmResult As DialogResult = MessageBox.Show(
                                                         $"Are you sure you want to change the status to '{selectedStatus}'?",
                                                         "Confirm Status Change",
                                                         MessageBoxButtons.OKCancel,
                                                         MessageBoxIcon.Question
                                                     )
-
-                                                    ' If user clicks OK
                                                     If confirmResult = DialogResult.OK Then
-                                                        ' Update the order status in the database
                                                         UpdateOrderStatus(row("o_id").ToString(), selectedStatus)
-
-                                                        ' Show success message
                                                         MessageBox.Show("Status changed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                                        ' --- Refresh InventoryForm Product List ---
+                                                        For Each frm As Form In Application.OpenForms
+                                                            If TypeOf frm Is InventoryForm Then
+                                                                DirectCast(frm, InventoryForm).RefreshProductListFromOtherForm()
+                                                                Exit For
+                                                            End If
+                                                        Next
                                                     End If
                                                 End Sub
 
-                ' Add the Confirm Button to the row panel
+
                 rowPanel.Controls.Add(confirmButton)
 
-                ' Add the row panel to the FlowLayoutPanel
+                ' --- Add the row to FlowLayoutPanel ---
                 OrderFlowLayoutPanel.Controls.Add(rowPanel)
-
             Next
+
 
         Catch ex As Exception
             MessageBox.Show("❌ Error loading orders: " & ex.Message)
@@ -246,5 +196,9 @@ Public Class ViewOrderForm
         Finally
             conn.Close()
         End Try
+    End Sub
+
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+        Me.Close()
     End Sub
 End Class

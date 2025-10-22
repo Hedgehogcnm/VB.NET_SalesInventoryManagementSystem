@@ -4,7 +4,7 @@ Imports System.IO
 Public Class InventoryForm
 
     ' === COLUMN POSITIONS AND WIDTHS ===
-    Private columnWidths() As Integer = {80, 120, 250, 100, 160, 120, 80, 100, 120, 120, 200}
+    Private columnWidths() As Integer = {80, 120, 210, 100, 160, 120, 80, 100, 110, 110, 200}
     Private columnNames() As String = {
         "Image", "Product ID", "Product Name",
         "Supplier ID", "Supplier Name", "Category",
@@ -309,7 +309,7 @@ Public Class InventoryForm
 
 
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
-        AddProductForm.Show()
+        AddProductForm.ShowDialog()
     End Sub
 
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
@@ -318,6 +318,6 @@ Public Class InventoryForm
     End Sub
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        ViewOrderForm.Show()
+        ViewOrderForm.ShowDialog()
     End Sub
 End Class
