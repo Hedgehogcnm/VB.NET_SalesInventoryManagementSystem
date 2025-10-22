@@ -144,12 +144,16 @@ Public Class ViewOrderForm
                 ' Event handler to update status
                 AddHandler confirmButton.Click, Sub(sender, e)
                                                     Dim selectedStatus As String = status.SelectedItem.ToString()
+                                                    Dim productName As String = row("p_name").ToString()
+                                                    Dim productID As String = row("p_id").ToString()
+
                                                     Dim confirmResult As DialogResult = MessageBox.Show(
-                                                        $"Are you sure you want to change the status to '{selectedStatus}'?",
+                                                        $"Confirm change order status for '{productName}' (Product ID: {productID}) to '{selectedStatus}'?",
                                                         "Confirm Status Change",
                                                         MessageBoxButtons.OKCancel,
                                                         MessageBoxIcon.Question
                                                     )
+
                                                     If confirmResult = DialogResult.OK Then
                                                         UpdateOrderStatus(row("o_id").ToString(), selectedStatus)
                                                         MessageBox.Show("Status changed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -163,6 +167,7 @@ Public Class ViewOrderForm
                                                         Next
                                                     End If
                                                 End Sub
+
 
 
                 rowPanel.Controls.Add(confirmButton)
