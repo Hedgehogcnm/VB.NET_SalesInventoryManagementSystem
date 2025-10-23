@@ -59,7 +59,7 @@ Partial Class SupplierForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(67, 62)
+        LogoToolStripMenuItem.Size = New Size(149, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
@@ -67,7 +67,7 @@ Partial Class SupplierForm
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SalesToolStripMenuItem.Size = New Size(67, 80)
+        SalesToolStripMenuItem.Size = New Size(149, 80)
         SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
@@ -76,7 +76,7 @@ Partial Class SupplierForm
         InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        InventoryToolStripMenuItem.Size = New Size(67, 80)
+        InventoryToolStripMenuItem.Size = New Size(149, 80)
         InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
@@ -85,7 +85,7 @@ Partial Class SupplierForm
         SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SupplierToolStripMenuItem.Size = New Size(67, 80)
+        SupplierToolStripMenuItem.Size = New Size(149, 80)
         SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
@@ -95,7 +95,7 @@ Partial Class SupplierForm
         ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.Size = New Size(149, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
         ' 
         ' LogOutToolStripMenuItem
@@ -104,7 +104,7 @@ Partial Class SupplierForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.Size = New Size(149, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' PanelMain
@@ -139,7 +139,7 @@ Partial Class SupplierForm
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(131, 40)
@@ -163,7 +163,7 @@ Partial Class SupplierForm
         ' 
         ' SupplierForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1502, 773)
         Controls.Add(PanelMain)

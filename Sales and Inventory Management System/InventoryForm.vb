@@ -11,14 +11,22 @@ Public Class InventoryForm
         "Stock", "Min Stock", "Cost Price", "Sell Price", "Operation"
     }
 
+    ' === FORM LOAD ===
     Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetupProductHeader()   ' Build header once
+        SetupProductHeader()
         ProductListFlowLayoutPanel.AutoScroll = True
         ProductListFlowLayoutPanel.WrapContents = False
         ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
         LoadProductTable()
+        ' Remove the blue highlight focus border
+        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
     End Sub
 
+    Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        LoadProductTable()
+    End Sub
+
+    ' === HEADER SETUP ===
     Private Sub SetupProductHeader()
         HeaderPanel.Controls.Clear()
         HeaderPanel.BackColor = Color.FromArgb(255, 255, 200) ' Light yellow
@@ -38,37 +46,34 @@ Public Class InventoryForm
         Next
     End Sub
 
-    Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+    ' === REFRESH FROM OTHER FORMS ===
+    Public Sub RefreshProductListFromOtherForm()
         LoadProductTable()
     End Sub
 
     ' === NAVIGATION MENU ===
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
-        Dim Sales As New SalesForm()
-        Sales.Show()
+        Dim frm As New SalesForm()
+        frm.Show()
         Me.Close()
     End Sub
 
     Private Sub InventoryToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
-        Dim Inventory As New InventoryForm()
-        Inventory.Show()
+        Dim frm As New InventoryForm()
+        frm.Show()
         Me.Close()
     End Sub
 
     Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupplierToolStripMenuItem.Click
-        Dim Supplier As New SupplierForm()
-        Supplier.Show()
+        Dim frm As New SupplierForm()
+        frm.Show()
         Me.Close()
     End Sub
 
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
-        Dim Report As New ReportForm()
-        Report.Show()
+        Dim frm As New ReportForm()
+        frm.Show()
         Me.Close()
-    End Sub
-
-    Public Sub RefreshProductListFromOtherForm()
-        LoadProductTable()
     End Sub
 
     ' === LOAD PRODUCT TABLE ===
@@ -123,6 +128,7 @@ Public Class InventoryForm
 
                 Dim stock As Integer = Convert.ToInt32(row("p_stock"))
                 Dim minStock As Integer = Convert.ToInt32(row("p_minStock"))
+                If stock <= minStock Then rowPanel.BackColor = Color.MistyRose
 
                 ' 🔴 Highlight low stock
                 If stock <= minStock Then rowPanel.BackColor = Color.MistyRose
@@ -152,7 +158,6 @@ Public Class InventoryForm
                 Catch
                     pic.BackColor = Color.LightGray
                 End Try
-
                 rowPanel.Controls.Add(pic)
 
                 ' === Text fields ===
@@ -192,6 +197,11 @@ Public Class InventoryForm
                 .Location = New Point(operationStartX, 25)
             }
                 editBtn.FlatAppearance.BorderSize = 0
+                AddHandler editBtn.Click, Sub()
+                                              Dim frm As New EditProductForm()
+                                              frm.ProductID = productID
+                                              If frm.ShowDialog() = DialogResult.OK Then LoadProductTable()
+                                          End Sub
 
                 Dim orderBtn As New Button With {
                 .Text = "📦 Order",
@@ -201,6 +211,12 @@ Public Class InventoryForm
                 .Location = New Point(operationStartX + 80, 25)
             }
                 orderBtn.FlatAppearance.BorderSize = 0
+                AddHandler orderBtn.Click, Sub()
+                                               Dim frm As New OrderProductForm()
+                                               frm.SelectedProductID = productID
+                                               frm.SelectedProductName = productName
+                                               frm.ShowDialog()
+                                           End Sub
 
                 Dim deleteBtn As New Button With {
                 .Text = "🗑️ Delete",
@@ -210,28 +226,7 @@ Public Class InventoryForm
                 .Location = New Point(operationStartX + 160, 25)
             }
                 deleteBtn.FlatAppearance.BorderSize = 0
-
-                Dim productID As Integer = Convert.ToInt32(row("p_id"))
-                Dim productName As String = row("p_name").ToString()
-
-                AddHandler editBtn.Click, Sub()
-                                              Dim editForm As New EditProductForm()
-                                              editForm.ProductID = productID
-                                              If editForm.ShowDialog() = DialogResult.OK Then
-                                                  LoadProductTable()
-                                              End If
-                                          End Sub
-
-                AddHandler orderBtn.Click, Sub()
-                                               Dim orderForm As New OrderProductForm()
-                                               orderForm.SelectedProductID = productID
-                                               orderForm.SelectedProductName = productName
-                                               orderForm.ShowDialog()
-                                           End Sub
-
-                AddHandler deleteBtn.Click, Sub()
-                                                DeleteProduct(productID, productName)
-                                            End Sub
+                AddHandler deleteBtn.Click, Sub() DeleteProduct(productID, productName)
 
                 rowPanel.Controls.Add(editBtn)
                 rowPanel.Controls.Add(orderBtn)
@@ -251,60 +246,49 @@ Public Class InventoryForm
     ' === DELETE PRODUCT AND RELATED INVENTORY ===
     ' === DELETE PRODUCT AND RELATED INVENTORY AND ORDERS ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
-        ' Show confirmation dialog before proceeding
         Dim confirm As DialogResult = MessageBox.Show(
-        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
-        "This will also remove all related inventory movement records and orders.",
-        "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+            "This will also remove all related inventory movements and orders.",
+            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
-        ' If the user clicks Yes, proceed with deletion
         If confirm = DialogResult.Yes Then
             Try
                 ConnectDB()
-
-                ' Start a transaction to ensure all deletions are done atomically
                 Using transaction As MySqlTransaction = conn.BeginTransaction()
                     Try
-                        ' Delete related inventory movement records first
-                        Using cmdDeleteMovements As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
-                            cmdDeleteMovements.Parameters.AddWithValue("@pid", productID)
-                            cmdDeleteMovements.ExecuteNonQuery()
+                        Using cmd1 As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
+                            cmd1.Parameters.AddWithValue("@pid", productID)
+                            cmd1.ExecuteNonQuery()
                         End Using
 
-                        ' Delete related orders for this product
-                        Using cmdDeleteOrders As New MySqlCommand("DELETE FROM tb_orders WHERE p_id = @pid", conn, transaction)
-                            cmdDeleteOrders.Parameters.AddWithValue("@pid", productID)
-                            cmdDeleteOrders.ExecuteNonQuery()
+                        Using cmd2 As New MySqlCommand("DELETE FROM tb_orders WHERE p_id = @pid", conn, transaction)
+                            cmd2.Parameters.AddWithValue("@pid", productID)
+                            cmd2.ExecuteNonQuery()
                         End Using
 
-                        ' Delete the product record from tb_products
-                        Using cmdDeleteProduct As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
-                            cmdDeleteProduct.Parameters.AddWithValue("@pid", productID)
-                            cmdDeleteProduct.ExecuteNonQuery()
+                        Using cmd3 As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
+                            cmd3.Parameters.AddWithValue("@pid", productID)
+                            cmd3.ExecuteNonQuery()
                         End Using
 
-                        ' Commit the transaction if everything is successful
                         transaction.Commit()
-                        MessageBox.Show($"✅ Product '{productName}' (ID: {productID}) and related records (inventory and orders) deleted successfully.")
-                        ' Reload the product table after deletion
+                        MessageBox.Show($"✅ Product '{productName}' and related records deleted successfully.")
                         LoadProductTable()
 
                     Catch ex As Exception
-                        ' Rollback the transaction if any part fails
                         transaction.Rollback()
-                        MessageBox.Show("❌ Failed to delete product and related records: " & ex.Message)
+                        MessageBox.Show("❌ Failed to delete product: " & ex.Message)
                     End Try
                 End Using
             Catch ex As Exception
-                MessageBox.Show("❌ Connection error: " & ex.Message)
+                MessageBox.Show("❌ Database error: " & ex.Message)
             Finally
                 conn.Close()
             End Try
         End If
     End Sub
 
-
-
+    ' === BUTTONS ON FORM ===
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
         AddProductForm.ShowDialog()
     End Sub
@@ -331,4 +315,5 @@ Public Class InventoryForm
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
         ViewOrderForm.ShowDialog()
     End Sub
+
 End Class

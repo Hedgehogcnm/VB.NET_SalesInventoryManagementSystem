@@ -34,6 +34,8 @@ Public Class SupplierForm
     ' === Form Load ===
     Private Sub SupplierForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadSuppliers()
+        ' Remove the blue highlight focus border
+        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
     End Sub
 
 
@@ -191,6 +193,5 @@ Public Class SupplierForm
         editForm.ShowDialog()
         LoadSuppliers()
     End Sub
-
 
 End Class

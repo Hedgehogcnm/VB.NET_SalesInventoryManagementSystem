@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.Drawing.Printing
 
 Public Class SalesForm
     Private Sub SalesToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
@@ -386,6 +387,187 @@ Public Class SalesForm
         UpdateTotals()
     End Sub
 
+    Private WithEvents PrintDoc As New PrintDocument
+    Private PrintDlg As New PrintDialog
+    Private currentInvoiceNo As String
+    Private invoiceTable As DataTable
+    Private customerName As String
+    Private totalAmount As Decimal
+    Private discountValue As Decimal
+    Private subTotal As Decimal
+
+    Private Sub ButtonCheckOut_Click(sender As Object, e As EventArgs) Handles ButtonCheckOut.Click
+        customerName = TextBoxCustomerName.Text.Trim()
+        If customerName = "" Or customerName = "Customer Name" Then
+            MessageBox.Show("Please enter customer name.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+        If Cart.Count = 0 Then
+            MessageBox.Show("Your cart is empty.", "No Items", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Try
+            ConnectDB()
+
+            currentInvoiceNo = labelInvoiceNo.Text.Replace("#", "").Trim()
+            subTotal = Cart.Values.Sum(Function(x) x.Total)
+            Dim discountPercent As Decimal
+            Decimal.TryParse(TextBoxDiscount.Text, discountPercent)
+            discountValue = subTotal * (discountPercent / 100D)
+            totalAmount = subTotal - discountValue
+
+            ' === Save into tb_sales ===
+            Dim sqlSale As String = "INSERT INTO tb_sales (u_id, s_invoiceNo, s_customer, s_total) VALUES (@uid, @inv, @cust, @total)"
+            Using cmd As New MySqlCommand(sqlSale, conn)
+                cmd.Parameters.AddWithValue("@uid", 1)
+                cmd.Parameters.AddWithValue("@inv", currentInvoiceNo)
+                cmd.Parameters.AddWithValue("@cust", customerName)
+                cmd.Parameters.AddWithValue("@total", totalAmount)
+                cmd.ExecuteNonQuery()
+            End Using
+
+            ' === Get the new sale id ===
+            Dim saleId As Integer
+            Using cmd As New MySqlCommand("SELECT LAST_INSERT_ID()", conn)
+                saleId = Convert.ToInt32(cmd.ExecuteScalar())
+            End Using
+
+            ' === Save sale details ===
+            For Each item In Cart.Values
+                Dim productId As Integer
+                Using cmd As New MySqlCommand("SELECT p_id FROM tb_products WHERE p_name=@pname LIMIT 1", conn)
+                    cmd.Parameters.AddWithValue("@pname", item.Name)
+                    Dim result = cmd.ExecuteScalar()
+                    If result IsNot Nothing Then productId = Convert.ToInt32(result)
+                End Using
+
+                If productId > 0 Then
+                    Dim sqlDetail As String = "INSERT INTO tb_sales_detail (s_id, p_id, sd_qty, sd_total) VALUES (@sid, @pid, @qty, @total)"
+                    Using cmdDetail As New MySqlCommand(sqlDetail, conn)
+                        cmdDetail.Parameters.AddWithValue("@sid", saleId)
+                        cmdDetail.Parameters.AddWithValue("@pid", productId)
+                        cmdDetail.Parameters.AddWithValue("@qty", item.Quantity)
+                        cmdDetail.Parameters.AddWithValue("@total", item.Total)
+                        cmdDetail.ExecuteNonQuery()
+                    End Using
+                End If
+            Next
+
+            ' === Prepare data for printing ===
+            invoiceTable = New DataTable()
+            invoiceTable.Columns.Add("Product")
+            invoiceTable.Columns.Add("Qty", GetType(Integer))
+            invoiceTable.Columns.Add("Price", GetType(Decimal))
+            invoiceTable.Columns.Add("Total", GetType(Decimal))
+
+            For Each c In Cart.Values
+                invoiceTable.Rows.Add(c.Name, c.Quantity, c.Price, c.Total)
+            Next
+
+            ' === Show Print Dialog ===
+            PrintDlg.Document = PrintDoc
+            PrintDoc.DocumentName = currentInvoiceNo
+            If PrintDlg.ShowDialog() = DialogResult.OK Then
+                PrintDoc.PrinterSettings = PrintDlg.PrinterSettings
+                PrintDoc.Print()
+            End If
+
+            MessageBox.Show("Sale saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Cart.Clear()
+            RefreshCartPanel()
+            GenerateInvoiceNo()
+            TextBoxCustomerName.Text = "Customer Name"
+            TextBoxDiscount.Text = "Discount (%)"
+
+        Catch ex As Exception
+            MessageBox.Show("Checkout Error: " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+
+    Private Sub PrintDoc_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDoc.PrintPage
+        Dim g As Graphics = e.Graphics
+        Dim left As Integer = 60
+        Dim y As Integer = 80
+        Dim marginBounds = e.MarginBounds
+        Dim centerX As Single = marginBounds.Left + marginBounds.Width / 2
+
+        Dim reportTitleFont As New Font("Arial", 20, FontStyle.Bold)
+        Dim companyFont As New Font("Arial", 12, FontStyle.Bold)
+        Dim infoFont As New Font("Arial", 9)
+        Dim smallFont As New Font("Arial", 8)
+        Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
+        Dim bodyFont As New Font("Arial", 9)
+        Dim formatCenter As New StringFormat() With {.Alignment = StringAlignment.Center}
+        Dim rightAlign As New StringFormat() With {.Alignment = StringAlignment.Far}
+
+        ' === Logo ===
+        Try
+            Dim logoPath As String = IO.Path.Combine(Application.StartupPath, "VBlogo.png")
+            If IO.File.Exists(logoPath) Then
+                Dim logo As Image = Image.FromFile(logoPath)
+                g.DrawImage(logo, centerX - 50, 20, 100, 50)
+            End If
+        Catch
+        End Try
+
+        ' === Company Info ===
+        g.DrawString("GEARTRACK SDN BHD", companyFont, Brushes.Black, centerX, y, formatCenter)
+        g.DrawString("No. 88, Jalan Teknologi, Skudai, Johor", infoFont, Brushes.Black, centerX, y + 20, formatCenter)
+        g.DrawString("Tel: +60 13-7323888 | geartrack@gmail.com", infoFont, Brushes.Black, centerX, y + 40, formatCenter)
+        y += 80
+
+        ' === Invoice Header ===
+        g.DrawString("INVOICE", reportTitleFont, Brushes.Black, centerX, y, formatCenter)
+        y += 40
+        g.DrawString("Invoice No: " & currentInvoiceNo, bodyFont, Brushes.Black, left, y)
+        y += 20
+        g.DrawString("Customer: " & customerName, bodyFont, Brushes.Black, left, y)
+        y += 20
+        g.DrawString("Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), bodyFont, Brushes.Black, left, y)
+        y += 30
+
+        ' === Table Header ===
+        g.DrawLine(Pens.Black, left, y, marginBounds.Right, y)
+        y += 10
+        g.DrawString("Product", headerFont, Brushes.Black, left + 10, y)
+        g.DrawString("Qty", headerFont, Brushes.Black, left + 250, y)
+        g.DrawString("Price", headerFont, Brushes.Black, left + 330, y)
+        g.DrawString("Total", headerFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
+        y += 20
+        g.DrawLine(Pens.Black, left, y, marginBounds.Right, y)
+        y += 10
+
+        ' === Items ===
+        For Each row As DataRow In invoiceTable.Rows
+            g.DrawString(row("Product").ToString(), bodyFont, Brushes.Black, left + 10, y)
+            g.DrawString(row("Qty").ToString(), bodyFont, Brushes.Black, left + 260, y)
+            g.DrawString("RM " & Format(row("Price"), "0.00"), bodyFont, Brushes.Black, left + 330, y)
+            g.DrawString("RM " & Format(row("Total"), "0.00"), bodyFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
+            y += 20
+        Next
+
+        y += 10
+        g.DrawLine(Pens.Black, left, y, marginBounds.Right, y)
+        y += 30
+
+        ' === Totals ===
+        g.DrawString("Subtotal: RM " & subTotal.ToString("0.00"), bodyFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
+        y += 20
+        g.DrawString("Discount: RM " & discountValue.ToString("0.00"), bodyFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
+        y += 20
+        g.DrawString("Total: RM " & totalAmount.ToString("0.00"), headerFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
+        y += 40
+
+        g.DrawString("Thank you for your purchase!", bodyFont, Brushes.Black, centerX, y, formatCenter)
+        y += 20
+        g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, y)
+    End Sub
+
+
 End Class
 
 Public Class Product
@@ -405,25 +587,6 @@ Public Class CartItem
     Public ReadOnly Property Total As Decimal
         Get
             Return Price * Quantity
-        End Get
-    End Property
-End Class
-
-Public Class NoHighlightColorTable
-    Inherits ProfessionalColorTable
-    Public Overrides ReadOnly Property MenuItemSelected As Color
-        Get
-            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
-        End Get
-    End Property
-    Public Overrides ReadOnly Property MenuItemSelectedGradientBegin As Color
-        Get
-            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
-        End Get
-    End Property
-    Public Overrides ReadOnly Property MenuItemSelectedGradientEnd As Color
-        Get
-            Return Color.FromArgb(255, 235, 200) ' Light peach hover color
         End Get
     End Property
 End Class
