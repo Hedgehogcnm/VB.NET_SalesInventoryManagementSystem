@@ -25,6 +25,7 @@ Partial Class SupplierForm
         InventoryToolStripMenuItem = New ToolStripMenuItem()
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
+        AboutUsToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
         SupplierFlowLayoutPanel = New FlowLayoutPanel()
@@ -43,7 +44,7 @@ Partial Class SupplierForm
         MenuStrip1.BackgroundImageLayout = ImageLayout.None
         MenuStrip1.Dock = DockStyle.Left
         MenuStrip1.ImageScalingSize = New Size(40, 40)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, AboutUsToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
@@ -59,7 +60,7 @@ Partial Class SupplierForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(149, 62)
+        LogoToolStripMenuItem.Size = New Size(67, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
@@ -67,7 +68,7 @@ Partial Class SupplierForm
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SalesToolStripMenuItem.Size = New Size(149, 80)
+        SalesToolStripMenuItem.Size = New Size(67, 80)
         SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
@@ -76,7 +77,7 @@ Partial Class SupplierForm
         InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        InventoryToolStripMenuItem.Size = New Size(149, 80)
+        InventoryToolStripMenuItem.Size = New Size(67, 80)
         InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
@@ -85,18 +86,25 @@ Partial Class SupplierForm
         SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SupplierToolStripMenuItem.Size = New Size(149, 80)
+        SupplierToolStripMenuItem.Size = New Size(67, 80)
         SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
         ' 
         ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         ReportToolStripMenuItem.Image = My.Resources.Resources.report
-        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(149, 80)
+        ReportToolStripMenuItem.Size = New Size(67, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
+        ' 
+        ' AboutUsToolStripMenuItem
+        ' 
+        AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
+        AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
+        AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        AboutUsToolStripMenuItem.Size = New Size(67, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -104,7 +112,7 @@ Partial Class SupplierForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(149, 80)
+        LogOutToolStripMenuItem.Size = New Size(67, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' PanelMain
@@ -195,4 +203,5 @@ Partial Class SupplierForm
     Friend WithEvents LabelForm As Label
     Friend WithEvents AddPictureBox As PictureBox
     Friend WithEvents SupplierFlowLayoutPanel As FlowLayoutPanel
+    Friend WithEvents AboutUsToolStripMenuItem As ToolStripMenuItem
 End Class

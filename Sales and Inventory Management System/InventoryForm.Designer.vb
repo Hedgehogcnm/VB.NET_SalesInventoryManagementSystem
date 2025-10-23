@@ -25,6 +25,7 @@ Partial Class InventoryForm
         InventoryToolStripMenuItem = New ToolStripMenuItem()
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
+        AboutUsToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
         HeaderPanel = New Panel()
@@ -46,7 +47,7 @@ Partial Class InventoryForm
         MenuStrip1.BackgroundImageLayout = ImageLayout.None
         MenuStrip1.Dock = DockStyle.Left
         MenuStrip1.ImageScalingSize = New Size(40, 40)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, AboutUsToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
@@ -96,11 +97,18 @@ Partial Class InventoryForm
         ' 
         ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         ReportToolStripMenuItem.Image = My.Resources.Resources.report
-        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         ReportToolStripMenuItem.Size = New Size(67, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
+        ' 
+        ' AboutUsToolStripMenuItem
+        ' 
+        AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
+        AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
+        AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        AboutUsToolStripMenuItem.Size = New Size(67, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -150,9 +158,9 @@ Partial Class InventoryForm
         ' 
         ' ProductListFlowLayoutPanel
         ' 
-        ProductListFlowLayoutPanel.Location = New Point(3, 190)
+        ProductListFlowLayoutPanel.Location = New Point(0, 193)
         ProductListFlowLayoutPanel.Name = "ProductListFlowLayoutPanel"
-        ProductListFlowLayoutPanel.Size = New Size(1814, 840)
+        ProductListFlowLayoutPanel.Size = New Size(1808, 840)
         ProductListFlowLayoutPanel.TabIndex = 10
         ' 
         ' SearchProductButton
@@ -172,6 +180,7 @@ Partial Class InventoryForm
         ' 
         ProductSearchTextBox.Location = New Point(1397, 93)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
+        ProductSearchTextBox.PlaceholderText = "Enter Product Name to Search"
         ProductSearchTextBox.Size = New Size(276, 27)
         ProductSearchTextBox.TabIndex = 5
         ' 
@@ -247,4 +256,5 @@ Partial Class InventoryForm
     Friend WithEvents ProductListFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents ViewOrderButton As Button
     Friend WithEvents HeaderPanel As Panel
+    Friend WithEvents AboutUsToolStripMenuItem As ToolStripMenuItem
 End Class

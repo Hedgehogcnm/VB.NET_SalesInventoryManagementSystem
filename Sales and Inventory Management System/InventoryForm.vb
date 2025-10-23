@@ -2,72 +2,6 @@
 Imports System.IO
 
 Public Class InventoryForm
-
-    ' === COLUMN POSITIONS AND WIDTHS ===
-    Private columnWidths() As Integer = {80, 120, 210, 100, 160, 120, 80, 100, 110, 110, 210}
-    Private columnNames() As String = {
-        "Image", "Product ID", "Product Name",
-        "Supplier ID", "Supplier Name", "Category",
-        "Stock", "Min Stock", "Cost Price", "Sell Price", "Action"
-    }
-
-    ' === FORM LOAD ===
-    Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetupProductHeader()
-        ProductListFlowLayoutPanel.AutoScroll = True
-        ProductListFlowLayoutPanel.WrapContents = False
-        ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
-        LoadProductTable()
-
-        ' === Initialize placeholder text ===
-        ProductSearchTextBox.Text = "Enter Product Name to Search"
-        ProductSearchTextBox.ForeColor = Color.Gray
-    End Sub
-
-    Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        LoadProductTable()
-    End Sub
-
-    ' === PRODUCT SEARCH PLACEHOLDER ===
-    Private Sub ProductSearchTextBox_GotFocus(sender As Object, e As EventArgs) Handles ProductSearchTextBox.GotFocus
-        If ProductSearchTextBox.Text = "Enter Product Name to Search" Then
-            ProductSearchTextBox.Text = ""
-            ProductSearchTextBox.ForeColor = Color.Black
-        End If
-    End Sub
-
-    Private Sub ProductSearchTextBox_LostFocus(sender As Object, e As EventArgs) Handles ProductSearchTextBox.LostFocus
-        If String.IsNullOrWhiteSpace(ProductSearchTextBox.Text) Then
-            ProductSearchTextBox.Text = "Enter Product Name to Search"
-            ProductSearchTextBox.ForeColor = Color.Gray
-        End If
-    End Sub
-
-    ' === HEADER SETUP ===
-    Private Sub SetupProductHeader()
-        HeaderPanel.Controls.Clear()
-        HeaderPanel.BackColor = Color.Bisque ' Light yellow
-
-        Dim x As Integer = 10
-        For i = 0 To columnNames.Length - 1
-            Dim lbl As New Label With {
-                .Text = columnNames(i),
-                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                .AutoSize = False,
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Width = columnWidths(i),
-                .Location = New Point(x, 8)
-            }
-            HeaderPanel.Controls.Add(lbl)
-            x += columnWidths(i)
-        Next
-    End Sub
-
-    ' === REFRESH FROM OTHER FORMS ===
-    Public Sub RefreshProductListFromOtherForm()
-        LoadProductTable()
-    End Sub
-
     ' === NAVIGATION MENU ===
     Private Sub SalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesToolStripMenuItem.Click
         Dim frm As New SalesForm()
@@ -91,6 +25,61 @@ Public Class InventoryForm
         Dim frm As New ReportForm()
         frm.Show()
         Me.Close()
+    End Sub
+
+    Private Sub AboutUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutUsToolStripMenuItem.Click
+        Dim aboutbox As New AboutBox
+        aboutbox.Show()
+    End Sub
+
+    Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
+        Dim login As New LoginForm
+        login.Show()
+        Close()
+    End Sub
+
+    ' === FORM LOAD ===
+    Private Sub InventoryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetupProductHeader()
+        ProductListFlowLayoutPanel.AutoScroll = True
+        ProductListFlowLayoutPanel.WrapContents = False
+        ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
+    End Sub
+
+    Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        LoadProductTable()
+    End Sub
+
+    ' === REFRESH FROM OTHER FORMS ===
+    Public Sub RefreshProductListFromOtherForm()
+        LoadProductTable()
+    End Sub
+
+    ' === COLUMN POSITIONS AND WIDTHS ===
+    Private columnWidths() As Integer = {85, 140, 230, 120, 180, 140, 100, 120, 130, 150, 260}
+    Private columnNames() As String = {
+        "Image", "Product ID", "Product Name",
+        "Supplier ID", "Supplier Name", "Category",
+        "Stock", "Min Stock", "Cost Price", "Sell Price", "                      Action"
+    }
+    ' === HEADER SETUP ===
+    Private Sub SetupProductHeader()
+        HeaderPanel.Controls.Clear()
+        HeaderPanel.BackColor = Color.Bisque ' Light yellow
+
+        Dim x As Integer = 10
+        For i = 0 To columnNames.Length - 1
+            Dim lbl As New Label With {
+                .Text = columnNames(i),
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .AutoSize = False,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Width = columnWidths(i),
+                .Location = New Point(x, 8)
+            }
+            HeaderPanel.Controls.Add(lbl)
+            x += columnWidths(i)
+        Next
     End Sub
 
     ' === LOAD PRODUCT TABLE ===
@@ -210,7 +199,8 @@ Public Class InventoryForm
                     .Text = "✏️ Edit",
                     .BackColor = Color.LightBlue,
                     .FlatStyle = FlatStyle.Flat,
-                    .Width = 70,
+                    .Width = 100,
+                    .Height = 35,
                     .Location = New Point(operationStartX, 25)
                 }
                 editBtn.FlatAppearance.BorderSize = 0
@@ -224,8 +214,9 @@ Public Class InventoryForm
                     .Text = "📦 Order",
                     .BackColor = Color.LightGreen,
                     .FlatStyle = FlatStyle.Flat,
-                    .Width = 70,
-                    .Location = New Point(operationStartX + 80, 25)
+                    .Width = 100,
+                    .Height = 35,
+                    .Location = New Point(operationStartX + 130, 25)
                 }
                 orderBtn.FlatAppearance.BorderSize = 0
                 AddHandler orderBtn.Click, Sub()
@@ -239,8 +230,9 @@ Public Class InventoryForm
                     .Text = "🗑️ Delete",
                     .BackColor = Color.LightPink,
                     .FlatStyle = FlatStyle.Flat,
-                    .Width = 70,
-                    .Location = New Point(operationStartX + 160, 25)
+                    .Width = 100,
+                    .Height = 35,
+                    .Location = New Point(operationStartX + 260, 25)
                 }
                 deleteBtn.FlatAppearance.BorderSize = 0
                 AddHandler deleteBtn.Click, Sub() DeleteProduct(productID, productName)
@@ -259,7 +251,6 @@ Public Class InventoryForm
         End Try
     End Sub
 
-    ' === DELETE PRODUCT ===
     ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
@@ -319,17 +310,15 @@ Public Class InventoryForm
         AddProductForm.ShowDialog()
     End Sub
 
+    Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
+        ViewOrderForm.ShowDialog()
+    End Sub
+
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
         Dim searchTerm As String = ProductSearchTextBox.Text.Trim()
 
-        ' Ignore placeholder text
-        If searchTerm = "Enter Product Name to Search" Then
-            MessageBox.Show("Please enter a Product Name to search.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Exit Sub
-        End If
-
-        ' --- Block empty input ---
-        If String.IsNullOrWhiteSpace(searchTerm) Then
+        ' --- Validate input ---
+        If String.IsNullOrWhiteSpace(searchTerm) OrElse searchTerm = "Enter Product Name to Search" Then
             MessageBox.Show("Please enter a Product Name to search.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
@@ -340,11 +329,7 @@ Public Class InventoryForm
             Exit Sub
         End If
 
+        ' --- Perform search ---
         LoadProductTable(searchTerm)
     End Sub
-
-    Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
-        ViewOrderForm.ShowDialog()
-    End Sub
-
 End Class

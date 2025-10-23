@@ -27,6 +27,11 @@ Public Class ReportForm
         Close()
     End Sub
 
+    Private Sub AboutUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutUsToolStripMenuItem.Click
+        Dim aboutbox As New AboutBox
+        aboutbox.Show()
+    End Sub
+
     Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
         Dim login As New LoginForm
         login.Show()

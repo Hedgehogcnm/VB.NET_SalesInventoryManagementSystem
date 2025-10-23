@@ -25,6 +25,7 @@ Partial Class ReportForm
         InventoryToolStripMenuItem = New ToolStripMenuItem()
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
+        AboutUsToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
         ReportPanel = New Panel()
@@ -51,7 +52,7 @@ Partial Class ReportForm
         MenuStrip1.BackgroundImageLayout = ImageLayout.None
         MenuStrip1.Dock = DockStyle.Left
         MenuStrip1.ImageScalingSize = New Size(40, 40)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, AboutUsToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
@@ -100,11 +101,18 @@ Partial Class ReportForm
         ' 
         ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         ReportToolStripMenuItem.Image = My.Resources.Resources.report
-        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         ReportToolStripMenuItem.Size = New Size(149, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
+        ' 
+        ' AboutUsToolStripMenuItem
+        ' 
+        AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
+        AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
+        AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        AboutUsToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -284,4 +292,5 @@ Partial Class ReportForm
     Friend WithEvents InventoryTrackingButton As Button
     Friend WithEvents SaleReportButton As Button
     Friend WithEvents InventoryReportButton As Button
+    Friend WithEvents AboutUsToolStripMenuItem As ToolStripMenuItem
 End Class
