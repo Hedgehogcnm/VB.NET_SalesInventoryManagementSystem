@@ -277,7 +277,7 @@ Public Class InventoryForm
     ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
-        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+        $"Are you sure you want to delete '{productName}' (Product ID: {productID})? " & vbCrLf &
         "This will also remove all related sales details, orders, and inventory movements.",
         "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
@@ -349,7 +349,7 @@ Public Class InventoryForm
         End If
 
         ' --- Validate letters and spaces only ---
-        If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z\s]+$") Then
+        If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z0-9\s]+$") Then
             MessageBox.Show("❌ Only letters and spaces are allowed for Product Name search.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
