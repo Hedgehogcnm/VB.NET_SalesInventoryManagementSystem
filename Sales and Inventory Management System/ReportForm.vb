@@ -53,9 +53,6 @@ Public Class ReportForm
         PrintDoc.DefaultPageSettings.Landscape = False
         PageSetup.Document = PrintDoc
         PrintDlg.Document = PrintDoc
-
-        ' Remove the blue highlight focus border
-        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
     End Sub
 
     Private Sub DateTimePickerFrom_ValueChanged(sender As Object, e As EventArgs) Handles FromDateTimePicker.ValueChanged

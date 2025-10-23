@@ -19,9 +19,6 @@ Public Class InventoryForm
         ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
         LoadProductTable()
 
-        ' Remove the blue highlight focus border
-        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
-
         ' === Initialize placeholder text ===
         ProductSearchTextBox.Text = "Enter Product Name to Search"
         ProductSearchTextBox.ForeColor = Color.Gray
