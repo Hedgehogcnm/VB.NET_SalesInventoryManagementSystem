@@ -129,7 +129,7 @@ Partial Class InventoryForm
         ' 
         ' HeaderPanel
         ' 
-        HeaderPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
+        HeaderPanel.BackColor = Color.Bisque
         HeaderPanel.Location = New Point(3, 136)
         HeaderPanel.Name = "HeaderPanel"
         HeaderPanel.Size = New Size(1788, 48)
