@@ -24,18 +24,17 @@ Partial Class OrderProductForm
     Private Sub InitializeComponent()
         Label1 = New Label()
         Label2 = New Label()
-        ProductNameComboBox = New ComboBox()
         Label3 = New Label()
         OrderQuantityTextBox = New TextBox()
         OrderButton = New Button()
         CancelButton = New Button()
-        ViewOrderButton = New Button()
         Label4 = New Label()
         ProductIDLabel = New Label()
         Label5 = New Label()
         Label6 = New Label()
         UnitPriceLabel = New Label()
         TotalPriceLabel = New Label()
+        ProductNameLabel = New Label()
         SuspendLayout()
         ' 
         ' Label1
@@ -57,14 +56,6 @@ Partial Class OrderProductForm
         Label2.Size = New Size(135, 23)
         Label2.TabIndex = 1
         Label2.Text = "Product Name: "
-        ' 
-        ' ProductNameComboBox
-        ' 
-        ProductNameComboBox.FormattingEnabled = True
-        ProductNameComboBox.Location = New Point(458, 85)
-        ProductNameComboBox.Name = "ProductNameComboBox"
-        ProductNameComboBox.Size = New Size(210, 28)
-        ProductNameComboBox.TabIndex = 2
         ' 
         ' Label3
         ' 
@@ -100,15 +91,6 @@ Partial Class OrderProductForm
         CancelButton.TabIndex = 6
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
-        ' 
-        ' ViewOrderButton
-        ' 
-        ViewOrderButton.Location = New Point(28, 44)
-        ViewOrderButton.Name = "ViewOrderButton"
-        ViewOrderButton.Size = New Size(94, 29)
-        ViewOrderButton.TabIndex = 7
-        ViewOrderButton.Text = "View Order List"
-        ViewOrderButton.UseVisualStyleBackColor = True
         ' 
         ' Label4
         ' 
@@ -164,44 +146,49 @@ Partial Class OrderProductForm
         TotalPriceLabel.Size = New Size(0, 20)
         TotalPriceLabel.TabIndex = 13
         ' 
+        ' ProductNameLabel
+        ' 
+        ProductNameLabel.AutoSize = True
+        ProductNameLabel.Location = New Point(458, 89)
+        ProductNameLabel.Name = "ProductNameLabel"
+        ProductNameLabel.Size = New Size(0, 20)
+        ProductNameLabel.TabIndex = 14
+        ' 
         ' OrderProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1014, 454)
+        Controls.Add(ProductNameLabel)
         Controls.Add(TotalPriceLabel)
         Controls.Add(UnitPriceLabel)
         Controls.Add(Label6)
         Controls.Add(Label5)
         Controls.Add(ProductIDLabel)
         Controls.Add(Label4)
-        Controls.Add(ViewOrderButton)
         Controls.Add(CancelButton)
         Controls.Add(OrderButton)
         Controls.Add(OrderQuantityTextBox)
         Controls.Add(Label3)
-        Controls.Add(ProductNameComboBox)
         Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "OrderProductForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "OrderProductForm"
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents ProductNameComboBox As ComboBox
     Friend WithEvents Label3 As Label
     Friend WithEvents OrderQuantityTextBox As TextBox
     Friend WithEvents OrderButton As Button
     Friend WithEvents CancelButton As Button
-    Friend WithEvents ViewOrderButton As Button
     Friend WithEvents Label4 As Label
     Friend WithEvents ProductIDLabel As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents UnitPriceLabel As Label
     Friend WithEvents TotalPriceLabel As Label
+    Friend WithEvents ProductNameLabel As Label
 End Class

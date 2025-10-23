@@ -41,12 +41,21 @@ Public Class ReportForm
     Private reportTitle As String = ""
     Private reportData As DataTable
 
+    ' === For multi-page Inventory Tracking ===
+    Private currentProductIndex As Integer = 0
+    Private currentYPos As Single = 0
+    Private productList As List(Of Integer)
+
+
     Private Sub ReportForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ConnectDB()
 
         PrintDoc.DefaultPageSettings.Landscape = False
         PageSetup.Document = PrintDoc
         PrintDlg.Document = PrintDoc
+
+        ' Remove the blue highlight focus border
+        MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
     End Sub
 
     Private Sub DateTimePickerFrom_ValueChanged(sender As Object, e As EventArgs) Handles FromDateTimePicker.ValueChanged
@@ -123,45 +132,20 @@ Public Class ReportForm
 
     Private Sub SaleReportButton_Click(sender As Object, e As EventArgs) Handles SaleReportButton.Click
         reportTitle = "Sales Report"
-        LoadReport("
-        SELECT 
-            s.s_invoiceNo AS InvoiceNo,
-            s.s_dateTime AS DateTime,
-            s.s_customer AS Customer,
-            p.p_name AS ProductName,
-            d.sd_qty AS Quantity,
-            d.sd_total AS Subtotal
-        FROM tb_sales s
-        INNER JOIN tb_sales_detail d ON s.s_id = d.s_id
-        INNER JOIN tb_products p ON d.p_id = p.p_id
-        ")
+        currentProductIndex = 0 : currentYPos = 0 : productList = Nothing
+        RefreshCurrentReport()
     End Sub
 
     Private Sub InventoryReportButton_Click(sender As Object, e As EventArgs) Handles InventoryReportButton.Click
         reportTitle = "Inventory Report"
-        LoadReport("
-        SELECT 
-            p.p_id AS ProductID,
-            p.p_name AS ProductName,
-            p.p_stock AS StockQty,
-            p.p_sellPrice AS UnitPrice
-        FROM tb_products p
-        ORDER BY p.p_name ASC
-        ")
+        currentProductIndex = 0 : currentYPos = 0 : productList = Nothing
+        RefreshCurrentReport()
     End Sub
 
     Private Sub InventoryTrackingButton_Click(sender As Object, e As EventArgs) Handles InventoryTrackingButton.Click
         reportTitle = "Inventory Tracking Report"
-        LoadReport("
-        SELECT 
-            p.p_id AS ProductID,
-            p.p_name AS ProductName,
-            t.im_dateTime AS LastUpdate,
-            t.im_qtyChange AS QuantityMoved,
-            t.im_note AS Remark
-        FROM tb_products p
-        INNER JOIN tb_inventorymovements t ON p.p_id = t.p_id
-        ")
+        currentProductIndex = 0 : currentYPos = 0 : productList = Nothing
+        RefreshCurrentReport()
     End Sub
 
     '=== General Loading Report ===
@@ -209,24 +193,89 @@ Public Class ReportForm
                 Exit Sub
             End If
 
-            ' === Print Preview ===
+            ' === 在 ReportPanel 内做“连续滚动预览” ===
+            RemoveHandler PrintDoc.PrintPage, AddressOf PrintDoc_PrintPage
             AddHandler PrintDoc.PrintPage, AddressOf PrintDoc_PrintPage
-            currentPreview = New PrintPreviewControl() With {
-            .Document = PrintDoc,
-            .Dock = DockStyle.Fill,
-            .Zoom = 1.0
+
+            ' 清空旧内容
+            ReportPanel.Controls.Clear()
+
+            ' 用 PreviewPrintController 生成所有页（不会真的打印）
+            Dim oldCtrl As PrintController = PrintDoc.PrintController
+            Dim previewCtrl As New PreviewPrintController()
+            PrintDoc.PrintController = previewCtrl
+            PrintDoc.Print()  ' 触发 PrintDoc_PrintPage 生成页
+
+            Dim pages = previewCtrl.GetPreviewPageInfo()
+
+            ' === 灰底 FlowLayoutPanel，纵向排版 ===
+            Dim flow As New FlowLayoutPanel With {
+                .Dock = DockStyle.Fill,
+                .AutoScroll = True,
+                .BackColor = SystemColors.ActiveBorder,
+                .WrapContents = False,
+                .FlowDirection = FlowDirection.TopDown,
+                .Padding = New Padding(0, 30, 0, 30)
             }
 
+            ' 页面缩放比例（看起来像A4预览）
+            Dim paperScale As Double = 0.85
+
+            flow.SuspendLayout()
+
+            For Each p In pages
+                ' 计算纸张尺寸（按宽度缩放）
+                Dim paperWidth As Integer = CInt((ReportPanel.ClientSize.Width - 120) * paperScale)
+                Dim paperHeight As Integer = CInt(p.Image.Height * (paperWidth / p.Image.Width))
+
+                ' 纸张图片
+                Dim pb As New PictureBox With {
+                    .Image = New Bitmap(p.Image),
+                    .SizeMode = PictureBoxSizeMode.Zoom,
+                    .Width = paperWidth,
+                    .Height = paperHeight,
+                    .BackColor = Color.White
+                }
+
+                ' 每一页的承载面板（负责水平居中）
+                Dim host As New Panel With {
+                    .Width = flow.ClientSize.Width,                    ' 先用当前宽度
+                    .Height = paperHeight + 20,                        ' 上下留白
+                    .BackColor = Color.Transparent,
+                    .Margin = New Padding(0, 0, 0, 20)                 ' 页间距
+                }
+
+                pb.Top = 10
+                pb.Left = (host.ClientSize.Width - pb.Width) \ 2
+                host.Controls.Add(pb)
+                flow.Controls.Add(host)
+            Next
+
+            flow.ResumeLayout()
+
+            AddHandler flow.Resize,
+                Sub()
+                    For Each host As Panel In flow.Controls.OfType(Of Panel)()
+                        host.Width = flow.ClientSize.Width
+                        Dim pic = host.Controls.OfType(Of PictureBox)().FirstOrDefault()
+                        If pic IsNot Nothing Then
+                            pic.Left = (host.ClientSize.Width - pic.Width) \ 2
+                        End If
+                    Next
+                End Sub
+
+            ' Put in ReportPanel
             ReportPanel.Controls.Clear()
-            ReportPanel.Controls.Add(currentPreview)
-            currentPreview.Refresh()
+            ReportPanel.Controls.Add(flow)
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Load Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
+
     Private Sub PrintDoc_PrintPage(sender As Object, e As Printing.PrintPageEventArgs)
+        Static pageNumber As Integer = 1
         Dim g As Graphics = e.Graphics
         Dim left As Integer = 60
         Dim y As Integer = 80
@@ -242,30 +291,30 @@ Public Class ReportForm
         Dim formatCenter As New StringFormat() With {.Alignment = StringAlignment.Center}
 
         '=== LOGO ===
-        Try
-            Dim logoPath As String = IO.Path.Combine(Application.StartupPath, "VBlogo.png")
-            If IO.File.Exists(logoPath) Then
-                Dim logo As Image = Image.FromFile(logoPath)
+        If pageNumber = 1 Then
+            Try
+                Dim logoPath As String = IO.Path.Combine(Application.StartupPath, "VBlogo.png")
+                If IO.File.Exists(logoPath) Then
+                    Dim logo As Image = Image.FromFile(logoPath)
+                    Dim logoWidth As Integer = 120
+                    Dim logoHeight As Integer = 60
+                    Dim logoX As Integer = CInt(centerX - (logoWidth / 2))
+                    Dim logoY As Integer = 20
+                    g.DrawImage(logo, logoX, logoY, logoWidth, logoHeight)
+                End If
+            Catch
+                g.DrawString("LOGO MISSING", infoFont, Brushes.Red, centerX, 30, formatCenter)
+            End Try
 
-                Dim logoWidth As Integer = 120
-                Dim logoHeight As Integer = 60
-                Dim logoX As Integer = CInt(centerX - (logoWidth / 2))
-                Dim logoY As Integer = 20
-                g.DrawImage(logo, logoX, logoY, logoWidth, logoHeight)
-            End If
-        Catch
-            g.DrawString("LOGO MISSING", infoFont, Brushes.Red, centerX, 30, formatCenter)
-        End Try
+            '=== Company Info ===
+            g.DrawString("GEARTRACK SDN BHD", companyTitleFont, Brushes.Black, centerX, y + 5, formatCenter)
+            g.DrawString("No. 88, Jalan Teknologi, Skudai, Johor, Malaysia", infoFont, Brushes.Black, centerX, y + 30, formatCenter)
+            g.DrawString("Tel: +60 13-7323888 | Email: geartrack@gmail.com", infoFont, Brushes.Black, centerX, y + 50, formatCenter)
+            y += 90
 
-        '=== Company Info ===
-        g.DrawString("GEARTRACK SDN BHD", companyTitleFont, Brushes.Black, centerX, y + 5, formatCenter)
-        g.DrawString("No. 88, Jalan Teknologi, Skudai, Johor, Malaysia", infoFont, Brushes.Black, centerX, y + 30, formatCenter)
-        g.DrawString("Tel: +60 13-7323888 | Email: geartrack@gmail.com", infoFont, Brushes.Black, centerX, y + 50, formatCenter)
-
-        y += 90
-        g.DrawString(reportTitle, reportTitleFont, Brushes.Black, centerX, y, formatCenter)
-        y += 40
-
+            g.DrawString(reportTitle, reportTitleFont, Brushes.Black, centerX, y, formatCenter)
+            y += 40
+        End If
 
         ' Invoke database based on reportTitle
         If reportTitle = "Sales Report" Then
@@ -273,11 +322,13 @@ Public Class ReportForm
         ElseIf reportTitle = "Inventory Report" Then
             DrawInventoryReport(g, marginBounds)
         Else
-            DrawInventoryTracking(g, marginBounds)
+            DrawInventoryTracking(g, marginBounds, e)
         End If
 
         '=== Footer ===
         g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, e.MarginBounds.Bottom + 30)
+        pageNumber += 1
+        If Not e.HasMorePages Then pageNumber = 1  ' Reset page number
     End Sub
 
     Private Sub DrawSalesReport(g As Graphics, marginBounds As RectangleF)
@@ -415,7 +466,7 @@ Public Class ReportForm
 
         g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
 
-        ' === Table Rows ===
+        ' === Table Content ===
         Dim currentY As Single = tableTop + 35
         For Each r As DataRow In sortedData.Rows
             Dim values() As String = {
@@ -464,63 +515,134 @@ Public Class ReportForm
         g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
     End Sub
 
-    Private Sub DrawInventoryTracking(g As Graphics, marginBounds As RectangleF)
-        ' === Fonts ===
+    Private Sub DrawInventoryTracking(g As Graphics, marginBounds As RectangleF, e As Printing.PrintPageEventArgs)
+        ' ==== Fonts ====
         Dim headerFont As New Font("Arial", 10, FontStyle.Bold)
         Dim bodyFont As New Font("Arial", 9)
 
-        ' === Layout ===
-        Dim tableTop As Single = marginBounds.Top + 150
-        Dim tableWidth As Single = 680 ' 增加宽度，列间更宽
+        ' ==== Layout (per-page) ====
+        Dim tableWidth As Single = 680
         Dim leftMargin As Single = marginBounds.Left + ((marginBounds.Width - tableWidth) / 2)
+        Dim lineSpacing As Single = 25
 
-        ' === 各栏位位置（拉宽列距） ===
-        Dim colX() As Single = {
-            leftMargin,           ' Last Update
-            leftMargin + 200,     ' Product ID
-            leftMargin + 320,     ' Quantity Moved
-            leftMargin + 480      ' Remark
-        }
+        Static inited As Boolean = False
+        Static productIDs As List(Of Integer)
+        Static productIndex As Integer
+        Static currentRows As DataRow()
+        Static rowIndex As Integer
+        Static pageNumber As Integer = 1
 
-        ' === 表头 ===
-        Dim headers() As String = {"Last Update", "Product ID", "Quantity Moved", "Remark"}
-        g.DrawLine(Pens.Black, leftMargin, tableTop, leftMargin + tableWidth, tableTop)
+        Dim pageTop As Single
+        If pageNumber = 1 Then
+            pageTop = marginBounds.Top + 150
+        Else
+            pageTop = marginBounds.Top - 20
+            If pageTop < 60 Then pageTop = 60
+        End If
 
-        For i As Integer = 0 To headers.Length - 1
-            Dim headerText As String = headers(i)
-            Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
-            Dim headerCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
-            g.DrawString(headerText, headerFont, Brushes.Black,
-                         headerCenterX - (g.MeasureString(headerText, headerFont).Width / 2),
-                         tableTop + 5)
-        Next
+        Dim pageBottom As Single = marginBounds.Bottom - 80
+        Dim currentY As Single = pageTop
 
-        g.DrawLine(Pens.Black, leftMargin, tableTop + 25, leftMargin + tableWidth, tableTop + 25)
+        If Not inited Then
+            productIDs = (From r As DataRow In reportData.Rows
+                          Select CInt(r("ProductID"))).Distinct().OrderBy(Function(x) x).ToList()
+            productIndex = 0
+            currentRows = Nothing
+            rowIndex = 0
+            pageNumber = 1
+            inited = True
+        End If
 
-        ' === 数据 ===
-        Dim currentY As Single = tableTop + 35
-        For Each r As DataRow In reportData.Rows
-            Dim values() As String = {
-                r("LastUpdate").ToString(),
-                r("ProductID").ToString(),
-                r("QuantityMoved").ToString(),
-                r("Remark").ToString()
-            }
+        While productIndex < productIDs.Count
+            Dim pid As Integer = productIDs(productIndex)
 
-            For i As Integer = 0 To values.Length - 1
-                Dim cellText As String = values(i)
+            If currentRows Is Nothing Then
+                currentRows = reportData.Select("ProductID = " & pid.ToString(), "LastUpdate ASC")
+                rowIndex = 0
+                If currentRows.Length = 0 Then
+                    productIndex += 1
+                    currentRows = Nothing
+                    Continue While
+                End If
+            End If
+
+            Dim headerNeed As Single = 60
+            If currentY + headerNeed > pageBottom Then
+                e.HasMorePages = True
+                pageNumber += 1
+                Return
+            End If
+
+            Dim productName As String = ""
+            Dim nameRows() As DataRow = reportData.Select("ProductID = " & pid.ToString())
+            If nameRows.Length > 0 Then
+                productName = nameRows(0)("ProductName").ToString()
+                If productName.Contains("("c) Then productName = productName.Substring(0, productName.IndexOf("("c)).Trim()
+            End If
+
+            ' ==== Table Title ====
+            g.DrawString(productName, headerFont, Brushes.Black, leftMargin, currentY)
+            currentY += lineSpacing
+
+            ' ==== Table Header ====
+            Dim colX() As Single = {leftMargin, leftMargin + 220, leftMargin + 380}
+            Dim headers() As String = {"Last Update", "Quantity Moved", "Remark"}
+
+            g.DrawLine(Pens.Black, leftMargin, currentY, leftMargin + tableWidth, currentY)
+            currentY += 5
+            For i As Integer = 0 To headers.Length - 1
                 Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
-
-                Dim cellCenterX As Single = colX(i) + ((nextX - colX(i)) / 2)
-                g.DrawString(cellText, bodyFont, Brushes.Black,
-                             cellCenterX - (g.MeasureString(cellText, bodyFont).Width / 2),
-                             currentY)
+                Dim cx As Single = colX(i) + (nextX - colX(i)) / 2
+                g.DrawString(headers(i), headerFont, Brushes.Black,
+                             cx - g.MeasureString(headers(i), headerFont).Width / 2, currentY)
             Next
+            currentY += (lineSpacing - 5)
+            g.DrawLine(Pens.Black, leftMargin, currentY, leftMargin + tableWidth, currentY)
+            currentY += 5
 
-            currentY += 30
-        Next
+            ' ==== Table Content ====
+            While rowIndex < currentRows.Length
+                If currentY + lineSpacing > pageBottom Then
+                    e.HasMorePages = True
+                    pageNumber += 1
+                    Return
+                End If
 
-        ' === 底线 ===
-        g.DrawLine(Pens.Black, leftMargin, currentY + 5, leftMargin + tableWidth, currentY + 5)
+                Dim r As DataRow = currentRows(rowIndex)
+                Dim values() As String = {
+                    CDate(r("LastUpdate")).ToString("dd/MM/yyyy hh:mm:ss tt"),
+                    r("QuantityMoved").ToString(),
+                    r("Remark").ToString()
+                }
+
+                For i As Integer = 0 To values.Length - 1
+                    Dim nextX As Single = If(i < headers.Length - 1, colX(i + 1), leftMargin + tableWidth)
+                    Dim cx As Single = colX(i) + (nextX - colX(i)) / 2
+                    g.DrawString(values(i), bodyFont, Brushes.Black,
+                                 cx - g.MeasureString(values(i), bodyFont).Width / 2, currentY)
+                Next
+
+                currentY += lineSpacing
+                rowIndex += 1
+            End While
+
+            g.DrawLine(Pens.Black, leftMargin, currentY, leftMargin + tableWidth, currentY)
+            currentY += 40
+
+            productIndex += 1
+            currentRows = Nothing
+            rowIndex = 0
+
+            If currentY + 100 > pageBottom AndAlso productIndex < productIDs.Count Then
+                e.HasMorePages = True
+                pageNumber += 1
+                Return
+            End If
+        End While
+
+        e.HasMorePages = False
+        inited = False
+        pageNumber = 1
     End Sub
+
 End Class

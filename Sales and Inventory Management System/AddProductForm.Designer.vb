@@ -40,13 +40,17 @@ Partial Class AddProductForm
         CancelButton = New Button()
         ProductIDLabel = New Label()
         ProductIDTextBox = New TextBox()
+        Label6 = New Label()
+        ProductImagePictureBox = New PictureBox()
+        ProductImageButton = New Button()
+        CType(ProductImagePictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(299, 25)
+        Label1.Location = New Point(502, 21)
         Label1.Name = "Label1"
         Label1.Size = New Size(162, 35)
         Label1.TabIndex = 0
@@ -161,7 +165,7 @@ Partial Class AddProductForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(646, 373)
+        AddProductButton.Location = New Point(602, 385)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 29)
         AddProductButton.TabIndex = 16
@@ -178,7 +182,7 @@ Partial Class AddProductForm
         ' 
         ' CancelButton
         ' 
-        CancelButton.Location = New Point(525, 373)
+        CancelButton.Location = New Point(481, 385)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 19
@@ -200,11 +204,43 @@ Partial Class AddProductForm
         ProductIDTextBox.Size = New Size(151, 27)
         ProductIDTextBox.TabIndex = 21
         ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label6.Location = New Point(893, 108)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(138, 23)
+        Label6.TabIndex = 22
+        Label6.Text = "Product Image: "
+        ' 
+        ' ProductImagePictureBox
+        ' 
+        ProductImagePictureBox.BorderStyle = BorderStyle.FixedSingle
+        ProductImagePictureBox.Location = New Point(856, 134)
+        ProductImagePictureBox.Name = "ProductImagePictureBox"
+        ProductImagePictureBox.Size = New Size(207, 175)
+        ProductImagePictureBox.SizeMode = PictureBoxSizeMode.Zoom
+        ProductImagePictureBox.TabIndex = 23
+        ProductImagePictureBox.TabStop = False
+        ' 
+        ' ProductImageButton
+        ' 
+        ProductImageButton.Location = New Point(903, 315)
+        ProductImageButton.Name = "ProductImageButton"
+        ProductImageButton.Size = New Size(118, 30)
+        ProductImageButton.TabIndex = 24
+        ProductImageButton.Text = "Upload Image"
+        ProductImageButton.UseVisualStyleBackColor = True
+        ' 
         ' AddProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1177, 450)
+        Controls.Add(ProductImageButton)
+        Controls.Add(ProductImagePictureBox)
+        Controls.Add(Label6)
         Controls.Add(ProductIDTextBox)
         Controls.Add(ProductIDLabel)
         Controls.Add(CancelButton)
@@ -225,7 +261,7 @@ Partial Class AddProductForm
         Controls.Add(Label1)
         Name = "AddProductForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "AddProductForm"
+        CType(ProductImagePictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -248,4 +284,7 @@ Partial Class AddProductForm
     Friend WithEvents CancelButton As Button
     Friend WithEvents ProductIDLabel As Label
     Friend WithEvents ProductIDTextBox As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents ProductImagePictureBox As PictureBox
+    Friend WithEvents ProductImageButton As Button
 End Class

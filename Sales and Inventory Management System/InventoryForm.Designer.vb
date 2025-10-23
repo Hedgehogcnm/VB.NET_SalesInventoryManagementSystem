@@ -27,18 +27,16 @@ Partial Class InventoryForm
         ReportToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         PanelMain = New Panel()
-        ProductListDataGridView = New DataGridView()
+        HeaderPanel = New Panel()
+        ViewOrderButton = New Button()
+        ProductListFlowLayoutPanel = New FlowLayoutPanel()
         SearchProductButton = New Button()
         ProductSearchTextBox = New TextBox()
-        OrderProductButton = New Button()
         AddProductButton = New Button()
-        EditProductButton = New Button()
-        DeleteProductButton = New Button()
         Panel8 = New Panel()
         LabelForm = New Label()
         MenuStrip1.SuspendLayout()
         PanelMain.SuspendLayout()
-        CType(ProductListDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         Panel8.SuspendLayout()
         SuspendLayout()
         ' 
@@ -116,32 +114,46 @@ Partial Class InventoryForm
         ' 
         ' PanelMain
         ' 
-        PanelMain.Controls.Add(ProductListDataGridView)
+        PanelMain.Controls.Add(HeaderPanel)
+        PanelMain.Controls.Add(ViewOrderButton)
+        PanelMain.Controls.Add(ProductListFlowLayoutPanel)
         PanelMain.Controls.Add(SearchProductButton)
         PanelMain.Controls.Add(ProductSearchTextBox)
-        PanelMain.Controls.Add(OrderProductButton)
         PanelMain.Controls.Add(AddProductButton)
-        PanelMain.Controls.Add(EditProductButton)
-        PanelMain.Controls.Add(DeleteProductButton)
         PanelMain.Controls.Add(Panel8)
         PanelMain.Dock = DockStyle.Fill
         PanelMain.Location = New Point(68, 0)
         PanelMain.Name = "PanelMain"
-        PanelMain.Size = New Size(1434, 773)
+        PanelMain.Size = New Size(1686, 773)
         PanelMain.TabIndex = 6
         ' 
-        ' ProductListDataGridView
+        ' HeaderPanel
         ' 
-        ProductListDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        ProductListDataGridView.Location = New Point(281, 132)
-        ProductListDataGridView.Name = "ProductListDataGridView"
-        ProductListDataGridView.RowHeadersWidth = 51
-        ProductListDataGridView.Size = New Size(1072, 730)
-        ProductListDataGridView.TabIndex = 3
+        HeaderPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
+        HeaderPanel.Location = New Point(3, 136)
+        HeaderPanel.Name = "HeaderPanel"
+        HeaderPanel.Size = New Size(1629, 48)
+        HeaderPanel.TabIndex = 12
+        ' 
+        ' ViewOrderButton
+        ' 
+        ViewOrderButton.Location = New Point(147, 81)
+        ViewOrderButton.Name = "ViewOrderButton"
+        ViewOrderButton.Size = New Size(105, 49)
+        ViewOrderButton.TabIndex = 11
+        ViewOrderButton.Text = "View Order"
+        ViewOrderButton.UseVisualStyleBackColor = True
+        ' 
+        ' ProductListFlowLayoutPanel
+        ' 
+        ProductListFlowLayoutPanel.Location = New Point(3, 190)
+        ProductListFlowLayoutPanel.Name = "ProductListFlowLayoutPanel"
+        ProductListFlowLayoutPanel.Size = New Size(1655, 840)
+        ProductListFlowLayoutPanel.TabIndex = 10
         ' 
         ' SearchProductButton
         ' 
-        SearchProductButton.Location = New Point(1259, 84)
+        SearchProductButton.Location = New Point(1538, 91)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -150,46 +162,19 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(1059, 85)
+        ProductSearchTextBox.Location = New Point(1242, 92)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
-        ProductSearchTextBox.Size = New Size(180, 27)
+        ProductSearchTextBox.Size = New Size(276, 27)
         ProductSearchTextBox.TabIndex = 5
-        ' 
-        ' OrderProductButton
-        ' 
-        OrderProductButton.Location = New Point(115, 132)
-        OrderProductButton.Name = "OrderProductButton"
-        OrderProductButton.Size = New Size(94, 50)
-        OrderProductButton.TabIndex = 6
-        OrderProductButton.Text = "Order Product"
-        OrderProductButton.UseVisualStyleBackColor = True
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(115, 214)
+        AddProductButton.Location = New Point(15, 81)
         AddProductButton.Name = "AddProductButton"
-        AddProductButton.Size = New Size(94, 48)
+        AddProductButton.Size = New Size(111, 48)
         AddProductButton.TabIndex = 7
         AddProductButton.Text = "Add Product"
         AddProductButton.UseVisualStyleBackColor = True
-        ' 
-        ' EditProductButton
-        ' 
-        EditProductButton.Location = New Point(115, 292)
-        EditProductButton.Name = "EditProductButton"
-        EditProductButton.Size = New Size(94, 50)
-        EditProductButton.TabIndex = 8
-        EditProductButton.Text = "Edit Product"
-        EditProductButton.UseVisualStyleBackColor = True
-        ' 
-        ' DeleteProductButton
-        ' 
-        DeleteProductButton.Location = New Point(115, 373)
-        DeleteProductButton.Name = "DeleteProductButton"
-        DeleteProductButton.Size = New Size(94, 65)
-        DeleteProductButton.TabIndex = 9
-        DeleteProductButton.Text = "Delete Product"
-        DeleteProductButton.UseVisualStyleBackColor = True
         ' 
         ' Panel8
         ' 
@@ -198,7 +183,7 @@ Partial Class InventoryForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1434, 60)
+        Panel8.Size = New Size(1686, 60)
         Panel8.TabIndex = 0
         ' 
         ' LabelForm
@@ -217,7 +202,7 @@ Partial Class InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1502, 773)
+        ClientSize = New Size(1754, 773)
         Controls.Add(PanelMain)
         Controls.Add(MenuStrip1)
         Name = "InventoryForm"
@@ -227,7 +212,6 @@ Partial Class InventoryForm
         MenuStrip1.PerformLayout()
         PanelMain.ResumeLayout(False)
         PanelMain.PerformLayout()
-        CType(ProductListDataGridView, ComponentModel.ISupportInitialize).EndInit()
         Panel8.ResumeLayout(False)
         Panel8.PerformLayout()
         ResumeLayout(False)
@@ -245,11 +229,10 @@ Partial Class InventoryForm
     Friend WithEvents PanelMain As Panel
     Friend WithEvents Panel8 As Panel
     Friend WithEvents LabelForm As Label
-    Friend WithEvents ProductListDataGridView As DataGridView
     Friend WithEvents SearchProductButton As Button
     Friend WithEvents ProductSearchTextBox As TextBox
-    Friend WithEvents OrderProductButton As Button
     Friend WithEvents AddProductButton As Button
-    Friend WithEvents EditProductButton As Button
-    Friend WithEvents DeleteProductButton As Button
+    Friend WithEvents ProductListFlowLayoutPanel As FlowLayoutPanel
+    Friend WithEvents ViewOrderButton As Button
+    Friend WithEvents HeaderPanel As Panel
 End Class
