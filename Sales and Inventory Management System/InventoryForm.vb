@@ -49,7 +49,7 @@ Public Class InventoryForm
     ' === HEADER SETUP ===
     Private Sub SetupProductHeader()
         HeaderPanel.Controls.Clear()
-        HeaderPanel.BackColor = Color.FromArgb(255, 255, 200) ' Light yellow
+        HeaderPanel.BackColor = Color.Bisque ' Light yellow
 
         Dim x As Integer = 10
         For i = 0 To columnNames.Length - 1
