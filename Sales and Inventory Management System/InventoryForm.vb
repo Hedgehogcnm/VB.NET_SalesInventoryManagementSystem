@@ -22,6 +22,21 @@ Public Class InventoryForm
         ' === Initialize placeholder text ===
         ProductSearchTextBox.Text = "Enter Product Name to Search"
         ProductSearchTextBox.ForeColor = Color.Gray
+
+        ' === Style for Add Product & View Order Buttons ===
+        Dim baseColor As Color = Color.SeaShell
+        Dim hoverColor As Color = Color.AntiqueWhite
+        Dim fontColor As Color = Color.Sienna
+
+        ' --- Button Style ---
+        Dim allButtons() As Button = {AddProductButton, ViewOrderButton, SearchProductButton}
+        For Each btn As Button In allButtons
+            With btn
+                .FlatAppearance.BorderSize = 0
+            End With
+            AddHandler btn.MouseEnter, Sub() btn.BackColor = hoverColor
+            AddHandler btn.MouseLeave, Sub() btn.BackColor = baseColor
+        Next
     End Sub
 
     Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
@@ -46,7 +61,7 @@ Public Class InventoryForm
     ' === HEADER SETUP ===
     Private Sub SetupProductHeader()
         HeaderPanel.Controls.Clear()
-        HeaderPanel.BackColor = Color.Bisque ' Light yellow
+        HeaderPanel.BackColor = Color.AntiqueWhite ' Light yellow
 
         Dim x As Integer = 10
         For i = 0 To columnNames.Length - 1
@@ -259,7 +274,6 @@ Public Class InventoryForm
         End Try
     End Sub
 
-    ' === DELETE PRODUCT ===
     ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(

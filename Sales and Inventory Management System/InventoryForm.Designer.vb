@@ -129,10 +129,10 @@ Partial Class InventoryForm
         ' 
         ' HeaderPanel
         ' 
-        HeaderPanel.BackColor = Color.Bisque
+        HeaderPanel.BackColor = Color.AntiqueWhite
         HeaderPanel.Location = New Point(3, 136)
         HeaderPanel.Name = "HeaderPanel"
-        HeaderPanel.Size = New Size(1788, 48)
+        HeaderPanel.Size = New Size(1814, 48)
         HeaderPanel.TabIndex = 12
         ' 
         ' ViewOrderButton
@@ -141,7 +141,7 @@ Partial Class InventoryForm
         ViewOrderButton.FlatStyle = FlatStyle.Flat
         ViewOrderButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         ViewOrderButton.ForeColor = Color.Sienna
-        ViewOrderButton.Location = New Point(147, 81)
+        ViewOrderButton.Location = New Point(147, 75)
         ViewOrderButton.Name = "ViewOrderButton"
         ViewOrderButton.Size = New Size(105, 49)
         ViewOrderButton.TabIndex = 11
@@ -161,7 +161,7 @@ Partial Class InventoryForm
         SearchProductButton.FlatStyle = FlatStyle.Flat
         SearchProductButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         SearchProductButton.ForeColor = Color.Sienna
-        SearchProductButton.Location = New Point(1697, 91)
+        SearchProductButton.Location = New Point(1697, 85)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -170,7 +170,7 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(1397, 93)
+        ProductSearchTextBox.Location = New Point(1397, 86)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
         ProductSearchTextBox.Size = New Size(276, 27)
         ProductSearchTextBox.TabIndex = 5
@@ -181,7 +181,7 @@ Partial Class InventoryForm
         AddProductButton.FlatStyle = FlatStyle.Flat
         AddProductButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AddProductButton.ForeColor = Color.Sienna
-        AddProductButton.Location = New Point(15, 81)
+        AddProductButton.Location = New Point(15, 75)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(111, 48)
         AddProductButton.TabIndex = 7

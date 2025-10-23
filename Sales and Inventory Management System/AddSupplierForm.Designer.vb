@@ -23,7 +23,6 @@ Partial Class AddSupplierForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        SupplierIDLabel = New Label()
         ContactTextBox = New TextBox()
         SaveButton = New Button()
         EmailTextBox = New TextBox()
@@ -33,7 +32,6 @@ Partial Class AddSupplierForm
         ContactText = New Label()
         SupplierNameText = New Label()
         TitleLabel = New Label()
-        SupplierIDText = New Label()
         EmailErrorProvider = New ErrorProvider(components)
         LogoText = New Label()
         UploadFileButton = New Button()
@@ -45,54 +43,47 @@ Partial Class AddSupplierForm
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' SupplierIDLabel
-        ' 
-        SupplierIDLabel.AutoSize = True
-        SupplierIDLabel.Font = New Font("Segoe UI", 10F)
-        SupplierIDLabel.Location = New Point(275, 121)
-        SupplierIDLabel.Name = "SupplierIDLabel"
-        SupplierIDLabel.Size = New Size(0, 23)
-        SupplierIDLabel.TabIndex = 6
-        ' 
         ' ContactTextBox
         ' 
-        ContactTextBox.Location = New Point(275, 284)
+        ContactTextBox.Location = New Point(293, 158)
         ContactTextBox.Name = "ContactTextBox"
         ContactTextBox.Size = New Size(307, 27)
         ContactTextBox.TabIndex = 1
         ' 
         ' SaveButton
         ' 
-        SaveButton.Location = New Point(623, 369)
+        SaveButton.BackColor = Color.SeaShell
+        SaveButton.ForeColor = Color.Sienna
+        SaveButton.Location = New Point(623, 385)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
         SaveButton.TabIndex = 3
         SaveButton.Text = "Save"
-        SaveButton.UseVisualStyleBackColor = True
+        SaveButton.UseVisualStyleBackColor = False
         ' 
         ' EmailTextBox
         ' 
-        EmailTextBox.Location = New Point(275, 332)
+        EmailTextBox.Location = New Point(293, 206)
         EmailTextBox.Name = "EmailTextBox"
         EmailTextBox.Size = New Size(307, 27)
         EmailTextBox.TabIndex = 2
         ' 
         ' SupplierNameTextBox
         ' 
-        SupplierNameTextBox.Location = New Point(275, 234)
+        SupplierNameTextBox.Location = New Point(293, 108)
         SupplierNameTextBox.Name = "SupplierNameTextBox"
         SupplierNameTextBox.Size = New Size(307, 27)
         SupplierNameTextBox.TabIndex = 0
         ' 
         ' EmailText
         ' 
-        EmailText.AutoSize = True
         EmailText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        EmailText.Location = New Point(184, 335)
+        EmailText.Location = New Point(202, 209)
         EmailText.Name = "EmailText"
         EmailText.Size = New Size(64, 23)
         EmailText.TabIndex = 9
         EmailText.Text = "Email :"
+        EmailText.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label5
         ' 
@@ -104,23 +95,23 @@ Partial Class AddSupplierForm
         ' 
         ' ContactText
         ' 
-        ContactText.AutoSize = True
         ContactText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        ContactText.Location = New Point(166, 285)
+        ContactText.Location = New Point(184, 159)
         ContactText.Name = "ContactText"
         ContactText.Size = New Size(82, 23)
         ContactText.TabIndex = 8
         ContactText.Text = "Contact :"
+        ContactText.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' SupplierNameText
         ' 
-        SupplierNameText.AutoSize = True
         SupplierNameText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        SupplierNameText.Location = New Point(108, 235)
+        SupplierNameText.Location = New Point(126, 107)
         SupplierNameText.Name = "SupplierNameText"
         SupplierNameText.Size = New Size(140, 23)
         SupplierNameText.TabIndex = 7
         SupplierNameText.Text = "Supplier Name :"
+        SupplierNameText.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' TitleLabel
         ' 
@@ -132,33 +123,23 @@ Partial Class AddSupplierForm
         TitleLabel.TabIndex = 4
         TitleLabel.Text = "Add Supplier"
         ' 
-        ' SupplierIDText
-        ' 
-        SupplierIDText.AutoSize = True
-        SupplierIDText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        SupplierIDText.Location = New Point(136, 118)
-        SupplierIDText.Name = "SupplierIDText"
-        SupplierIDText.Size = New Size(111, 23)
-        SupplierIDText.TabIndex = 5
-        SupplierIDText.Text = "Supplier ID :"
-        ' 
         ' EmailErrorProvider
         ' 
         EmailErrorProvider.ContainerControl = Me
         ' 
         ' LogoText
         ' 
-        LogoText.AutoSize = True
         LogoText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        LogoText.Location = New Point(114, 163)
+        LogoText.Location = New Point(125, 256)
         LogoText.Name = "LogoText"
-        LogoText.Size = New Size(133, 23)
+        LogoText.Size = New Size(141, 23)
         LogoText.TabIndex = 11
-        LogoText.Text = "Supplier Logo :"
+        LogoText.Text = "Company Logo :"
+        LogoText.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' UploadFileButton
         ' 
-        UploadFileButton.Location = New Point(274, 161)
+        UploadFileButton.Location = New Point(293, 256)
         UploadFileButton.Name = "UploadFileButton"
         UploadFileButton.Size = New Size(94, 29)
         UploadFileButton.TabIndex = 12
@@ -168,24 +149,25 @@ Partial Class AddSupplierForm
         ' PathLabel
         ' 
         PathLabel.AutoSize = True
-        PathLabel.Location = New Point(274, 194)
+        PathLabel.Location = New Point(413, 385)
         PathLabel.Name = "PathLabel"
         PathLabel.Size = New Size(0, 20)
         PathLabel.TabIndex = 14
         ' 
         ' MainPanel
         ' 
-        MainPanel.Controls.Add(LogoPictureBox)
+        MainPanel.Controls.Add(LogoText)
+        MainPanel.Controls.Add(SupplierNameText)
         MainPanel.Dock = DockStyle.Fill
         MainPanel.Location = New Point(0, 0)
         MainPanel.Name = "MainPanel"
-        MainPanel.Size = New Size(800, 450)
+        MainPanel.Size = New Size(800, 436)
         MainPanel.TabIndex = 15
         ' 
         ' LogoPictureBox
         ' 
         LogoPictureBox.BackColor = Color.White
-        LogoPictureBox.Location = New Point(613, 27)
+        LogoPictureBox.Location = New Point(293, 291)
         LogoPictureBox.Name = "LogoPictureBox"
         LogoPictureBox.Size = New Size(115, 114)
         LogoPictureBox.TabIndex = 14
@@ -195,11 +177,10 @@ Partial Class AddSupplierForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(800, 436)
+        Controls.Add(LogoPictureBox)
         Controls.Add(PathLabel)
         Controls.Add(UploadFileButton)
-        Controls.Add(LogoText)
-        Controls.Add(SupplierIDLabel)
         Controls.Add(ContactTextBox)
         Controls.Add(SaveButton)
         Controls.Add(EmailTextBox)
@@ -207,9 +188,7 @@ Partial Class AddSupplierForm
         Controls.Add(EmailText)
         Controls.Add(Label5)
         Controls.Add(ContactText)
-        Controls.Add(SupplierNameText)
         Controls.Add(TitleLabel)
-        Controls.Add(SupplierIDText)
         Controls.Add(MainPanel)
         Name = "AddSupplierForm"
         StartPosition = FormStartPosition.CenterScreen
@@ -220,8 +199,6 @@ Partial Class AddSupplierForm
         ResumeLayout(False)
         PerformLayout()
     End Sub
-
-    Friend WithEvents SupplierIDLabel As Label
     Friend WithEvents ContactTextBox As TextBox
     Friend WithEvents SaveButton As Button
     Friend WithEvents EmailTextBox As TextBox
@@ -231,7 +208,6 @@ Partial Class AddSupplierForm
     Friend WithEvents ContactText As Label
     Friend WithEvents SupplierNameText As Label
     Friend WithEvents TitleLabel As Label
-    Friend WithEvents SupplierIDText As Label
     Friend WithEvents EmailErrorProvider As ErrorProvider
     Friend WithEvents UploadFileButton As Button
     Friend WithEvents LogoText As Label
