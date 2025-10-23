@@ -228,7 +228,7 @@ Partial Class AddProductForm
         ' 
         ProductImageButton.Location = New Point(903, 315)
         ProductImageButton.Name = "ProductImageButton"
-        ProductImageButton.Size = New Size(118, 29)
+        ProductImageButton.Size = New Size(118, 30)
         ProductImageButton.TabIndex = 24
         ProductImageButton.Text = "Upload Image"
         ProductImageButton.UseVisualStyleBackColor = True
@@ -261,7 +261,6 @@ Partial Class AddProductForm
         Controls.Add(Label1)
         Name = "AddProductForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "AddProductForm"
         CType(ProductImagePictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()

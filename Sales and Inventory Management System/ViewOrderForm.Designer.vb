@@ -73,7 +73,6 @@ Partial Class ViewOrderForm
         Controls.Add(Label1)
         Name = "ViewOrderForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "ViewOrderForm"
         ResumeLayout(False)
         PerformLayout()
     End Sub

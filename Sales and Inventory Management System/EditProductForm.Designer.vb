@@ -272,7 +272,6 @@ Partial Class EditProductForm
         Controls.Add(Label1)
         Name = "EditProductForm"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "EditProductForm"
         CType(ProductPictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
