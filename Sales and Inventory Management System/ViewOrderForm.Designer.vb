@@ -66,6 +66,7 @@ Partial Class ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.SeaShell
         ClientSize = New Size(1360, 621)
         Controls.Add(SaveButton)
         Controls.Add(OrderFlowLayoutPanel)
