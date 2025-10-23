@@ -32,7 +32,7 @@ Partial Class ViewOrderForm
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(606, 19)
+        Label1.Location = New Point(562, 18)
         Label1.Name = "Label1"
         Label1.Size = New Size(176, 35)
         Label1.TabIndex = 0
@@ -40,22 +40,22 @@ Partial Class ViewOrderForm
         ' 
         ' HeaderFlowLayoutPanel
         ' 
-        HeaderFlowLayoutPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
-        HeaderFlowLayoutPanel.Location = New Point(89, 84)
+        HeaderFlowLayoutPanel.BackColor = Color.Bisque
+        HeaderFlowLayoutPanel.Location = New Point(76, 81)
         HeaderFlowLayoutPanel.Name = "HeaderFlowLayoutPanel"
         HeaderFlowLayoutPanel.Size = New Size(1177, 41)
         HeaderFlowLayoutPanel.TabIndex = 1
         ' 
         ' OrderFlowLayoutPanel
         ' 
-        OrderFlowLayoutPanel.Location = New Point(89, 131)
+        OrderFlowLayoutPanel.Location = New Point(76, 128)
         OrderFlowLayoutPanel.Name = "OrderFlowLayoutPanel"
         OrderFlowLayoutPanel.Size = New Size(1203, 375)
         OrderFlowLayoutPanel.TabIndex = 2
         ' 
         ' SaveButton
         ' 
-        SaveButton.Location = New Point(1191, 534)
+        SaveButton.Location = New Point(1159, 530)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
         SaveButton.TabIndex = 3
@@ -66,7 +66,8 @@ Partial Class ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1360, 621)
+        BackColor = Color.SeaShell
+        ClientSize = New Size(1323, 621)
         Controls.Add(SaveButton)
         Controls.Add(OrderFlowLayoutPanel)
         Controls.Add(HeaderFlowLayoutPanel)

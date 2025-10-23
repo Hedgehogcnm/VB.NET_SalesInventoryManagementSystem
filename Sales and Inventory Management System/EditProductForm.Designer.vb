@@ -61,7 +61,7 @@ Partial Class EditProductForm
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label2.Location = New Point(108, 147)
+        Label2.Location = New Point(90, 122)
         Label2.Name = "Label2"
         Label2.Size = New Size(106, 23)
         Label2.TabIndex = 1
@@ -71,7 +71,7 @@ Partial Class EditProductForm
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(108, 272)
+        Label3.Location = New Point(90, 247)
         Label3.Name = "Label3"
         Label3.Size = New Size(140, 23)
         Label3.TabIndex = 2
@@ -81,7 +81,7 @@ Partial Class EditProductForm
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.Location = New Point(108, 334)
+        Label4.Location = New Point(90, 309)
         Label4.Name = "Label4"
         Label4.Size = New Size(162, 23)
         Label4.TabIndex = 3
@@ -91,7 +91,7 @@ Partial Class EditProductForm
         ' 
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label5.Location = New Point(551, 147)
+        Label5.Location = New Point(533, 122)
         Label5.Name = "Label5"
         Label5.Size = New Size(134, 23)
         Label5.TabIndex = 4
@@ -101,7 +101,7 @@ Partial Class EditProductForm
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label6.Location = New Point(468, 204)
+        Label6.Location = New Point(450, 179)
         Label6.Name = "Label6"
         Label6.Size = New Size(217, 23)
         Label6.TabIndex = 5
@@ -111,7 +111,7 @@ Partial Class EditProductForm
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label7.Location = New Point(518, 271)
+        Label7.Location = New Point(500, 246)
         Label7.Name = "Label7"
         Label7.Size = New Size(167, 23)
         Label7.TabIndex = 6
@@ -121,7 +121,7 @@ Partial Class EditProductForm
         ' 
         Label8.AutoSize = True
         Label8.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label8.Location = New Point(524, 334)
+        Label8.Location = New Point(506, 309)
         Label8.Name = "Label8"
         Label8.Size = New Size(161, 23)
         Label8.TabIndex = 7
@@ -129,7 +129,7 @@ Partial Class EditProductForm
         ' 
         ' SaveButton
         ' 
-        SaveButton.Location = New Point(1034, 465)
+        SaveButton.Location = New Point(627, 431)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
         SaveButton.TabIndex = 8
@@ -138,16 +138,19 @@ Partial Class EditProductForm
         ' 
         ' ProductCategoryComboBox
         ' 
+        ProductCategoryComboBox.BackColor = SystemColors.Info
         ProductCategoryComboBox.FormattingEnabled = True
         ProductCategoryComboBox.Items.AddRange(New Object() {"Hand Tools", "Power Tools", "Plumbing", "Electrical", "Building Materials", "Paint & Adhesives", "Safety Equipment"})
-        ProductCategoryComboBox.Location = New Point(276, 333)
+        ProductCategoryComboBox.Location = New Point(258, 308)
         ProductCategoryComboBox.Name = "ProductCategoryComboBox"
         ProductCategoryComboBox.Size = New Size(151, 28)
         ProductCategoryComboBox.TabIndex = 9
         ' 
         ' EditProductNameTextBox
         ' 
-        EditProductNameTextBox.Location = New Point(254, 271)
+        EditProductNameTextBox.BackColor = SystemColors.Info
+        EditProductNameTextBox.BorderStyle = BorderStyle.FixedSingle
+        EditProductNameTextBox.Location = New Point(236, 246)
         EditProductNameTextBox.Name = "EditProductNameTextBox"
         EditProductNameTextBox.Size = New Size(224, 27)
         EditProductNameTextBox.TabIndex = 10
@@ -156,7 +159,7 @@ Partial Class EditProductForm
         ' 
         Label9.AutoSize = True
         Label9.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label9.Location = New Point(108, 204)
+        Label9.Location = New Point(90, 179)
         Label9.Name = "Label9"
         Label9.Size = New Size(122, 23)
         Label9.TabIndex = 11
@@ -165,7 +168,7 @@ Partial Class EditProductForm
         ' ProductIDLabel
         ' 
         ProductIDLabel.AutoSize = True
-        ProductIDLabel.Location = New Point(220, 149)
+        ProductIDLabel.Location = New Point(202, 124)
         ProductIDLabel.Name = "ProductIDLabel"
         ProductIDLabel.Size = New Size(0, 20)
         ProductIDLabel.TabIndex = 12
@@ -173,42 +176,50 @@ Partial Class EditProductForm
         ' SupplierIDLabel
         ' 
         SupplierIDLabel.AutoSize = True
-        SupplierIDLabel.Location = New Point(236, 207)
+        SupplierIDLabel.Location = New Point(218, 182)
         SupplierIDLabel.Name = "SupplierIDLabel"
         SupplierIDLabel.Size = New Size(0, 20)
         SupplierIDLabel.TabIndex = 13
         ' 
         ' EditProductStockTextBox
         ' 
-        EditProductStockTextBox.Location = New Point(691, 145)
+        EditProductStockTextBox.BackColor = SystemColors.Info
+        EditProductStockTextBox.BorderStyle = BorderStyle.FixedSingle
+        EditProductStockTextBox.Location = New Point(673, 120)
         EditProductStockTextBox.Name = "EditProductStockTextBox"
         EditProductStockTextBox.Size = New Size(125, 27)
         EditProductStockTextBox.TabIndex = 14
         ' 
         ' EditProductMinStockTextBox
         ' 
-        EditProductMinStockTextBox.Location = New Point(691, 204)
+        EditProductMinStockTextBox.BackColor = SystemColors.Info
+        EditProductMinStockTextBox.BorderStyle = BorderStyle.FixedSingle
+        EditProductMinStockTextBox.Location = New Point(673, 179)
         EditProductMinStockTextBox.Name = "EditProductMinStockTextBox"
         EditProductMinStockTextBox.Size = New Size(125, 27)
         EditProductMinStockTextBox.TabIndex = 15
         ' 
         ' EditProductCostPriceTextBox
         ' 
-        EditProductCostPriceTextBox.Location = New Point(691, 272)
+        EditProductCostPriceTextBox.BackColor = SystemColors.Info
+        EditProductCostPriceTextBox.BorderStyle = BorderStyle.FixedSingle
+        EditProductCostPriceTextBox.Location = New Point(673, 247)
         EditProductCostPriceTextBox.Name = "EditProductCostPriceTextBox"
         EditProductCostPriceTextBox.Size = New Size(125, 27)
         EditProductCostPriceTextBox.TabIndex = 16
         ' 
         ' EditProductSellPriceTextBox
         ' 
-        EditProductSellPriceTextBox.Location = New Point(691, 331)
+        EditProductSellPriceTextBox.BackColor = SystemColors.Info
+        EditProductSellPriceTextBox.BorderStyle = BorderStyle.FixedSingle
+        EditProductSellPriceTextBox.Location = New Point(673, 306)
         EditProductSellPriceTextBox.Name = "EditProductSellPriceTextBox"
         EditProductSellPriceTextBox.Size = New Size(125, 27)
         EditProductSellPriceTextBox.TabIndex = 17
         ' 
         ' CancelButton
         ' 
-        CancelButton.Location = New Point(900, 465)
+        CancelButton.Location = New Point(493, 431)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 18
@@ -219,7 +230,7 @@ Partial Class EditProductForm
         ' 
         Label10.AutoSize = True
         Label10.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label10.Location = New Point(947, 145)
+        Label10.Location = New Point(929, 120)
         Label10.Name = "Label10"
         Label10.Size = New Size(138, 23)
         Label10.TabIndex = 19
@@ -227,7 +238,7 @@ Partial Class EditProductForm
         ' 
         ' ProductPictureBox
         ' 
-        ProductPictureBox.Location = New Point(909, 171)
+        ProductPictureBox.Location = New Point(891, 146)
         ProductPictureBox.Name = "ProductPictureBox"
         ProductPictureBox.Size = New Size(205, 172)
         ProductPictureBox.SizeMode = PictureBoxSizeMode.Zoom
@@ -236,7 +247,7 @@ Partial Class EditProductForm
         ' 
         ' ChangeImageButton
         ' 
-        ChangeImageButton.Location = New Point(924, 358)
+        ChangeImageButton.Location = New Point(906, 333)
         ChangeImageButton.Name = "ChangeImageButton"
         ChangeImageButton.Size = New Size(181, 37)
         ChangeImageButton.TabIndex = 21
@@ -247,6 +258,7 @@ Partial Class EditProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.SeaShell
         ClientSize = New Size(1198, 526)
         Controls.Add(ChangeImageButton)
         Controls.Add(ProductPictureBox)

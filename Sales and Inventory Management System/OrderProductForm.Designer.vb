@@ -41,7 +41,7 @@ Partial Class OrderProductForm
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(402, 24)
+        Label1.Location = New Point(301, 20)
         Label1.Name = "Label1"
         Label1.Size = New Size(182, 35)
         Label1.TabIndex = 0
@@ -51,7 +51,7 @@ Partial Class OrderProductForm
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label2.Location = New Point(317, 86)
+        Label2.Location = New Point(216, 82)
         Label2.Name = "Label2"
         Label2.Size = New Size(135, 23)
         Label2.TabIndex = 1
@@ -61,7 +61,7 @@ Partial Class OrderProductForm
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(344, 193)
+        Label3.Location = New Point(243, 189)
         Label3.Name = "Label3"
         Label3.Size = New Size(165, 23)
         Label3.TabIndex = 3
@@ -69,14 +69,16 @@ Partial Class OrderProductForm
         ' 
         ' OrderQuantityTextBox
         ' 
-        OrderQuantityTextBox.Location = New Point(515, 193)
+        OrderQuantityTextBox.BackColor = SystemColors.Info
+        OrderQuantityTextBox.BorderStyle = BorderStyle.FixedSingle
+        OrderQuantityTextBox.Location = New Point(414, 189)
         OrderQuantityTextBox.Name = "OrderQuantityTextBox"
         OrderQuantityTextBox.Size = New Size(125, 27)
         OrderQuantityTextBox.TabIndex = 4
         ' 
         ' OrderButton
         ' 
-        OrderButton.Location = New Point(865, 398)
+        OrderButton.Location = New Point(414, 389)
         OrderButton.Name = "OrderButton"
         OrderButton.Size = New Size(94, 29)
         OrderButton.TabIndex = 5
@@ -85,7 +87,7 @@ Partial Class OrderProductForm
         ' 
         ' CancelButton
         ' 
-        CancelButton.Location = New Point(733, 398)
+        CancelButton.Location = New Point(282, 389)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 6
@@ -96,7 +98,7 @@ Partial Class OrderProductForm
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.Location = New Point(344, 142)
+        Label4.Location = New Point(243, 138)
         Label4.Name = "Label4"
         Label4.Size = New Size(106, 23)
         Label4.TabIndex = 8
@@ -105,7 +107,7 @@ Partial Class OrderProductForm
         ' ProductIDLabel
         ' 
         ProductIDLabel.AutoSize = True
-        ProductIDLabel.Location = New Point(458, 145)
+        ProductIDLabel.Location = New Point(357, 141)
         ProductIDLabel.Name = "ProductIDLabel"
         ProductIDLabel.Size = New Size(0, 20)
         ProductIDLabel.TabIndex = 9
@@ -114,7 +116,7 @@ Partial Class OrderProductForm
         ' 
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label5.Location = New Point(304, 298)
+        Label5.Location = New Point(203, 294)
         Label5.Name = "Label5"
         Label5.Size = New Size(98, 23)
         Label5.TabIndex = 10
@@ -124,7 +126,7 @@ Partial Class OrderProductForm
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label6.Location = New Point(565, 298)
+        Label6.Location = New Point(464, 294)
         Label6.Name = "Label6"
         Label6.Size = New Size(103, 23)
         Label6.TabIndex = 11
@@ -133,7 +135,7 @@ Partial Class OrderProductForm
         ' UnitPriceLabel
         ' 
         UnitPriceLabel.AutoSize = True
-        UnitPriceLabel.Location = New Point(402, 300)
+        UnitPriceLabel.Location = New Point(301, 296)
         UnitPriceLabel.Name = "UnitPriceLabel"
         UnitPriceLabel.Size = New Size(0, 20)
         UnitPriceLabel.TabIndex = 12
@@ -141,7 +143,7 @@ Partial Class OrderProductForm
         ' TotalPriceLabel
         ' 
         TotalPriceLabel.AutoSize = True
-        TotalPriceLabel.Location = New Point(674, 300)
+        TotalPriceLabel.Location = New Point(573, 296)
         TotalPriceLabel.Name = "TotalPriceLabel"
         TotalPriceLabel.Size = New Size(0, 20)
         TotalPriceLabel.TabIndex = 13
@@ -149,7 +151,7 @@ Partial Class OrderProductForm
         ' ProductNameLabel
         ' 
         ProductNameLabel.AutoSize = True
-        ProductNameLabel.Location = New Point(458, 89)
+        ProductNameLabel.Location = New Point(357, 85)
         ProductNameLabel.Name = "ProductNameLabel"
         ProductNameLabel.Size = New Size(0, 20)
         ProductNameLabel.TabIndex = 14
@@ -158,7 +160,8 @@ Partial Class OrderProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1014, 454)
+        BackColor = Color.SeaShell
+        ClientSize = New Size(801, 454)
         Controls.Add(ProductNameLabel)
         Controls.Add(TotalPriceLabel)
         Controls.Add(UnitPriceLabel)

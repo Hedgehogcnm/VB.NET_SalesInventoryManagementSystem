@@ -48,7 +48,7 @@ Partial Class SupplierForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.Size = New Size(68, 1033)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -114,15 +114,16 @@ Partial Class SupplierForm
         PanelMain.Dock = DockStyle.Fill
         PanelMain.Location = New Point(68, 0)
         PanelMain.Name = "PanelMain"
-        PanelMain.Size = New Size(1434, 773)
+        PanelMain.Size = New Size(1834, 1033)
         PanelMain.TabIndex = 6
         ' 
         ' SupplierFlowLayoutPanel
         ' 
+        SupplierFlowLayoutPanel.BackColor = SystemColors.Control
         SupplierFlowLayoutPanel.Dock = DockStyle.Fill
         SupplierFlowLayoutPanel.Location = New Point(0, 60)
         SupplierFlowLayoutPanel.Name = "SupplierFlowLayoutPanel"
-        SupplierFlowLayoutPanel.Size = New Size(1434, 713)
+        SupplierFlowLayoutPanel.Size = New Size(1834, 973)
         SupplierFlowLayoutPanel.TabIndex = 8
         ' 
         ' Panel8
@@ -133,7 +134,7 @@ Partial Class SupplierForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1434, 60)
+        Panel8.Size = New Size(1834, 60)
         Panel8.TabIndex = 0
         ' 
         ' LabelForm
@@ -154,7 +155,7 @@ Partial Class SupplierForm
         AddPictureBox.BackColor = Color.SeaShell
         AddPictureBox.BackgroundImageLayout = ImageLayout.Zoom
         AddPictureBox.Image = My.Resources.Resources.AddIconBlue
-        AddPictureBox.Location = New Point(1306, 8)
+        AddPictureBox.Location = New Point(1758, 8)
         AddPictureBox.Name = "AddPictureBox"
         AddPictureBox.Size = New Size(47, 46)
         AddPictureBox.SizeMode = PictureBoxSizeMode.Zoom
@@ -165,7 +166,7 @@ Partial Class SupplierForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1502, 773)
+        ClientSize = New Size(1902, 1033)
         Controls.Add(PanelMain)
         Controls.Add(MenuStrip1)
         Name = "SupplierForm"

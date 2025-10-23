@@ -50,7 +50,7 @@ Partial Class AddProductForm
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(502, 21)
+        Label1.Location = New Point(481, 9)
         Label1.Name = "Label1"
         Label1.Size = New Size(162, 35)
         Label1.TabIndex = 0
@@ -128,6 +128,8 @@ Partial Class AddProductForm
         ' 
         ' ProductNameTextBox
         ' 
+        ProductNameTextBox.BackColor = SystemColors.Info
+        ProductNameTextBox.BorderStyle = BorderStyle.FixedSingle
         ProductNameTextBox.Location = New Point(204, 228)
         ProductNameTextBox.Name = "ProductNameTextBox"
         ProductNameTextBox.Size = New Size(151, 27)
@@ -135,6 +137,7 @@ Partial Class AddProductForm
         ' 
         ' ProductCategoryComboBox
         ' 
+        ProductCategoryComboBox.BackColor = SystemColors.Info
         ProductCategoryComboBox.FormattingEnabled = True
         ProductCategoryComboBox.Items.AddRange(New Object() {"Hand Tools", "Power Tools", "Plumbing", "Electrical", "Building Materials", "Paint & Adhesives", "Safety Equipment"})
         ProductCategoryComboBox.Location = New Point(204, 295)
@@ -144,6 +147,8 @@ Partial Class AddProductForm
         ' 
         ' ProductMinStockTextBox
         ' 
+        ProductMinStockTextBox.BackColor = SystemColors.Info
+        ProductMinStockTextBox.BorderStyle = BorderStyle.FixedSingle
         ProductMinStockTextBox.Location = New Point(615, 108)
         ProductMinStockTextBox.Name = "ProductMinStockTextBox"
         ProductMinStockTextBox.Size = New Size(125, 27)
@@ -151,6 +156,8 @@ Partial Class AddProductForm
         ' 
         ' ProductCostPriceTextBox
         ' 
+        ProductCostPriceTextBox.BackColor = SystemColors.Info
+        ProductCostPriceTextBox.BorderStyle = BorderStyle.FixedSingle
         ProductCostPriceTextBox.Location = New Point(615, 166)
         ProductCostPriceTextBox.Name = "ProductCostPriceTextBox"
         ProductCostPriceTextBox.Size = New Size(125, 27)
@@ -158,6 +165,8 @@ Partial Class AddProductForm
         ' 
         ' ProductSellPriceTextBox
         ' 
+        ProductSellPriceTextBox.BackColor = SystemColors.Info
+        ProductSellPriceTextBox.BorderStyle = BorderStyle.FixedSingle
         ProductSellPriceTextBox.Location = New Point(615, 228)
         ProductSellPriceTextBox.Name = "ProductSellPriceTextBox"
         ProductSellPriceTextBox.Size = New Size(125, 27)
@@ -165,15 +174,18 @@ Partial Class AddProductForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.Location = New Point(602, 385)
+        AddProductButton.BackColor = Color.White
+        AddProductButton.Cursor = Cursors.No
+        AddProductButton.Location = New Point(577, 371)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 29)
         AddProductButton.TabIndex = 16
         AddProductButton.Text = "Add"
-        AddProductButton.UseVisualStyleBackColor = True
+        AddProductButton.UseVisualStyleBackColor = False
         ' 
         ' SupplierIDComboBox
         ' 
+        SupplierIDComboBox.BackColor = SystemColors.Info
         SupplierIDComboBox.FormattingEnabled = True
         SupplierIDComboBox.Location = New Point(204, 165)
         SupplierIDComboBox.Name = "SupplierIDComboBox"
@@ -182,12 +194,13 @@ Partial Class AddProductForm
         ' 
         ' CancelButton
         ' 
-        CancelButton.Location = New Point(481, 385)
+        CancelButton.BackColor = Color.White
+        CancelButton.Location = New Point(456, 371)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 19
         CancelButton.Text = "Cancel"
-        CancelButton.UseVisualStyleBackColor = True
+        CancelButton.UseVisualStyleBackColor = False
         ' 
         ' ProductIDLabel
         ' 
@@ -199,6 +212,8 @@ Partial Class AddProductForm
         ' 
         ' ProductIDTextBox
         ' 
+        ProductIDTextBox.BackColor = SystemColors.Info
+        ProductIDTextBox.BorderStyle = BorderStyle.FixedSingle
         ProductIDTextBox.Location = New Point(204, 106)
         ProductIDTextBox.Name = "ProductIDTextBox"
         ProductIDTextBox.Size = New Size(151, 27)
@@ -227,18 +242,20 @@ Partial Class AddProductForm
         ' 
         ' ProductImageButton
         ' 
+        ProductImageButton.BackColor = Color.White
         ProductImageButton.Location = New Point(903, 315)
         ProductImageButton.Name = "ProductImageButton"
         ProductImageButton.Size = New Size(118, 30)
         ProductImageButton.TabIndex = 24
         ProductImageButton.Text = "Upload Image"
-        ProductImageButton.UseVisualStyleBackColor = True
+        ProductImageButton.UseVisualStyleBackColor = False
         ' 
         ' AddProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1177, 450)
+        BackColor = Color.SeaShell
+        ClientSize = New Size(1123, 450)
         Controls.Add(ProductImageButton)
         Controls.Add(ProductImagePictureBox)
         Controls.Add(Label6)
