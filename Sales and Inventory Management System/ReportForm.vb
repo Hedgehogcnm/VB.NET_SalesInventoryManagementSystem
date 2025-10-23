@@ -58,6 +58,22 @@ Public Class ReportForm
         PrintDoc.DefaultPageSettings.Landscape = False
         PageSetup.Document = PrintDoc
         PrintDlg.Document = PrintDoc
+
+        ' === Button Style ===
+        Dim reportButtons() As Button = {SaleReportButton, InventoryReportButton, InventoryTrackingButton, PrintButton}
+
+        For Each btn As Button In reportButtons
+            btn.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+            btn.BackColor = Color.SeaShell
+            btn.ForeColor = Color.Sienna
+            btn.FlatStyle = FlatStyle.Flat
+            btn.FlatAppearance.BorderSize = 0
+            btn.Cursor = Cursors.Hand
+            btn.UseCompatibleTextRendering = True
+            btn.UseVisualStyleBackColor = False
+            AddHandler btn.MouseEnter, Sub() btn.BackColor = Color.AntiqueWhite
+            AddHandler btn.MouseLeave, Sub() btn.BackColor = Color.SeaShell
+        Next
     End Sub
 
     Private Sub DateTimePickerFrom_ValueChanged(sender As Object, e As EventArgs) Handles FromDateTimePicker.ValueChanged
@@ -73,7 +89,6 @@ Public Class ReportForm
     End Sub
 
     Private Sub RefreshCurrentReport()
-        ' 若还没选择报表，就不刷新
         If String.IsNullOrEmpty(reportTitle) Then Exit Sub
 
         Try
@@ -195,22 +210,18 @@ Public Class ReportForm
                 Exit Sub
             End If
 
-            ' === 在 ReportPanel 内做“连续滚动预览” ===
             RemoveHandler PrintDoc.PrintPage, AddressOf PrintDoc_PrintPage
             AddHandler PrintDoc.PrintPage, AddressOf PrintDoc_PrintPage
 
-            ' 清空旧内容
             ReportPanel.Controls.Clear()
 
-            ' 用 PreviewPrintController 生成所有页（不会真的打印）
             Dim oldCtrl As PrintController = PrintDoc.PrintController
             Dim previewCtrl As New PreviewPrintController()
             PrintDoc.PrintController = previewCtrl
-            PrintDoc.Print()  ' 触发 PrintDoc_PrintPage 生成页
+            PrintDoc.Print()
 
             Dim pages = previewCtrl.GetPreviewPageInfo()
 
-            ' === 灰底 FlowLayoutPanel，纵向排版 ===
             Dim flow As New FlowLayoutPanel With {
                 .Dock = DockStyle.Fill,
                 .AutoScroll = True,
@@ -220,17 +231,14 @@ Public Class ReportForm
                 .Padding = New Padding(0, 30, 0, 30)
             }
 
-            ' 页面缩放比例（看起来像A4预览）
             Dim paperScale As Double = 0.85
 
             flow.SuspendLayout()
 
             For Each p In pages
-                ' 计算纸张尺寸（按宽度缩放）
                 Dim paperWidth As Integer = CInt((ReportPanel.ClientSize.Width - 120) * paperScale)
                 Dim paperHeight As Integer = CInt(p.Image.Height * (paperWidth / p.Image.Width))
 
-                ' 纸张图片
                 Dim pb As New PictureBox With {
                     .Image = New Bitmap(p.Image),
                     .SizeMode = PictureBoxSizeMode.Zoom,
@@ -239,12 +247,11 @@ Public Class ReportForm
                     .BackColor = Color.White
                 }
 
-                ' 每一页的承载面板（负责水平居中）
                 Dim host As New Panel With {
-                    .Width = flow.ClientSize.Width,                    ' 先用当前宽度
-                    .Height = paperHeight + 20,                        ' 上下留白
+                    .Width = flow.ClientSize.Width,
+                    .Height = paperHeight + 20,
                     .BackColor = Color.Transparent,
-                    .Margin = New Padding(0, 0, 0, 20)                 ' 页间距
+                    .Margin = New Padding(0, 0, 0, 20)
                 }
 
                 pb.Top = 10

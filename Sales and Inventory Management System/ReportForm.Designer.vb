@@ -57,7 +57,7 @@ Partial Class ReportForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.Size = New Size(68, 1033)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -68,7 +68,7 @@ Partial Class ReportForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(149, 62)
+        LogoToolStripMenuItem.Size = New Size(67, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
@@ -76,7 +76,7 @@ Partial Class ReportForm
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SalesToolStripMenuItem.Size = New Size(149, 80)
+        SalesToolStripMenuItem.Size = New Size(67, 80)
         SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
@@ -85,7 +85,7 @@ Partial Class ReportForm
         InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        InventoryToolStripMenuItem.Size = New Size(149, 80)
+        InventoryToolStripMenuItem.Size = New Size(67, 80)
         InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
@@ -94,7 +94,7 @@ Partial Class ReportForm
         SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SupplierToolStripMenuItem.Size = New Size(149, 80)
+        SupplierToolStripMenuItem.Size = New Size(67, 80)
         SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
@@ -104,7 +104,7 @@ Partial Class ReportForm
         ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(149, 80)
+        ReportToolStripMenuItem.Size = New Size(67, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
         ' 
         ' AboutUsToolStripMenuItem
@@ -120,11 +120,12 @@ Partial Class ReportForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(149, 80)
+        LogOutToolStripMenuItem.Size = New Size(67, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' PanelMain
         ' 
+        PanelMain.BackColor = SystemColors.Control
         PanelMain.Controls.Add(ReportPanel)
         PanelMain.Controls.Add(PrintButton)
         PanelMain.Controls.Add(FromDateTimePicker)
@@ -136,7 +137,7 @@ Partial Class ReportForm
         PanelMain.Dock = DockStyle.Fill
         PanelMain.Location = New Point(68, 0)
         PanelMain.Name = "PanelMain"
-        PanelMain.Size = New Size(1434, 773)
+        PanelMain.Size = New Size(1834, 1033)
         PanelMain.TabIndex = 6
         ' 
         ' ReportPanel
@@ -145,12 +146,12 @@ Partial Class ReportForm
         ReportPanel.BackColor = SystemColors.ActiveBorder
         ReportPanel.Location = New Point(179, 120)
         ReportPanel.Name = "ReportPanel"
-        ReportPanel.Size = New Size(1243, 616)
+        ReportPanel.Size = New Size(1643, 876)
         ReportPanel.TabIndex = 11
         ' 
         ' PrintButton
         ' 
-        PrintButton.Location = New Point(1327, 76)
+        PrintButton.Location = New Point(1687, 76)
         PrintButton.Name = "PrintButton"
         PrintButton.Size = New Size(94, 29)
         PrintButton.TabIndex = 7
@@ -159,7 +160,7 @@ Partial Class ReportForm
         ' 
         ' FromDateTimePicker
         ' 
-        FromDateTimePicker.Location = New Point(541, 77)
+        FromDateTimePicker.Location = New Point(272, 77)
         FromDateTimePicker.Name = "FromDateTimePicker"
         FromDateTimePicker.Size = New Size(260, 27)
         FromDateTimePicker.TabIndex = 5
@@ -167,7 +168,7 @@ Partial Class ReportForm
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(489, 81)
+        Label3.Location = New Point(220, 80)
         Label3.Name = "Label3"
         Label3.Size = New Size(46, 20)
         Label3.TabIndex = 4
@@ -176,7 +177,7 @@ Partial Class ReportForm
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(895, 81)
+        Label2.Location = New Point(570, 80)
         Label2.Name = "Label2"
         Label2.Size = New Size(28, 20)
         Label2.TabIndex = 3
@@ -184,21 +185,21 @@ Partial Class ReportForm
         ' 
         ' ToDateTimePicker
         ' 
-        ToDateTimePicker.Location = New Point(939, 77)
+        ToDateTimePicker.Location = New Point(614, 77)
         ToDateTimePicker.Name = "ToDateTimePicker"
         ToDateTimePicker.Size = New Size(262, 27)
         ToDateTimePicker.TabIndex = 2
         ' 
         ' Panel1
         ' 
-        Panel1.BackColor = SystemColors.ControlLight
+        Panel1.BackColor = Color.AntiqueWhite
         Panel1.Controls.Add(InventoryTrackingButton)
         Panel1.Controls.Add(SaleReportButton)
         Panel1.Controls.Add(InventoryReportButton)
         Panel1.Dock = DockStyle.Left
         Panel1.Location = New Point(0, 60)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(169, 713)
+        Panel1.Size = New Size(169, 973)
         Panel1.TabIndex = 14
         ' 
         ' InventoryTrackingButton
@@ -212,21 +213,25 @@ Partial Class ReportForm
         ' 
         ' SaleReportButton
         ' 
+        SaleReportButton.BackColor = SystemColors.Control
+        SaleReportButton.ForeColor = Color.Black
         SaleReportButton.Location = New Point(17, 32)
         SaleReportButton.Name = "SaleReportButton"
         SaleReportButton.Size = New Size(135, 29)
         SaleReportButton.TabIndex = 12
         SaleReportButton.Text = "Sale Report"
-        SaleReportButton.UseVisualStyleBackColor = True
+        SaleReportButton.UseVisualStyleBackColor = False
         ' 
         ' InventoryReportButton
         ' 
+        InventoryReportButton.BackColor = SystemColors.ControlLight
+        InventoryReportButton.ForeColor = SystemColors.ControlText
         InventoryReportButton.Location = New Point(17, 87)
         InventoryReportButton.Name = "InventoryReportButton"
         InventoryReportButton.Size = New Size(135, 29)
         InventoryReportButton.TabIndex = 13
         InventoryReportButton.Text = "Inventory Report"
-        InventoryReportButton.UseVisualStyleBackColor = True
+        InventoryReportButton.UseVisualStyleBackColor = False
         ' 
         ' Panel8
         ' 
@@ -235,7 +240,7 @@ Partial Class ReportForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1434, 60)
+        Panel8.Size = New Size(1834, 60)
         Panel8.TabIndex = 0
         ' 
         ' LabelForm
@@ -254,7 +259,7 @@ Partial Class ReportForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1502, 773)
+        ClientSize = New Size(1902, 1033)
         Controls.Add(PanelMain)
         Controls.Add(MenuStrip1)
         Name = "ReportForm"

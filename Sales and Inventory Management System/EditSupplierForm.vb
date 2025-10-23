@@ -14,74 +14,98 @@ Public Class EditSupplierForm
     End Sub
 
     Private Sub EditSupplierForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' === 窗体样式 ===
-        Me.BackColor = Color.FromArgb(245, 247, 250)
+        ' === Background ===
+        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.StartPosition = FormStartPosition.CenterScreen
-        Me.Font = New Font("Segoe UI", 10)
         Me.Text = "Edit Supplier"
 
-        ' === 主容器 Panel ===
-        MainPanel.BackColor = Color.White
-        MainPanel.BorderStyle = BorderStyle.FixedSingle
-        MainPanel.Padding = New Padding(20)
-        MainPanel.Size = New Size(620, 420)
+        ' === Main Panel ===
+        MainPanel.BackColor = Color.SeaShell
+        MainPanel.BorderStyle = BorderStyle.None
+        MainPanel.Padding = New Padding(30)
+        MainPanel.Size = New Size(600, 420)
         MainPanel.Location = New Point((Me.ClientSize.Width - MainPanel.Width) \ 2, (Me.ClientSize.Height - MainPanel.Height) \ 2)
 
-        ' === 标题 ===
-        TitleLabel.Font = New Font("Segoe UI", 16, FontStyle.Bold)
-        TitleLabel.ForeColor = Color.FromArgb(30, 60, 130)
+        ' === Center title inside MainPanel ===
+        TitleLabel.Dock = DockStyle.None
+        TitleLabel.AutoSize = False
+        TitleLabel.Size = New Size(MainPanel.Width, 45)
+        TitleLabel.Location = New Point(0, 20)
+        TitleLabel.TextAlign = ContentAlignment.MiddleCenter
+
+        ' === Title ===
+        TitleLabel.Font = New Font("Segoe UI Semibold", 16, FontStyle.Bold)
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40) ' 深棕色
         TitleLabel.TextAlign = ContentAlignment.MiddleCenter
         TitleLabel.Text = "Edit Supplier"
         TitleLabel.Dock = DockStyle.Top
-        TitleLabel.Height = 50
+        TitleLabel.Height = 45
 
-        ' === 标签样式 ===
-        For Each lbl As Label In {SupplierIDText, SupplierNameText, ContactText, EmailText, LogoText, StatusText}
-            lbl.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-            lbl.ForeColor = Color.FromArgb(60, 60, 60)
+        ' === Label Style ===
+        For Each lbl As Label In {SupplierNameText, ContactText, EmailText, LogoText, StatusText}
+            lbl.Font = New Font("Segoe UI Semibold", 10)
+            lbl.ForeColor = Color.FromArgb(100, 70, 50)
             lbl.TextAlign = ContentAlignment.MiddleRight
         Next
 
-        ' === TextBox 样式 ===
+        ' === TextBox Style ===
         For Each txt As TextBox In {SupplierNameTextBox, ContactTextBox, EmailTextBox}
             txt.BorderStyle = BorderStyle.FixedSingle
             txt.Font = New Font("Segoe UI", 10)
-            txt.BackColor = Color.FromArgb(250, 250, 250)
+            txt.BackColor = Color.FromArgb(255, 245, 230)
+            txt.ForeColor = Color.FromArgb(50, 50, 50)
         Next
 
-        ' === PictureBox 样式 ===
+        ' === PictureBox ===
         With LogoPictureBox
             .BorderStyle = BorderStyle.FixedSingle
             .SizeMode = PictureBoxSizeMode.Zoom
             .BackColor = Color.White
         End With
 
-        ' === 上传按钮 ===
+        ' === Upload Button ===
         UploadFileButton.FlatStyle = FlatStyle.Flat
         UploadFileButton.FlatAppearance.BorderSize = 0
-        UploadFileButton.BackColor = Color.FromArgb(230, 240, 255)
-        UploadFileButton.ForeColor = Color.FromArgb(30, 60, 130)
-        UploadFileButton.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        UploadFileButton.BackColor = Color.FromArgb(255, 235, 215)
+        UploadFileButton.ForeColor = Color.FromArgb(120, 80, 40)
+        UploadFileButton.Font = New Font("Segoe UI Semibold", 9)
         UploadFileButton.Cursor = Cursors.Hand
-        AddHandler UploadFileButton.MouseEnter, Sub() UploadFileButton.BackColor = Color.FromArgb(210, 225, 255)
-        AddHandler UploadFileButton.MouseLeave, Sub() UploadFileButton.BackColor = Color.FromArgb(230, 240, 255)
+        AddHandler UploadFileButton.MouseEnter, Sub() UploadFileButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler UploadFileButton.MouseLeave, Sub() UploadFileButton.BackColor = Color.FromArgb(255, 235, 215)
 
-        ' === Save 按钮 ===
+        ' === Save Button ===
         SaveButton.FlatStyle = FlatStyle.Flat
         SaveButton.FlatAppearance.BorderSize = 0
-        SaveButton.BackColor = Color.FromArgb(70, 130, 230)
-        SaveButton.ForeColor = Color.White
-        SaveButton.Font = New Font("Segoe UI", 10, FontStyle.Bold)
+        SaveButton.BackColor = Color.FromArgb(255, 235, 215)
+        SaveButton.ForeColor = Color.FromArgb(120, 80, 40)
+        SaveButton.Font = New Font("Segoe UI Semibold", 9)
         SaveButton.Cursor = Cursors.Hand
-        AddHandler SaveButton.MouseEnter, Sub() SaveButton.BackColor = Color.FromArgb(90, 150, 255)
-        AddHandler SaveButton.MouseLeave, Sub() SaveButton.BackColor = Color.FromArgb(70, 130, 230)
+        AddHandler SaveButton.MouseEnter, Sub() SaveButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler SaveButton.MouseLeave, Sub() SaveButton.BackColor = Color.FromArgb(255, 235, 215)
 
-        ' === 载入数据 ===
+        ' === RadioButton Style ===
+        For Each rb As RadioButton In {ActiveRadioButton, InactiveRadioButton}
+            rb.Font = New Font("Segoe UI", 9.5, FontStyle.Regular)
+            rb.ForeColor = Color.FromArgb(100, 70, 50)
+            rb.BackColor = Color.SeaShell
+        Next
+
+        ' === Path Label ===
+        PathLabel.ForeColor = Color.FromArgb(100, 70, 50)
+
+        ' === Load Data ===
         LoadSupplierData()
+
+        ' === Center title horizontally in the whole form ===
+        TitleLabel.Dock = DockStyle.None
+        TitleLabel.AutoSize = False
+        TitleLabel.Size = New Size(Me.ClientSize.Width, 45)
+        TitleLabel.Location = New Point(0, 20)
+        TitleLabel.TextAlign = ContentAlignment.MiddleCenter
     End Sub
 
-    ' === 载入供应商资料 ===
+    ' === Load Supplier Info ===
     Private Sub LoadSupplierData()
         Try
             ConnectDB()
@@ -91,12 +115,10 @@ Public Class EditSupplierForm
                 cmd.Parameters.AddWithValue("@sup_id", supID)
                 Dim reader As MySqlDataReader = cmd.ExecuteReader()
                 If reader.Read() Then
-                    SupplierIDLabel.Text = supID.ToString()
                     SupplierNameTextBox.Text = reader("sup_name").ToString()
                     ContactTextBox.Text = reader("sup_contact").ToString()
                     EmailTextBox.Text = reader("sup_email").ToString()
 
-                    ' === 状态单选 ===
                     Dim statusValue As String = reader("status").ToString()
                     If statusValue = "Active" Then
                         ActiveRadioButton.Checked = True
@@ -111,7 +133,7 @@ Public Class EditSupplierForm
                             LogoPictureBox.Image = Image.FromStream(ms)
                         End Using
                         PathLabel.Text = "logo_supplier_" & supID & ".png"
-                        PathLabel.ForeColor = Color.DimGray
+                        PathLabel.ForeColor = Color.FromArgb(80, 60, 40)
                     Else
                         LogoPictureBox.Image = Nothing
                         PathLabel.Text = "(No logo uploaded)"
@@ -127,7 +149,7 @@ Public Class EditSupplierForm
         End Try
     End Sub
 
-    ' === 上传新 Logo ===
+    ' === Upload New Logo ===
     Private Sub UploadFileButton_Click(sender As Object, e As EventArgs) Handles UploadFileButton.Click
         Dim ofd As New OpenFileDialog With {
             .Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp",
@@ -138,12 +160,12 @@ Public Class EditSupplierForm
             logoPath = ofd.FileName
             LogoPictureBox.Image = Image.FromFile(logoPath)
             PathLabel.Text = IO.Path.GetFileName(logoPath) & " (new)"
-            PathLabel.ForeColor = Color.FromArgb(40, 100, 180)
+            PathLabel.ForeColor = Color.FromArgb(120, 80, 40)
             isSaved = False
         End If
     End Sub
 
-    ' === 保存修改 ===
+    ' === Save Changes ===
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
         Dim newName As String = SupplierNameTextBox.Text.Trim()
         Dim newContact As String = ContactTextBox.Text.Trim()
@@ -151,7 +173,6 @@ Public Class EditSupplierForm
         Dim newStatus As String = If(ActiveRadioButton.Checked, "Active", "Inactive")
         Dim emailPattern As String = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
 
-        ' === 邮箱验证 ===
         If Not Regex.IsMatch(newEmail, emailPattern) Then
             EmailErrorProvider.SetError(EmailTextBox, "Invalid email format")
             Return
@@ -159,13 +180,12 @@ Public Class EditSupplierForm
             EmailErrorProvider.SetError(EmailTextBox, "")
         End If
 
-        ' === 空白检查 ===
         If newName = "" OrElse newContact = "" OrElse newEmail = "" Then
             MessageBox.Show("All fields are required.", "Missing Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        ' === 处理 Logo Bytes ===
+        ' === Process Logo Bytes ===
         Dim logoBytes() As Byte = Nothing
         Try
             If logoPath <> "" AndAlso IO.File.Exists(logoPath) Then
@@ -178,7 +198,7 @@ Public Class EditSupplierForm
             Return
         End Try
 
-        ' === 执行更新 ===
+        ' === Update Database ===
         Try
             ConnectDB()
             Dim sql As String = "UPDATE tb_suppliers 
@@ -206,12 +226,12 @@ Public Class EditSupplierForm
         End Try
     End Sub
 
-    ' === 检测修改 ===
+    ' === Detect Changes ===
     Private Sub AnyControl_Changed(sender As Object, e As EventArgs) Handles SupplierNameTextBox.TextChanged, ContactTextBox.TextChanged, EmailTextBox.TextChanged, ActiveRadioButton.CheckedChanged, InactiveRadioButton.CheckedChanged
         isSaved = False
     End Sub
 
-    ' === 离开前检测 ===
+    ' === Form Closing ===
     Private Sub EditSupplierForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If Not isSaved Then
             Dim result As DialogResult = MessageBox.Show("You have unsaved changes. Save before closing?",

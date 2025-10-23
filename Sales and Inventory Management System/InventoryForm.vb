@@ -324,7 +324,7 @@ Public Class InventoryForm
         End If
 
         ' --- Validate letters and spaces only ---
-        If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z\s]+$") Then
+        If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z0-9\s]+$") Then
             MessageBox.Show("❌ Only letters and spaces are allowed for Product Name search.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If

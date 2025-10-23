@@ -52,16 +52,15 @@ Public Class SupplierForm
             conn.Close()
 
             SupplierFlowLayoutPanel.Controls.Clear()
-            SupplierFlowLayoutPanel.AutoScroll = True
 
             Dim headerPanel As New Panel With {
-                .Width = SupplierFlowLayoutPanel.Width - 40,
+                .Width = SupplierFlowLayoutPanel.Width,
                 .Height = 50,
-                .BackColor = Color.Bisque,
+                .BackColor = Color.AntiqueWhite,
                 .Padding = New Padding(10, 10, 10, 10)
             }
 
-            Dim columnWidths() As Integer = {210, 210, 210, 210, 210, 210}
+            Dim columnWidths() As Integer = {230, 240, 280, 220, 220, 220}
             Dim headers() As String = {"Company Logo", "Supplier Name", "Email", "Contact", "Status", "Action"}
 
             Dim colX(headers.Length - 1) As Integer
@@ -81,7 +80,7 @@ Public Class SupplierForm
                     .Height = 40,
                     .TextAlign = ContentAlignment.MiddleCenter,
                     .Location = New Point(colX(i), 5),
-                    .BackColor = Color.Bisque
+                    .BackColor = Color.AntiqueWhite
                 }
                 headerPanel.Controls.Add(lbl)
             Next
@@ -91,8 +90,8 @@ Public Class SupplierForm
             ' === Data ===
             For Each row As DataRow In dt.Rows
                 Dim rowPanel As New Panel With {
-                    .Width = SupplierFlowLayoutPanel.Width - 40,
-                    .Height = 65,
+                    .Width = SupplierFlowLayoutPanel.Width,
+                    .Height = 80,
                     .BackColor = Color.White,
                     .BorderStyle = BorderStyle.None,
                     .Margin = New Padding(5),
@@ -102,7 +101,7 @@ Public Class SupplierForm
                 ' === Company Logo ===
                 Dim logoBox As New PictureBox With {
                     .Width = columnWidths(0) - 20,
-                    .Height = 55,
+                    .Height = 70,
                     .SizeMode = PictureBoxSizeMode.Zoom,
                     .Location = New Point(colX(0) + (columnWidths(0) - (columnWidths(0) - 20)) \ 2, 5), ' ✅ 居中对齐 header
                     .BorderStyle = BorderStyle.None

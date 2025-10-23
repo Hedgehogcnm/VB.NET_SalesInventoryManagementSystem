@@ -24,7 +24,6 @@ Partial Class EditSupplierForm
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         TitleLabel = New Label()
-        SupplierIDText = New Label()
         SupplierNameText = New Label()
         ContactText = New Label()
         EmailText = New Label()
@@ -36,7 +35,6 @@ Partial Class EditSupplierForm
         InactiveRadioButton = New RadioButton()
         SaveButton = New Button()
         ContactTextBox = New TextBox()
-        SupplierIDLabel = New Label()
         EmailErrorProvider = New ErrorProvider(components)
         MainPanel = New Panel()
         LogoPictureBox = New PictureBox()
@@ -44,7 +42,6 @@ Partial Class EditSupplierForm
         UploadFileButton = New Button()
         LogoText = New Label()
         CType(EmailErrorProvider, ComponentModel.ISupportInitialize).BeginInit()
-        MainPanel.SuspendLayout()
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -58,21 +55,11 @@ Partial Class EditSupplierForm
         TitleLabel.TabIndex = 7
         TitleLabel.Text = "Edit Supplier"
         ' 
-        ' SupplierIDText
-        ' 
-        SupplierIDText.AutoSize = True
-        SupplierIDText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        SupplierIDText.Location = New Point(135, 119)
-        SupplierIDText.Name = "SupplierIDText"
-        SupplierIDText.Size = New Size(111, 23)
-        SupplierIDText.TabIndex = 8
-        SupplierIDText.Text = "Supplier ID :"
-        ' 
         ' SupplierNameText
         ' 
         SupplierNameText.AutoSize = True
         SupplierNameText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        SupplierNameText.Location = New Point(106, 218)
+        SupplierNameText.Location = New Point(111, 97)
         SupplierNameText.Name = "SupplierNameText"
         SupplierNameText.Size = New Size(140, 23)
         SupplierNameText.TabIndex = 10
@@ -82,7 +69,7 @@ Partial Class EditSupplierForm
         ' 
         ContactText.AutoSize = True
         ContactText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        ContactText.Location = New Point(164, 268)
+        ContactText.Location = New Point(169, 147)
         ContactText.Name = "ContactText"
         ContactText.Size = New Size(82, 23)
         ContactText.TabIndex = 11
@@ -92,7 +79,7 @@ Partial Class EditSupplierForm
         ' 
         EmailText.AutoSize = True
         EmailText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        EmailText.Location = New Point(182, 318)
+        EmailText.Location = New Point(187, 197)
         EmailText.Name = "EmailText"
         EmailText.Size = New Size(64, 23)
         EmailText.TabIndex = 12
@@ -108,14 +95,14 @@ Partial Class EditSupplierForm
         ' 
         ' SupplierNameTextBox
         ' 
-        SupplierNameTextBox.Location = New Point(273, 217)
+        SupplierNameTextBox.Location = New Point(278, 96)
         SupplierNameTextBox.Name = "SupplierNameTextBox"
         SupplierNameTextBox.Size = New Size(307, 27)
         SupplierNameTextBox.TabIndex = 0
         ' 
         ' EmailTextBox
         ' 
-        EmailTextBox.Location = New Point(273, 315)
+        EmailTextBox.Location = New Point(278, 194)
         EmailTextBox.Name = "EmailTextBox"
         EmailTextBox.Size = New Size(307, 27)
         EmailTextBox.TabIndex = 2
@@ -124,7 +111,7 @@ Partial Class EditSupplierForm
         ' 
         StatusText.AutoSize = True
         StatusText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        StatusText.Location = New Point(176, 368)
+        StatusText.Location = New Point(181, 247)
         StatusText.Name = "StatusText"
         StatusText.Size = New Size(70, 23)
         StatusText.TabIndex = 13
@@ -133,7 +120,7 @@ Partial Class EditSupplierForm
         ' ActiveRadioButton
         ' 
         ActiveRadioButton.AutoSize = True
-        ActiveRadioButton.Location = New Point(274, 368)
+        ActiveRadioButton.Location = New Point(279, 248)
         ActiveRadioButton.Name = "ActiveRadioButton"
         ActiveRadioButton.Size = New Size(71, 24)
         ActiveRadioButton.TabIndex = 3
@@ -144,7 +131,7 @@ Partial Class EditSupplierForm
         ' InactiveRadioButton
         ' 
         InactiveRadioButton.AutoSize = True
-        InactiveRadioButton.Location = New Point(371, 367)
+        InactiveRadioButton.Location = New Point(376, 248)
         InactiveRadioButton.Name = "InactiveRadioButton"
         InactiveRadioButton.Size = New Size(81, 24)
         InactiveRadioButton.TabIndex = 4
@@ -163,19 +150,10 @@ Partial Class EditSupplierForm
         ' 
         ' ContactTextBox
         ' 
-        ContactTextBox.Location = New Point(273, 267)
+        ContactTextBox.Location = New Point(278, 146)
         ContactTextBox.Name = "ContactTextBox"
         ContactTextBox.Size = New Size(307, 27)
         ContactTextBox.TabIndex = 1
-        ' 
-        ' SupplierIDLabel
-        ' 
-        SupplierIDLabel.AutoSize = True
-        SupplierIDLabel.Font = New Font("Segoe UI", 10F)
-        SupplierIDLabel.Location = New Point(274, 122)
-        SupplierIDLabel.Name = "SupplierIDLabel"
-        SupplierIDLabel.Size = New Size(0, 23)
-        SupplierIDLabel.TabIndex = 9
         ' 
         ' EmailErrorProvider
         ' 
@@ -183,17 +161,16 @@ Partial Class EditSupplierForm
         ' 
         ' MainPanel
         ' 
-        MainPanel.Controls.Add(LogoPictureBox)
         MainPanel.Dock = DockStyle.Fill
         MainPanel.Location = New Point(0, 0)
         MainPanel.Name = "MainPanel"
-        MainPanel.Size = New Size(800, 450)
+        MainPanel.Size = New Size(800, 467)
         MainPanel.TabIndex = 16
         ' 
         ' LogoPictureBox
         ' 
         LogoPictureBox.BackColor = Color.White
-        LogoPictureBox.Location = New Point(611, 31)
+        LogoPictureBox.Location = New Point(279, 328)
         LogoPictureBox.Name = "LogoPictureBox"
         LogoPictureBox.Size = New Size(115, 114)
         LogoPictureBox.TabIndex = 13
@@ -202,14 +179,14 @@ Partial Class EditSupplierForm
         ' PathLabel
         ' 
         PathLabel.AutoSize = True
-        PathLabel.Location = New Point(273, 187)
+        PathLabel.Location = New Point(397, 420)
         PathLabel.Name = "PathLabel"
         PathLabel.Size = New Size(0, 20)
         PathLabel.TabIndex = 19
         ' 
         ' UploadFileButton
         ' 
-        UploadFileButton.Location = New Point(273, 154)
+        UploadFileButton.Location = New Point(279, 293)
         UploadFileButton.Name = "UploadFileButton"
         UploadFileButton.Size = New Size(94, 29)
         UploadFileButton.TabIndex = 18
@@ -220,7 +197,7 @@ Partial Class EditSupplierForm
         ' 
         LogoText.AutoSize = True
         LogoText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        LogoText.Location = New Point(113, 156)
+        LogoText.Location = New Point(119, 295)
         LogoText.Name = "LogoText"
         LogoText.Size = New Size(133, 23)
         LogoText.TabIndex = 17
@@ -230,11 +207,11 @@ Partial Class EditSupplierForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(800, 467)
+        Controls.Add(LogoPictureBox)
         Controls.Add(PathLabel)
         Controls.Add(UploadFileButton)
         Controls.Add(LogoText)
-        Controls.Add(SupplierIDLabel)
         Controls.Add(ContactTextBox)
         Controls.Add(SaveButton)
         Controls.Add(InactiveRadioButton)
@@ -247,19 +224,16 @@ Partial Class EditSupplierForm
         Controls.Add(ContactText)
         Controls.Add(SupplierNameText)
         Controls.Add(TitleLabel)
-        Controls.Add(SupplierIDText)
         Controls.Add(MainPanel)
         Name = "EditSupplierForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "EditSupplierForm"
         CType(EmailErrorProvider, ComponentModel.ISupportInitialize).EndInit()
-        MainPanel.ResumeLayout(False)
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
     Friend WithEvents TitleLabel As Label
-    Friend WithEvents SupplierIDText As Label
     Friend WithEvents SupplierNameText As Label
     Friend WithEvents ContactText As Label
     Friend WithEvents EmailText As Label
@@ -271,7 +245,6 @@ Partial Class EditSupplierForm
     Friend WithEvents InactiveRadioButton As RadioButton
     Friend WithEvents SaveButton As Button
     Friend WithEvents ContactTextBox As TextBox
-    Friend WithEvents SupplierIDLabel As Label
     Friend WithEvents EmailErrorProvider As ErrorProvider
     Friend WithEvents MainPanel As Panel
     Friend WithEvents LogoPictureBox As PictureBox
