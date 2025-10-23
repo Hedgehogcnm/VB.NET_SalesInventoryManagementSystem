@@ -216,6 +216,7 @@ Partial Class AddProductForm
         ' 
         ' ProductImagePictureBox
         ' 
+        ProductImagePictureBox.BackColor = Color.White
         ProductImagePictureBox.BorderStyle = BorderStyle.FixedSingle
         ProductImagePictureBox.Location = New Point(856, 134)
         ProductImagePictureBox.Name = "ProductImagePictureBox"

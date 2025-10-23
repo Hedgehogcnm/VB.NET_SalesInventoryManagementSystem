@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="AddProductForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="AddSupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="EditSupplierForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AddProductForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="EditProductForm.vb">

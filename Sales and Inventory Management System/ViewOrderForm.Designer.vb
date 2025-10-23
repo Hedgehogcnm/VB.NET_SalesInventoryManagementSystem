@@ -25,14 +25,14 @@ Partial Class ViewOrderForm
         Label1 = New Label()
         HeaderFlowLayoutPanel = New FlowLayoutPanel()
         OrderFlowLayoutPanel = New FlowLayoutPanel()
-        CancelButton = New Button()
+        SaveButton = New Button()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(590, 27)
+        Label1.Location = New Point(606, 19)
         Label1.Name = "Label1"
         Label1.Size = New Size(176, 35)
         Label1.TabIndex = 0
@@ -41,33 +41,33 @@ Partial Class ViewOrderForm
         ' HeaderFlowLayoutPanel
         ' 
         HeaderFlowLayoutPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
-        HeaderFlowLayoutPanel.Location = New Point(75, 87)
+        HeaderFlowLayoutPanel.Location = New Point(89, 84)
         HeaderFlowLayoutPanel.Name = "HeaderFlowLayoutPanel"
-        HeaderFlowLayoutPanel.Size = New Size(1210, 41)
+        HeaderFlowLayoutPanel.Size = New Size(1177, 41)
         HeaderFlowLayoutPanel.TabIndex = 1
         ' 
         ' OrderFlowLayoutPanel
         ' 
-        OrderFlowLayoutPanel.Location = New Point(75, 134)
+        OrderFlowLayoutPanel.Location = New Point(89, 131)
         OrderFlowLayoutPanel.Name = "OrderFlowLayoutPanel"
-        OrderFlowLayoutPanel.Size = New Size(1236, 375)
+        OrderFlowLayoutPanel.Size = New Size(1203, 375)
         OrderFlowLayoutPanel.TabIndex = 2
         ' 
-        ' CancelButton
+        ' SaveButton
         ' 
-        CancelButton.Location = New Point(1191, 534)
-        CancelButton.Name = "CancelButton"
-        CancelButton.Size = New Size(94, 29)
-        CancelButton.TabIndex = 3
-        CancelButton.Text = "Cancel"
-        CancelButton.UseVisualStyleBackColor = True
+        SaveButton.Location = New Point(1191, 534)
+        SaveButton.Name = "SaveButton"
+        SaveButton.Size = New Size(94, 29)
+        SaveButton.TabIndex = 3
+        SaveButton.Text = "Save"
+        SaveButton.UseVisualStyleBackColor = True
         ' 
         ' ViewOrderForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1360, 621)
-        Controls.Add(CancelButton)
+        Controls.Add(SaveButton)
         Controls.Add(OrderFlowLayoutPanel)
         Controls.Add(HeaderFlowLayoutPanel)
         Controls.Add(Label1)
@@ -80,5 +80,5 @@ Partial Class ViewOrderForm
     Friend WithEvents Label1 As Label
     Friend WithEvents HeaderFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents OrderFlowLayoutPanel As FlowLayoutPanel
-    Friend WithEvents CancelButton As Button
+    Friend WithEvents SaveButton As Button
 End Class

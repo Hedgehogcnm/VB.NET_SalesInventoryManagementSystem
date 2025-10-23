@@ -132,7 +132,7 @@ Partial Class InventoryForm
         HeaderPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
         HeaderPanel.Location = New Point(3, 136)
         HeaderPanel.Name = "HeaderPanel"
-        HeaderPanel.Size = New Size(1629, 48)
+        HeaderPanel.Size = New Size(1644, 48)
         HeaderPanel.TabIndex = 12
         ' 
         ' ViewOrderButton
@@ -148,7 +148,7 @@ Partial Class InventoryForm
         ' 
         ProductListFlowLayoutPanel.Location = New Point(3, 190)
         ProductListFlowLayoutPanel.Name = "ProductListFlowLayoutPanel"
-        ProductListFlowLayoutPanel.Size = New Size(1655, 840)
+        ProductListFlowLayoutPanel.Size = New Size(1670, 840)
         ProductListFlowLayoutPanel.TabIndex = 10
         ' 
         ' SearchProductButton

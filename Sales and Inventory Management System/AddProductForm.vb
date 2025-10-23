@@ -7,8 +7,10 @@ Public Class AddProductForm
     Private ProductImagePath As String = "" ' store selected image path
 
     Private Sub AddProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSupplierComboBox() ' 👈 Load supplier list when form opens
+        LoadSupplierComboBox()
+        ProductIDTextBox.Focus() ' 👈 Auto-focus when form opens
     End Sub
+
 
     ' --- Load Supplier IDs into ComboBox ---
     Private Sub LoadSupplierComboBox()

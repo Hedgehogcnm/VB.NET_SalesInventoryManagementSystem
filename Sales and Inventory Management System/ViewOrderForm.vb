@@ -2,55 +2,51 @@
 Imports System.IO
 
 Public Class ViewOrderForm
-    ' === SETUP ORDER HEADER ===
+
+    ' === Holds edited statuses before saving ===
+    Private orderStatusChanges As New Dictionary(Of Integer, String)
+
+    ' === FORM LOAD ===
     Private Sub ViewOrderForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SetupOrderHeader()
         LoadOrderData()
-
-        ' Set AutoScroll to True for scrolling functionality
         OrderFlowLayoutPanel.AutoScroll = True
     End Sub
 
+    ' === SETUP HEADER ===
     Private Sub SetupOrderHeader()
         HeaderFlowLayoutPanel.Controls.Clear()
-
-        ' Match the padding of OrderFlowLayoutPanel
         HeaderFlowLayoutPanel.Padding = New Padding(5)
         HeaderFlowLayoutPanel.Margin = New Padding(0)
 
-        ' Define column widths (same as in LoadOrderData)
-        Dim columnWidths As Integer() = {100, 100, 200, 70, 120, 70, 170, 50, 70}
-
+        ' Updated column widths (removed Action column)
+        Dim columnWidths As Integer() = {100, 100, 190, 90, 100, 90, 150, 90}
         Dim headers As String() = {
-        "Order ID", "Product ID", "Product Name",
-        "User ID", "Supplier ID", "Quantity",
-        "Total(RM)", "Status", "Action"
-    }
+            "Order ID", "Product ID", "Product Name",
+            "User ID", "Supplier ID", "Quantity",
+            "Total (RM)", "Status"
+        }
 
-        ' Start at same X position as rowPanel
         Dim xPos As Integer = 10
-
         For i As Integer = 0 To headers.Length - 1
             Dim lbl As New Label With {
-            .Text = headers(i),
-            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-            .AutoSize = False,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Width = columnWidths(i),
-            .Location = New Point(xPos, 10) ' Align Y with rowPanel content
-        }
+                .Text = headers(i),
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .AutoSize = False,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Width = columnWidths(i),
+                .Location = New Point(xPos, 10)
+            }
             HeaderFlowLayoutPanel.Controls.Add(lbl)
             xPos += columnWidths(i)
         Next
     End Sub
-
 
     ' === LOAD ORDER DATA ===
     Private Sub LoadOrderData()
         Try
             ConnectDB()
 
-            ' SQL query to get order details with product names
             Dim sql As String = "
                 SELECT o.o_id, o.p_id, p.p_name, o.u_id, o.sup_id, o.o_qty, o.o_total, o.o_status
                 FROM tb_orders o
@@ -62,10 +58,10 @@ Public Class ViewOrderForm
             da.Fill(dt)
             conn.Close()
 
-            ' Clear previous order data
             OrderFlowLayoutPanel.Controls.Clear()
+            orderStatusChanges.Clear()
 
-            ' If no data found
+            ' No data case
             If dt.Rows.Count = 0 Then
                 Dim noDataLbl As New Label With {
                     .Text = "No orders found.",
@@ -78,25 +74,19 @@ Public Class ViewOrderForm
                 Exit Sub
             End If
 
-
-
-            ' Loop through each order and display it in a row
-            ' --- Loop through each order and create a row ---
+            ' Build rows
             For Each row As DataRow In dt.Rows
                 Dim rowPanel As New Panel With {
-    .Width = OrderFlowLayoutPanel.Width - 25,
-    .Height = 50,
-    .BackColor = Color.White,
-    .Margin = New Padding(2),
-    .Padding = New Padding(5) ' Match header padding
-}
-                Dim xPos As Integer = 10 ' Same as header starting X
+                    .Width = OrderFlowLayoutPanel.Width - 25,
+                    .Height = 50,
+                    .BackColor = Color.White,
+                    .Margin = New Padding(2),
+                    .Padding = New Padding(5)
+                }
 
+                Dim xPos As Integer = 10
+                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 100}
 
-                ' --- Define column widths (including Confirm column) ---
-                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 80, 80}
-
-                ' --- Add labels for order data ---
                 Dim values As String() = {
                     row("o_id").ToString(),
                     row("p_id").ToString(),
@@ -128,54 +118,17 @@ Public Class ViewOrderForm
                 }
                 status.Items.AddRange(New String() {"ordered", "received", "cancelled"})
                 status.SelectedItem = row("o_status").ToString()
+
+                Dim orderID As Integer = Convert.ToInt32(row("o_id"))
+
+                ' Track changes
+                AddHandler status.SelectedIndexChanged, Sub()
+                                                            orderStatusChanges(orderID) = status.SelectedItem.ToString()
+                                                        End Sub
+
                 rowPanel.Controls.Add(status)
-                xPos += columnWidths(7)
-
-                ' --- Confirm Button in dedicated column ---
-                Dim confirmButton As New Button With {
-                    .Text = "Confirm",
-                    .Width = columnWidths(8),
-                    .Height = 30,
-                    .Location = New Point(xPos, 10),
-                    .BackColor = Color.LightSkyBlue,
-                    .FlatStyle = FlatStyle.Flat
-                }
-
-                ' Event handler to update status
-                AddHandler confirmButton.Click, Sub(sender, e)
-                                                    Dim selectedStatus As String = status.SelectedItem.ToString()
-                                                    Dim productName As String = row("p_name").ToString()
-                                                    Dim productID As String = row("p_id").ToString()
-
-                                                    Dim confirmResult As DialogResult = MessageBox.Show(
-                                                        $"Confirm change order status for '{productName}' (Product ID: {productID}) to '{selectedStatus}'?",
-                                                        "Confirm Status Change",
-                                                        MessageBoxButtons.OKCancel,
-                                                        MessageBoxIcon.Question
-                                                    )
-
-                                                    If confirmResult = DialogResult.OK Then
-                                                        UpdateOrderStatus(row("o_id").ToString(), selectedStatus)
-                                                        MessageBox.Show("Status changed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                                                        ' --- Refresh InventoryForm Product List ---
-                                                        For Each frm As Form In Application.OpenForms
-                                                            If TypeOf frm Is InventoryForm Then
-                                                                DirectCast(frm, InventoryForm).RefreshProductListFromOtherForm()
-                                                                Exit For
-                                                            End If
-                                                        Next
-                                                    End If
-                                                End Sub
-
-
-
-                rowPanel.Controls.Add(confirmButton)
-
-                ' --- Add the row to FlowLayoutPanel ---
                 OrderFlowLayoutPanel.Controls.Add(rowPanel)
             Next
-
 
         Catch ex As Exception
             MessageBox.Show("❌ Error loading orders: " & ex.Message)
@@ -184,27 +137,49 @@ Public Class ViewOrderForm
         End Try
     End Sub
 
-    ' === UPDATE ORDER STATUS ===
-    Private Sub UpdateOrderStatus(orderID As String, newStatus As String)
+    ' === SAVE BUTTON CLICK ===
+    Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
+        If orderStatusChanges.Count = 0 Then
+            MessageBox.Show("No changes detected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
+
         Try
             ConnectDB()
+            Dim transaction As MySqlTransaction = conn.BeginTransaction()
 
-            ' SQL query to update the order status
-            Dim sql As String = "UPDATE tb_orders SET o_status = @newStatus WHERE o_id = @orderID"
-            Dim cmd As New MySqlCommand(sql, conn)
-            cmd.Parameters.AddWithValue("@newStatus", newStatus)
-            cmd.Parameters.AddWithValue("@orderID", orderID)
+            Try
+                For Each pair In orderStatusChanges
+                    Dim sql As String = "UPDATE tb_orders SET o_status = @status WHERE o_id = @id"
+                    Dim cmd As New MySqlCommand(sql, conn, transaction)
+                    cmd.Parameters.AddWithValue("@status", pair.Value)
+                    cmd.Parameters.AddWithValue("@id", pair.Key)
+                    cmd.ExecuteNonQuery()
+                Next
 
-            cmd.ExecuteNonQuery()
+                transaction.Commit()
+                MessageBox.Show("✅ Order statuses updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                orderStatusChanges.Clear()
+                LoadOrderData()
+
+                ' Refresh InventoryForm if open
+                For Each frm As Form In Application.OpenForms
+                    If TypeOf frm Is InventoryForm Then
+                        DirectCast(frm, InventoryForm).RefreshProductListFromOtherForm()
+                        Exit For
+                    End If
+                Next
+
+            Catch ex As Exception
+                transaction.Rollback()
+                MessageBox.Show("❌ Failed to update order statuses: " & ex.Message)
+            End Try
+
         Catch ex As Exception
-            MessageBox.Show("❌ Error updating order status: " & ex.Message)
+            MessageBox.Show("❌ Connection error: " & ex.Message)
         Finally
             conn.Close()
         End Try
-    End Sub
-
-    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
-        Me.Close()
     End Sub
 
 End Class
