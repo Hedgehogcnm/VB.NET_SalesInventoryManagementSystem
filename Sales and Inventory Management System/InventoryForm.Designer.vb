@@ -137,12 +137,16 @@ Partial Class InventoryForm
         ' 
         ' ViewOrderButton
         ' 
+        ViewOrderButton.BackColor = Color.SeaShell
+        ViewOrderButton.FlatStyle = FlatStyle.Flat
+        ViewOrderButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ViewOrderButton.ForeColor = Color.Sienna
         ViewOrderButton.Location = New Point(147, 81)
         ViewOrderButton.Name = "ViewOrderButton"
         ViewOrderButton.Size = New Size(105, 49)
         ViewOrderButton.TabIndex = 11
         ViewOrderButton.Text = "View Order"
-        ViewOrderButton.UseVisualStyleBackColor = True
+        ViewOrderButton.UseVisualStyleBackColor = False
         ' 
         ' ProductListFlowLayoutPanel
         ' 
@@ -153,12 +157,16 @@ Partial Class InventoryForm
         ' 
         ' SearchProductButton
         ' 
+        SearchProductButton.BackColor = Color.SeaShell
+        SearchProductButton.FlatStyle = FlatStyle.Flat
+        SearchProductButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        SearchProductButton.ForeColor = Color.Sienna
         SearchProductButton.Location = New Point(1697, 91)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
         SearchProductButton.Text = "Search"
-        SearchProductButton.UseVisualStyleBackColor = True
+        SearchProductButton.UseVisualStyleBackColor = False
         ' 
         ' ProductSearchTextBox
         ' 
@@ -169,12 +177,16 @@ Partial Class InventoryForm
         ' 
         ' AddProductButton
         ' 
+        AddProductButton.BackColor = Color.SeaShell
+        AddProductButton.FlatStyle = FlatStyle.Flat
+        AddProductButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AddProductButton.ForeColor = Color.Sienna
         AddProductButton.Location = New Point(15, 81)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(111, 48)
         AddProductButton.TabIndex = 7
         AddProductButton.Text = "Add Product"
-        AddProductButton.UseVisualStyleBackColor = True
+        AddProductButton.UseVisualStyleBackColor = False
         ' 
         ' Panel8
         ' 

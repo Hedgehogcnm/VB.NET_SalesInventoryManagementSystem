@@ -129,6 +129,9 @@ Partial Class EditProductForm
         ' 
         ' SaveButton
         ' 
+        SaveButton.FlatStyle = FlatStyle.Flat
+        SaveButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        SaveButton.ForeColor = Color.Sienna
         SaveButton.Location = New Point(627, 431)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
@@ -219,12 +222,16 @@ Partial Class EditProductForm
         ' 
         ' CancelButton
         ' 
+        CancelButton.BackColor = Color.SeaShell
+        CancelButton.FlatStyle = FlatStyle.Flat
+        CancelButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        CancelButton.ForeColor = Color.Sienna
         CancelButton.Location = New Point(493, 431)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 18
         CancelButton.Text = "Cancel"
-        CancelButton.UseVisualStyleBackColor = True
+        CancelButton.UseVisualStyleBackColor = False
         ' 
         ' Label10
         ' 
@@ -247,6 +254,9 @@ Partial Class EditProductForm
         ' 
         ' ChangeImageButton
         ' 
+        ChangeImageButton.FlatStyle = FlatStyle.Flat
+        ChangeImageButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ChangeImageButton.ForeColor = Color.Sienna
         ChangeImageButton.Location = New Point(906, 333)
         ChangeImageButton.Name = "ChangeImageButton"
         ChangeImageButton.Size = New Size(181, 37)

@@ -55,6 +55,9 @@ Partial Class ViewOrderForm
         ' 
         ' SaveButton
         ' 
+        SaveButton.FlatStyle = FlatStyle.Flat
+        SaveButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        SaveButton.ForeColor = Color.Sienna
         SaveButton.Location = New Point(1159, 530)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
