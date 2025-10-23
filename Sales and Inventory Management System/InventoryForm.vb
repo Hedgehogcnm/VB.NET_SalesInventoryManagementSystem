@@ -18,12 +18,32 @@ Public Class InventoryForm
         ProductListFlowLayoutPanel.WrapContents = False
         ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
         LoadProductTable()
+
         ' Remove the blue highlight focus border
         MenuStrip1.Renderer = New ToolStripProfessionalRenderer(New NoHighlightColorTable())
+
+        ' === Initialize placeholder text ===
+        ProductSearchTextBox.Text = "Enter Product Name to Search"
+        ProductSearchTextBox.ForeColor = Color.Gray
     End Sub
 
     Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
         LoadProductTable()
+    End Sub
+
+    ' === PRODUCT SEARCH PLACEHOLDER ===
+    Private Sub ProductSearchTextBox_GotFocus(sender As Object, e As EventArgs) Handles ProductSearchTextBox.GotFocus
+        If ProductSearchTextBox.Text = "Enter Product Name to Search" Then
+            ProductSearchTextBox.Text = ""
+            ProductSearchTextBox.ForeColor = Color.Black
+        End If
+    End Sub
+
+    Private Sub ProductSearchTextBox_LostFocus(sender As Object, e As EventArgs) Handles ProductSearchTextBox.LostFocus
+        If String.IsNullOrWhiteSpace(ProductSearchTextBox.Text) Then
+            ProductSearchTextBox.Text = "Enter Product Name to Search"
+            ProductSearchTextBox.ForeColor = Color.Gray
+        End If
     End Sub
 
     ' === HEADER SETUP ===
@@ -77,16 +97,15 @@ Public Class InventoryForm
     End Sub
 
     ' === LOAD PRODUCT TABLE ===
-    ' === LOAD PRODUCT TABLE ===
     Private Sub LoadProductTable(Optional searchTerm As String = "")
         Try
             ConnectDB()
 
             Dim sql As String =
-            "SELECT p.p_id, p.sup_id, s.sup_name, p.p_name, p.p_category, p.p_stock, 
-                    p.p_minStock, p.p_costPrice, p.p_sellPrice, p.p_image
-             FROM tb_products p
-             LEFT JOIN tb_suppliers s ON p.sup_id = s.sup_id"
+                "SELECT p.p_id, p.sup_id, s.sup_name, p.p_name, p.p_category, p.p_stock, 
+                        p.p_minStock, p.p_costPrice, p.p_sellPrice, p.p_image
+                 FROM tb_products p
+                 LEFT JOIN tb_suppliers s ON p.sup_id = s.sup_id"
 
             ' ✅ Search only by Product Name
             If searchTerm <> "" Then
@@ -95,7 +114,6 @@ Public Class InventoryForm
 
             Dim cmd As New MySqlCommand(sql, conn)
             If searchTerm <> "" Then cmd.Parameters.AddWithValue("@search", "%" & searchTerm & "%")
-
 
             Dim da As New MySqlDataAdapter(cmd)
             Dim dt As New DataTable()
@@ -107,12 +125,12 @@ Public Class InventoryForm
             ' === NO DATA FOUND ===
             If dt.Rows.Count = 0 Then
                 Dim noDataLbl As New Label With {
-                .Text = "No products found.",
-                .Font = New Font("Segoe UI", 11, FontStyle.Italic),
-                .ForeColor = Color.Gray,
-                .AutoSize = True,
-                .Margin = New Padding(20)
-            }
+                    .Text = "😕 No products found.",
+                    .Font = New Font("Segoe UI", 11, FontStyle.Italic),
+                    .ForeColor = Color.Gray,
+                    .AutoSize = True,
+                    .Margin = New Padding(20)
+                }
                 ProductListFlowLayoutPanel.Controls.Add(noDataLbl)
                 Exit Sub
             End If
@@ -120,26 +138,27 @@ Public Class InventoryForm
             ' === DISPLAY PRODUCT ROWS ===
             For Each row As DataRow In dt.Rows
                 Dim rowPanel As New Panel With {
-                .Width = ProductListFlowLayoutPanel.Width - 25,
-                .Height = 80,
-                .BackColor = Color.White,
-                .Margin = New Padding(2)
-            }
+                    .Width = ProductListFlowLayoutPanel.Width - 25,
+                    .Height = 80,
+                    .BackColor = Color.White,
+                    .Margin = New Padding(2)
+                }
 
+                Dim productID As Integer = Convert.ToInt32(row("p_id"))
+                Dim productName As String = row("p_name").ToString()
                 Dim stock As Integer = Convert.ToInt32(row("p_stock"))
                 Dim minStock As Integer = Convert.ToInt32(row("p_minStock"))
-                If stock <= minStock Then rowPanel.BackColor = Color.MistyRose
 
                 ' 🔴 Highlight low stock
                 If stock <= minStock Then rowPanel.BackColor = Color.MistyRose
 
                 ' === Product Image ===
                 Dim pic As New PictureBox With {
-                .Width = 70,
-                .Height = 60,
-                .Location = New Point(10, 10),
-                .SizeMode = PictureBoxSizeMode.Zoom
-            }
+                    .Width = 70,
+                    .Height = 60,
+                    .Location = New Point(10, 10),
+                    .SizeMode = PictureBoxSizeMode.Zoom
+                }
 
                 Try
                     If Not IsDBNull(row("p_image")) Then
@@ -162,40 +181,41 @@ Public Class InventoryForm
 
                 ' === Text fields ===
                 Dim fields() As String = {
-                row("p_id").ToString(),
-                row("p_name").ToString(),
-                row("sup_id").ToString(),
-                If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
-                row("p_category").ToString(),
-                row("p_stock").ToString(),
-                row("p_minStock").ToString(),
-                FormatCurrency(row("p_costPrice"), 2),
-                FormatCurrency(row("p_sellPrice"), 2)
-            }
+                    row("p_id").ToString(),
+                    row("p_name").ToString(),
+                    row("sup_id").ToString(),
+                    If(IsDBNull(row("sup_name")), "N/A", row("sup_name").ToString()),
+                    row("p_category").ToString(),
+                    row("p_stock").ToString(),
+                    row("p_minStock").ToString(),
+                    FormatCurrency(row("p_costPrice"), 2),
+                    FormatCurrency(row("p_sellPrice"), 2)
+                }
 
                 Dim xPos As Integer = 90
                 For i = 0 To fields.Length - 1
                     Dim lbl As New Label With {
-                    .Text = fields(i),
-                    .Font = New Font("Segoe UI", 9),
-                    .AutoSize = False,
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Width = columnWidths(i + 1),
-                    .Location = New Point(xPos, 30)
-                }
+                        .Text = fields(i),
+                        .Font = New Font("Segoe UI", 9),
+                        .AutoSize = False,
+                        .TextAlign = ContentAlignment.MiddleCenter,
+                        .Width = columnWidths(i + 1),
+                        .Location = New Point(xPos, 30)
+                    }
                     rowPanel.Controls.Add(lbl)
                     xPos += columnWidths(i + 1)
                 Next
 
                 ' === Operations ===
                 Dim operationStartX As Integer = xPos
+
                 Dim editBtn As New Button With {
-                .Text = "✏️ Edit",
-                .BackColor = Color.LightBlue,
-                .FlatStyle = FlatStyle.Flat,
-                .Width = 70,
-                .Location = New Point(operationStartX, 25)
-            }
+                    .Text = "✏️ Edit",
+                    .BackColor = Color.LightBlue,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Width = 70,
+                    .Location = New Point(operationStartX, 25)
+                }
                 editBtn.FlatAppearance.BorderSize = 0
                 AddHandler editBtn.Click, Sub()
                                               Dim frm As New EditProductForm()
@@ -204,12 +224,12 @@ Public Class InventoryForm
                                           End Sub
 
                 Dim orderBtn As New Button With {
-                .Text = "📦 Order",
-                .BackColor = Color.LightGreen,
-                .FlatStyle = FlatStyle.Flat,
-                .Width = 70,
-                .Location = New Point(operationStartX + 80, 25)
-            }
+                    .Text = "📦 Order",
+                    .BackColor = Color.LightGreen,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Width = 70,
+                    .Location = New Point(operationStartX + 80, 25)
+                }
                 orderBtn.FlatAppearance.BorderSize = 0
                 AddHandler orderBtn.Click, Sub()
                                                Dim frm As New OrderProductForm()
@@ -219,12 +239,12 @@ Public Class InventoryForm
                                            End Sub
 
                 Dim deleteBtn As New Button With {
-                .Text = "🗑️ Delete",
-                .BackColor = Color.LightPink,
-                .FlatStyle = FlatStyle.Flat,
-                .Width = 70,
-                .Location = New Point(operationStartX + 160, 25)
-            }
+                    .Text = "🗑️ Delete",
+                    .BackColor = Color.LightPink,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Width = 70,
+                    .Location = New Point(operationStartX + 160, 25)
+                }
                 deleteBtn.FlatAppearance.BorderSize = 0
                 AddHandler deleteBtn.Click, Sub() DeleteProduct(productID, productName)
 
@@ -242,9 +262,7 @@ Public Class InventoryForm
         End Try
     End Sub
 
-
-    ' === DELETE PRODUCT AND RELATED INVENTORY ===
-    ' === DELETE PRODUCT AND RELATED INVENTORY AND ORDERS ===
+    ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
             $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
@@ -272,7 +290,7 @@ Public Class InventoryForm
                         End Using
 
                         transaction.Commit()
-                        MessageBox.Show($"✅ Product '{productName}' and related records deleted successfully.")
+                        MessageBox.Show($"✅ Product '{productName}' deleted successfully.")
                         LoadProductTable()
 
                     Catch ex As Exception
@@ -296,13 +314,19 @@ Public Class InventoryForm
     Private Sub SearchProductButton_Click(sender As Object, e As EventArgs) Handles SearchProductButton.Click
         Dim searchTerm As String = ProductSearchTextBox.Text.Trim()
 
+        ' Ignore placeholder text
+        If searchTerm = "Enter Product Name to Search" Then
+            MessageBox.Show("Please enter a Product Name to search.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
+
         ' --- Block empty input ---
         If String.IsNullOrWhiteSpace(searchTerm) Then
             MessageBox.Show("Please enter a Product Name to search.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
 
-        ' --- Validate: allow only letters and spaces (Product Name only) ---
+        ' --- Validate letters and spaces only ---
         If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z\s]+$") Then
             MessageBox.Show("❌ Only letters and spaces are allowed for Product Name search.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -310,7 +334,6 @@ Public Class InventoryForm
 
         LoadProductTable(searchTerm)
     End Sub
-
 
     Private Sub ViewOrderButton_Click(sender As Object, e As EventArgs) Handles ViewOrderButton.Click
         ViewOrderForm.ShowDialog()
