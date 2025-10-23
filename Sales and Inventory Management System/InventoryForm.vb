@@ -260,34 +260,44 @@ Public Class InventoryForm
     End Sub
 
     ' === DELETE PRODUCT ===
+    ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
-            $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
-            "This will also remove all related inventory movements and orders.",
-            "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+        "This will also remove all related sales details, orders, and inventory movements.",
+        "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
         If confirm = DialogResult.Yes Then
             Try
                 ConnectDB()
                 Using transaction As MySqlTransaction = conn.BeginTransaction()
                     Try
+                        ' 🧾 Delete related sales detail records
+                        Using cmd0 As New MySqlCommand("DELETE FROM tb_sales_detail WHERE p_id = @pid", conn, transaction)
+                            cmd0.Parameters.AddWithValue("@pid", productID)
+                            cmd0.ExecuteNonQuery()
+                        End Using
+
+                        ' 🧭 Delete related inventory movements
                         Using cmd1 As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
                             cmd1.Parameters.AddWithValue("@pid", productID)
                             cmd1.ExecuteNonQuery()
                         End Using
 
+                        ' 📦 Delete related orders
                         Using cmd2 As New MySqlCommand("DELETE FROM tb_orders WHERE p_id = @pid", conn, transaction)
                             cmd2.Parameters.AddWithValue("@pid", productID)
                             cmd2.ExecuteNonQuery()
                         End Using
 
+                        ' 🧹 Finally, delete product itself
                         Using cmd3 As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
                             cmd3.Parameters.AddWithValue("@pid", productID)
                             cmd3.ExecuteNonQuery()
                         End Using
 
                         transaction.Commit()
-                        MessageBox.Show($"✅ Product '{productName}' deleted successfully.")
+                        MessageBox.Show($"✅ Product '{productName}' deleted successfully, including related sales, orders, and inventory data.")
                         LoadProductTable()
 
                     Catch ex As Exception
@@ -302,6 +312,7 @@ Public Class InventoryForm
             End Try
         End If
     End Sub
+
 
     ' === BUTTONS ON FORM ===
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
