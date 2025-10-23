@@ -26,7 +26,7 @@ Partial Class SalesForm
         ContextMenuStrip1 = New ContextMenuStrip(components)
         TableLayoutPanelTotal = New TableLayoutPanel()
 <<<<<<< HEAD
-        Panel1 = New Panel()
+        PanelRight = New Panel()
         TextBoxCustomerName = New TextBox()
 =======
         PanelRight = New Panel()
@@ -42,6 +42,7 @@ Partial Class SalesForm
         TextBoxDiscount = New TextBox()
         LabelDiscount = New Label()
         Panel6 = New Panel()
+        Panel9 = New Panel()
         Panel9 = New Panel()
         LabelTotal = New Label()
         Panel7 = New Panel()
@@ -63,6 +64,7 @@ Partial Class SalesForm
         Panel8 = New Panel()
         LabelForm = New Label()
         TableLayoutPanelTotal.SuspendLayout()
+        PanelRight.SuspendLayout()
         PanelRight.SuspendLayout()
         Panel4.SuspendLayout()
         Panel5.SuspendLayout()
@@ -86,6 +88,7 @@ Partial Class SalesForm
         TableLayoutPanelTotal.ColumnCount = 1
         TableLayoutPanelTotal.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
         TableLayoutPanelTotal.Controls.Add(PanelRight, 0, 0)
+        TableLayoutPanelTotal.Controls.Add(PanelRight, 0, 0)
         TableLayoutPanelTotal.Controls.Add(FlowLayoutPanelItem, 0, 1)
         TableLayoutPanelTotal.Controls.Add(Panel4, 0, 2)
         TableLayoutPanelTotal.Controls.Add(Panel5, 0, 3)
@@ -104,6 +107,7 @@ Partial Class SalesForm
         TableLayoutPanelTotal.Size = New Size(554, 713)
         TableLayoutPanelTotal.TabIndex = 4
         ' 
+        ' PanelRight
         ' PanelRight
         ' 
 <<<<<<< HEAD
@@ -254,6 +258,15 @@ Partial Class SalesForm
         Panel6.Name = "Panel6"
         Panel6.Size = New Size(548, 59)
         Panel6.TabIndex = 6
+        ' 
+        ' Panel9
+        ' 
+        Panel9.BackColor = Color.Snow
+        Panel9.Dock = DockStyle.Bottom
+        Panel9.Location = New Point(0, 56)
+        Panel9.Name = "Panel9"
+        Panel9.Size = New Size(548, 3)
+        Panel9.TabIndex = 6
         ' 
         ' Panel9
         ' 
