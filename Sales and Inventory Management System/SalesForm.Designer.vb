@@ -132,27 +132,9 @@ Partial Class SalesForm
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(548, 3)
         Panel2.TabIndex = 2
-<<<<<<< Updated upstream
 
         ' === FlowLayoutPanelItem ===
-=======
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
-        Label1.Location = New Point(16, 17)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(86, 40)
-        Label1.TabIndex = 0
-        Label1.Text = "Sales"
-        Label1.TextAlign = ContentAlignment.MiddleLeft
-        Label1.UseMnemonic = False
-        ' 
-        ' FlowLayoutPanelItem
-        ' 
-        FlowLayoutPanelItem.BackColor = Color.AntiqueWhite
->>>>>>> Stashed changes
+
         FlowLayoutPanelItem.Dock = DockStyle.Fill
         FlowLayoutPanelItem.FlowDirection = FlowDirection.TopDown
         FlowLayoutPanelItem.Location = New Point(3, 53)

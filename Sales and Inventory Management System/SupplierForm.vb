@@ -187,8 +187,4 @@ Public Class SupplierForm
         editForm.ShowDialog()
         LoadSuppliers()
     End Sub
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 End Class
