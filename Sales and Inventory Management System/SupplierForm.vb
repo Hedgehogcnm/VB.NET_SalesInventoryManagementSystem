@@ -39,11 +39,9 @@ Public Class SupplierForm
     End Sub
 
 
-    ' === 加载供应商卡片 ===
     Private Sub LoadSuppliers()
         Try
             ConnectDB()
-            ' ✅ 从数据库取出图片栏位 logo_image
             Dim sql As String = "SELECT sup_id, sup_name, sup_contact, sup_email, status, logo_image FROM tb_suppliers"
             Dim da As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
@@ -52,70 +50,68 @@ Public Class SupplierForm
 
             SupplierFlowLayoutPanel.Controls.Clear()
             SupplierFlowLayoutPanel.AutoScroll = True
-            SupplierFlowLayoutPanel.BackColor = Color.FromArgb(248, 249, 252)
 
-            ' === 表头 ===
             Dim headerPanel As New Panel With {
-            .Width = SupplierFlowLayoutPanel.Width - 40,
-            .Height = 40,
-            .BackColor = Color.FromArgb(240, 242, 247),
-            .Padding = New Padding(10, 10, 10, 10)
-        }
+                .Width = SupplierFlowLayoutPanel.Width - 40,
+                .Height = 50,
+                .BackColor = Color.Bisque,
+                .Padding = New Padding(10, 10, 10, 10)
+            }
 
+            Dim columnWidths() As Integer = {210, 210, 210, 210, 210, 210}
             Dim headers() As String = {"Company Logo", "Supplier Name", "Email", "Contact", "Status", "Action"}
-            Dim headerWidths() As Integer = {100, 180, 220, 130, 100, 80}
-            Dim xPos As Integer = 10
 
+            Dim colX(headers.Length - 1) As Integer
+            colX(0) = 10
+            For i As Integer = 1 To headers.Length - 1
+                colX(i) = colX(i - 1) + columnWidths(i - 1)
+            Next
+
+            ' === Header ===
             For i As Integer = 0 To headers.Length - 1
                 Dim lbl As New Label With {
-                .Text = headers(i),
-                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                .ForeColor = Color.Black,
-                .AutoSize = False,
-                .Width = headerWidths(i),
-                .TextAlign = ContentAlignment.MiddleLeft,
-                .Location = New Point(xPos, 5)
-            }
+                    .Text = headers(i),
+                    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+                    .ForeColor = Color.Black,
+                    .AutoSize = False,
+                    .Width = columnWidths(i),
+                    .Height = 40,
+                    .TextAlign = ContentAlignment.MiddleCenter,
+                    .Location = New Point(colX(i), 5),
+                    .BackColor = Color.Bisque
+                }
                 headerPanel.Controls.Add(lbl)
-                xPos += headerWidths(i)
             Next
 
             SupplierFlowLayoutPanel.Controls.Add(headerPanel)
 
-            ' === 数据行 ===
+            ' === Data ===
             For Each row As DataRow In dt.Rows
                 Dim rowPanel As New Panel With {
-                .Width = SupplierFlowLayoutPanel.Width - 40,
-                .Height = 55,
-                .BackColor = Color.White,
-                .BorderStyle = BorderStyle.FixedSingle,
-                .Margin = New Padding(3)
-            }
+                    .Width = SupplierFlowLayoutPanel.Width - 40,
+                    .Height = 65,
+                    .BackColor = Color.White,
+                    .BorderStyle = BorderStyle.None,
+                    .Margin = New Padding(5),
+                    .Padding = New Padding(5)
+                }
 
-                ' Hover 效果
-                AddHandler rowPanel.MouseEnter, Sub() rowPanel.BackColor = Color.FromArgb(245, 248, 255)
-                AddHandler rowPanel.MouseLeave, Sub() rowPanel.BackColor = Color.White
-
-                Dim xPosRow As Integer = 10
-
-                ' === 公司Logo ===
+                ' === Company Logo ===
                 Dim logoBox As New PictureBox With {
-                .Width = 80,
-                .Height = 40,
-                .SizeMode = PictureBoxSizeMode.Zoom,
-                .Location = New Point(xPosRow + 5, 7),
-                .BorderStyle = BorderStyle.None
-            }
+                    .Width = columnWidths(0) - 20,
+                    .Height = 55,
+                    .SizeMode = PictureBoxSizeMode.Zoom,
+                    .Location = New Point(colX(0) + (columnWidths(0) - (columnWidths(0) - 20)) \ 2, 5), ' ✅ 居中对齐 header
+                    .BorderStyle = BorderStyle.None
+                }
 
                 Try
-                    ' ✅ 从数据库 BLOB 转回图片
                     If Not IsDBNull(row("logo_image")) Then
                         Dim imgData() As Byte = DirectCast(row("logo_image"), Byte())
                         Using ms As New IO.MemoryStream(imgData)
                             logoBox.Image = Image.FromStream(ms)
                         End Using
                     Else
-                        ' ❌ 如果没图片，就显示灰色背景或默认图
                         logoBox.BackColor = Color.LightGray
                     End If
                 Catch
@@ -123,44 +119,45 @@ Public Class SupplierForm
                 End Try
 
                 rowPanel.Controls.Add(logoBox)
-                xPosRow += 100
 
-                ' === 文字列 ===
                 Dim values() As String = {
-                row("sup_name").ToString(),
-                row("sup_email").ToString(),
-                row("sup_contact").ToString(),
-                row("status").ToString()
-            }
+                    row("sup_name").ToString(),
+                    row("sup_email").ToString(),
+                    row("sup_contact").ToString(),
+                    row("status").ToString()
+                }
 
-                Dim widths() As Integer = {180, 220, 130, 100}
                 For i As Integer = 0 To values.Length - 1
                     Dim lbl As New Label With {
-                    .Text = values(i),
-                    .Font = New Font("Segoe UI", 9),
-                    .ForeColor = If(i = 3 AndAlso values(i).ToLower() = "active", Color.SeaGreen,
-                                   If(i = 3, Color.Gray, Color.Black)),
-                    .AutoSize = False,
-                    .Width = widths(i),
-                    .TextAlign = ContentAlignment.MiddleLeft,
-                    .Location = New Point(xPosRow, 15)
-                }
+                        .Text = values(i),
+                        .Font = New Font("Segoe UI", 9),
+                        .ForeColor = If(i = 3 AndAlso values(i).ToLower() = "active", Color.SeaGreen,
+                                       If(i = 3, Color.Gray, Color.Black)),
+                        .AutoSize = False,
+                        .Width = columnWidths(i + 1),
+                        .Height = 40,
+                        .TextAlign = ContentAlignment.MiddleCenter,
+                        .Location = New Point(colX(i + 1), 15)
+                    }
                     rowPanel.Controls.Add(lbl)
-                    xPosRow += widths(i)
                 Next
 
-                ' === Edit 按钮 ===
+                ' === Edit Button ===
                 Dim editBtn As New Button With {
-                .Text = "Edit",
-                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                .BackColor = Color.FromArgb(230, 238, 255),
-                .ForeColor = Color.FromArgb(30, 60, 140),
-                .FlatStyle = FlatStyle.Flat,
-                .Size = New Size(70, 25),
-                .Location = New Point(xPosRow + 5, 13),
-                .Cursor = Cursors.Hand
-            }
+                    .Text = "Edit",
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .BackColor = Color.SeaShell,
+                    .ForeColor = Color.Sienna,
+                    .FlatStyle = FlatStyle.Flat,
+                    .Size = New Size(70, 25),
+                    .Location = New Point(colX(5) + (columnWidths(5) - 70) \ 2, 20),
+                    .Cursor = Cursors.Hand
+                }
                 editBtn.FlatAppearance.BorderSize = 0
+
+                ' Hower Effect
+                AddHandler editBtn.MouseEnter, Sub() editBtn.BackColor = Color.AntiqueWhite
+                AddHandler editBtn.MouseLeave, Sub() editBtn.BackColor = Color.SeaShell
 
                 Dim supID As Integer = Convert.ToInt32(row("sup_id"))
                 AddHandler editBtn.Click, Sub() EditSupplier(supID)
@@ -169,6 +166,7 @@ Public Class SupplierForm
                 SupplierFlowLayoutPanel.Controls.Add(rowPanel)
             Next
 
+
         Catch ex As Exception
             MessageBox.Show("Error loading suppliers: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
@@ -176,9 +174,6 @@ Public Class SupplierForm
         End Try
     End Sub
 
-
-
-    ' === 打开添加供应商表单 ===
     Private Sub AddPictureBox_Click(sender As Object, e As EventArgs) Handles AddPictureBox.Click
         Dim addSupplierID As Integer = SupplierFlowLayoutPanel.Controls.Count + 1
         Dim addForm As New AddSupplierForm(addSupplierID)
@@ -187,11 +182,13 @@ Public Class SupplierForm
     End Sub
 
 
-    ' === 打开编辑供应商表单 ===
     Private Sub EditSupplier(sup_id As Integer)
         Dim editForm As New EditSupplierForm(sup_id)
         editForm.ShowDialog()
         LoadSuppliers()
     End Sub
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 End Class

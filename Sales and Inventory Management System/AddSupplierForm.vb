@@ -13,32 +13,32 @@ Public Class AddSupplierForm
     End Sub
 
     Private Sub AddSupplierForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' === 基础外观 ===
-        Me.BackColor = Color.FromArgb(245, 247, 250)
+        ' === 整体背景 ===
+        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.Font = New Font("Segoe UI", 10)
         Me.Text = "Add Supplier"
 
-        ' === 主容器 Panel ===
+        ' === 主Panel ===
         MainPanel.BackColor = Color.White
-        MainPanel.BorderStyle = BorderStyle.FixedSingle
-        MainPanel.Padding = New Padding(20)
-        MainPanel.Size = New Size(620, 420)
+        MainPanel.BorderStyle = BorderStyle.None
+        MainPanel.Padding = New Padding(30)
+        MainPanel.Size = New Size(600, 400)
         MainPanel.Location = New Point((Me.ClientSize.Width - MainPanel.Width) \ 2, (Me.ClientSize.Height - MainPanel.Height) \ 2)
 
         ' === 标题 ===
-        TitleLabel.Font = New Font("Segoe UI", 16, FontStyle.Bold)
-        TitleLabel.ForeColor = Color.FromArgb(30, 60, 130)
-        TitleLabel.TextAlign = ContentAlignment.MiddleCenter
+        TitleLabel.Font = New Font("Segoe UI Semibold", 16, FontStyle.Bold)
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40) ' 深咖橙色
+        TitleLabel.TextAlign = ContentAlignment.MiddleLeft
         TitleLabel.Text = "Add Supplier"
         TitleLabel.Dock = DockStyle.Top
-        TitleLabel.Height = 50
+        TitleLabel.Height = 45
 
         ' === 标签样式 ===
         For Each lbl As Label In {SupplierIDText, SupplierNameText, ContactText, EmailText, LogoText}
-            lbl.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-            lbl.ForeColor = Color.FromArgb(60, 60, 60)
+            lbl.Font = New Font("Segoe UI Semibold", 10)
+            lbl.ForeColor = Color.FromArgb(100, 70, 50)
             lbl.TextAlign = ContentAlignment.MiddleRight
         Next
 
@@ -46,36 +46,35 @@ Public Class AddSupplierForm
         For Each txt As TextBox In {SupplierNameTextBox, ContactTextBox, EmailTextBox}
             txt.BorderStyle = BorderStyle.FixedSingle
             txt.Font = New Font("Segoe UI", 10)
-            txt.BackColor = Color.FromArgb(250, 250, 250)
+            txt.BackColor = Color.White
+            txt.ForeColor = Color.FromArgb(50, 50, 50)
         Next
-
-        ' === PictureBox Logo 预览 ===
-        LogoPictureBox.BorderStyle = BorderStyle.FixedSingle
-        LogoPictureBox.SizeMode = PictureBoxSizeMode.Zoom
-        LogoPictureBox.BackColor = Color.FromArgb(245, 245, 245)
 
         ' === 上传按钮 ===
         UploadFileButton.FlatStyle = FlatStyle.Flat
         UploadFileButton.FlatAppearance.BorderSize = 0
-        UploadFileButton.BackColor = Color.FromArgb(230, 240, 255)
-        UploadFileButton.ForeColor = Color.FromArgb(30, 60, 130)
-        UploadFileButton.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        UploadFileButton.BackColor = Color.FromArgb(255, 235, 215) ' 浅杏色
+        UploadFileButton.ForeColor = Color.FromArgb(120, 80, 40)
+        UploadFileButton.Font = New Font("Segoe UI Semibold", 9)
         UploadFileButton.Cursor = Cursors.Hand
-
-        AddHandler UploadFileButton.MouseEnter, Sub() UploadFileButton.BackColor = Color.FromArgb(210, 225, 255)
-        AddHandler UploadFileButton.MouseLeave, Sub() UploadFileButton.BackColor = Color.FromArgb(230, 240, 255)
+        AddHandler UploadFileButton.MouseEnter, Sub() UploadFileButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler UploadFileButton.MouseLeave, Sub() UploadFileButton.BackColor = Color.FromArgb(255, 235, 215)
 
         ' === Save 按钮 ===
         SaveButton.FlatStyle = FlatStyle.Flat
         SaveButton.FlatAppearance.BorderSize = 0
-        SaveButton.BackColor = Color.FromArgb(70, 130, 230)
+        SaveButton.BackColor = Color.FromArgb(230, 140, 70)
         SaveButton.ForeColor = Color.White
-        SaveButton.Font = New Font("Segoe UI", 10, FontStyle.Bold)
+        SaveButton.Font = New Font("Segoe UI Semibold", 10)
         SaveButton.Cursor = Cursors.Hand
-        AddHandler SaveButton.MouseEnter, Sub() SaveButton.BackColor = Color.FromArgb(90, 150, 255)
-        AddHandler SaveButton.MouseLeave, Sub() SaveButton.BackColor = Color.FromArgb(70, 130, 230)
+        AddHandler SaveButton.MouseEnter, Sub() SaveButton.BackColor = Color.FromArgb(255, 160, 90)
+        AddHandler SaveButton.MouseLeave, Sub() SaveButton.BackColor = Color.FromArgb(230, 140, 70)
 
-        SupplierIDLabel.Text = id.ToString
+        ' === 图片预览 ===
+        LogoPictureBox.BorderStyle = BorderStyle.FixedSingle
+        LogoPictureBox.SizeMode = PictureBoxSizeMode.Zoom
+        LogoPictureBox.BackColor = Color.FromArgb(255, 245, 230)
+
     End Sub
 
     ' 检测修改
@@ -145,10 +144,11 @@ Public Class AddSupplierForm
 
         If ofd.ShowDialog() = DialogResult.OK Then
             LogoPictureBox.Image = Image.FromFile(ofd.FileName)
-            PathLabel.Text = ofd.FileName
+            PathLabel.Text = System.IO.Path.GetFileName(ofd.FileName)
             PathLabel.ForeColor = Color.FromArgb(60, 60, 60)
             LogoPictureBox.BackColor = Color.White
         End If
+
     End Sub
 
     ' 离开前检测是否保存

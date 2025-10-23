@@ -110,7 +110,7 @@ Public Class EditSupplierForm
                         Using ms As New MemoryStream(currentLogoBytes)
                             LogoPictureBox.Image = Image.FromStream(ms)
                         End Using
-                        PathLabel.Text = "logo_supplier_" & supID & ".jpg (from DB)"
+                        PathLabel.Text = "logo_supplier_" & supID & ".png"
                         PathLabel.ForeColor = Color.DimGray
                     Else
                         LogoPictureBox.Image = Nothing
