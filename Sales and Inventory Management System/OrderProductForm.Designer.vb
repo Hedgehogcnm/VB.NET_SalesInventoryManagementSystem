@@ -78,6 +78,9 @@ Partial Class OrderProductForm
         ' 
         ' OrderButton
         ' 
+        OrderButton.FlatStyle = FlatStyle.Flat
+        OrderButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        OrderButton.ForeColor = Color.Sienna
         OrderButton.Location = New Point(414, 389)
         OrderButton.Name = "OrderButton"
         OrderButton.Size = New Size(94, 29)
@@ -87,6 +90,9 @@ Partial Class OrderProductForm
         ' 
         ' CancelButton
         ' 
+        CancelButton.FlatStyle = FlatStyle.Flat
+        CancelButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        CancelButton.ForeColor = Color.Sienna
         CancelButton.Location = New Point(282, 389)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
