@@ -174,8 +174,11 @@ Partial Class AddProductForm
         ' 
         ' AddProductButton
         ' 
-        AddProductButton.BackColor = Color.White
+        AddProductButton.BackColor = Color.SeaShell
         AddProductButton.Cursor = Cursors.No
+        AddProductButton.FlatStyle = FlatStyle.Flat
+        AddProductButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AddProductButton.ForeColor = Color.Sienna
         AddProductButton.Location = New Point(577, 371)
         AddProductButton.Name = "AddProductButton"
         AddProductButton.Size = New Size(94, 29)
@@ -194,7 +197,10 @@ Partial Class AddProductForm
         ' 
         ' CancelButton
         ' 
-        CancelButton.BackColor = Color.White
+        CancelButton.BackColor = Color.SeaShell
+        CancelButton.FlatStyle = FlatStyle.Flat
+        CancelButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        CancelButton.ForeColor = Color.Sienna
         CancelButton.Location = New Point(456, 371)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
@@ -242,7 +248,10 @@ Partial Class AddProductForm
         ' 
         ' ProductImageButton
         ' 
-        ProductImageButton.BackColor = Color.White
+        ProductImageButton.BackColor = Color.SeaShell
+        ProductImageButton.FlatStyle = FlatStyle.Flat
+        ProductImageButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ProductImageButton.ForeColor = Color.Sienna
         ProductImageButton.Location = New Point(903, 315)
         ProductImageButton.Name = "ProductImageButton"
         ProductImageButton.Size = New Size(118, 30)
