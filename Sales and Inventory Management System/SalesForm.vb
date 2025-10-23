@@ -477,8 +477,9 @@ Public Class SalesForm
             Cart.Clear()
             RefreshCartPanel()
             GenerateInvoiceNo()
-            TextBoxCustomerName.Text = "Customer Name"
-            TextBoxDiscount.Text = "Discount (%)"
+            TextBoxCustomerName.Clear()
+            TextBoxDiscount.Clear()
+            ButtonSearch_Click(Nothing, Nothing)
 
         Catch ex As Exception
             MessageBox.Show("Checkout Error: " & ex.Message)
@@ -564,9 +565,9 @@ Public Class SalesForm
 
         g.DrawString("Thank you for your purchase!", bodyFont, Brushes.Black, centerX, y, formatCenter)
         y += 20
-        g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, y)
-    End Sub
 
+        g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, e.MarginBounds.Bottom + 30)
+    End Sub
 
 End Class
 
