@@ -8,7 +8,7 @@ Public Class InventoryForm
     Private columnNames() As String = {
         "Image", "Product ID", "Product Name",
         "Supplier ID", "Supplier Name", "Category",
-        "Stock", "Min Stock", "Cost Price", "Sell Price", "Operation"
+        "Stock", "Min Stock", "Cost Price", "Sell Price", "Action"
     }
 
     ' === FORM LOAD ===
