@@ -51,7 +51,7 @@ Partial Class InventoryForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 773)
+        MenuStrip1.Size = New Size(68, 1033)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -124,7 +124,7 @@ Partial Class InventoryForm
         PanelMain.Dock = DockStyle.Fill
         PanelMain.Location = New Point(68, 0)
         PanelMain.Name = "PanelMain"
-        PanelMain.Size = New Size(1686, 773)
+        PanelMain.Size = New Size(1834, 1033)
         PanelMain.TabIndex = 6
         ' 
         ' HeaderPanel
@@ -132,7 +132,7 @@ Partial Class InventoryForm
         HeaderPanel.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(192))
         HeaderPanel.Location = New Point(3, 136)
         HeaderPanel.Name = "HeaderPanel"
-        HeaderPanel.Size = New Size(1644, 48)
+        HeaderPanel.Size = New Size(1788, 48)
         HeaderPanel.TabIndex = 12
         ' 
         ' ViewOrderButton
@@ -148,12 +148,12 @@ Partial Class InventoryForm
         ' 
         ProductListFlowLayoutPanel.Location = New Point(3, 190)
         ProductListFlowLayoutPanel.Name = "ProductListFlowLayoutPanel"
-        ProductListFlowLayoutPanel.Size = New Size(1670, 840)
+        ProductListFlowLayoutPanel.Size = New Size(1814, 840)
         ProductListFlowLayoutPanel.TabIndex = 10
         ' 
         ' SearchProductButton
         ' 
-        SearchProductButton.Location = New Point(1538, 91)
+        SearchProductButton.Location = New Point(1697, 91)
         SearchProductButton.Name = "SearchProductButton"
         SearchProductButton.Size = New Size(94, 29)
         SearchProductButton.TabIndex = 4
@@ -162,7 +162,7 @@ Partial Class InventoryForm
         ' 
         ' ProductSearchTextBox
         ' 
-        ProductSearchTextBox.Location = New Point(1242, 92)
+        ProductSearchTextBox.Location = New Point(1397, 93)
         ProductSearchTextBox.Name = "ProductSearchTextBox"
         ProductSearchTextBox.Size = New Size(276, 27)
         ProductSearchTextBox.TabIndex = 5
@@ -183,7 +183,7 @@ Partial Class InventoryForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1686, 60)
+        Panel8.Size = New Size(1834, 60)
         Panel8.TabIndex = 0
         ' 
         ' LabelForm
@@ -202,7 +202,7 @@ Partial Class InventoryForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1754, 773)
+        ClientSize = New Size(1902, 1033)
         Controls.Add(PanelMain)
         Controls.Add(MenuStrip1)
         Name = "InventoryForm"
