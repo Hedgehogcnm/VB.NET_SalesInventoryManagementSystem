@@ -138,11 +138,6 @@ Partial Class SalesForm
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(548, 3)
         Panel2.TabIndex = 2
-<<<<<<< Updated upstream
-
-        ' === FlowLayoutPanelItem ===
-
-=======
         ' 
         ' Label1
         ' 
@@ -159,7 +154,6 @@ Partial Class SalesForm
         ' FlowLayoutPanelItem
         ' 
         FlowLayoutPanelItem.BackColor = Color.AntiqueWhite
->>>>>>> Stashed changes
         FlowLayoutPanelItem.Dock = DockStyle.Fill
         FlowLayoutPanelItem.FlowDirection = FlowDirection.TopDown
         FlowLayoutPanelItem.Location = New Point(3, 62)
