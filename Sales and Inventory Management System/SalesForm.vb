@@ -372,12 +372,22 @@ Public Class SalesForm
         LabelSubTotal.Text = "RM " & subtotal.ToString("0.00")
 
         Dim discountPercent As Decimal
-        Decimal.TryParse(TextBoxDiscount.Text, discountPercent)
-        Dim discountValue = subtotal * (discountPercent / 100D)
+        If Decimal.TryParse(TextBoxDiscount.Text, discountPercent) Then
+            ' Ensure discountPercent stays between 0 and 100
+            If discountPercent < 0D Then
+                discountPercent = 0D
+            ElseIf discountPercent > 100D Then
+                discountPercent = 100D
+            End If
+        Else
+            discountPercent = 0D ' Invalid input → treat as 0
+        End If
 
+        Dim discountValue As Decimal = subtotal * (discountPercent / 100D)
         LabelDiscount.Text = "- RM " & discountValue.ToString("0.00")
         LabelTotal.Text = "RM " & (subtotal - discountValue).ToString("0.00")
     End Sub
+
 
     Private Sub TextBoxDiscount_TextChanged(sender As Object, e As EventArgs) Handles TextBoxDiscount.TextChanged
         UpdateTotals()
@@ -558,10 +568,7 @@ Public Class SalesForm
         y += 20
         g.DrawString("Total: RM " & totalAmount.ToString("0.00"), headerFont, Brushes.Black, marginBounds.Right - 10, y, rightAlign)
         y += 40
-
-        g.DrawString("Thank you for your purchase!", bodyFont, Brushes.Black, centerX, y, formatCenter)
-        y += 20
-
+        g.DrawString("Thank you for your purchase!", bodyFont, Brushes.Black, centerX, e.MarginBounds.Bottom + 30, formatCenter)
         g.DrawString("Generated on " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"), smallFont, Brushes.Black, left, e.MarginBounds.Bottom + 30)
     End Sub
 

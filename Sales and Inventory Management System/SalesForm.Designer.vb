@@ -18,8 +18,6 @@ Partial Class SalesForm
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New ComponentModel.Container()
-        ContextMenuStrip1 = New ContextMenuStrip(components)
         TableLayoutPanelTotal = New TableLayoutPanel()
         PanelRight = New Panel()
         TextBoxCustomerName = New TextBox()
@@ -44,6 +42,7 @@ Partial Class SalesForm
         InventoryToolStripMenuItem = New ToolStripMenuItem()
         SupplierToolStripMenuItem = New ToolStripMenuItem()
         ReportToolStripMenuItem = New ToolStripMenuItem()
+        AboutUsToolStripMenuItem = New ToolStripMenuItem()
         LogOutToolStripMenuItem = New ToolStripMenuItem()
         Panel3 = New Panel()
         TableLayoutPanel2 = New TableLayoutPanel()
@@ -65,17 +64,11 @@ Partial Class SalesForm
         Panel8.SuspendLayout()
         SuspendLayout()
         ' 
-        ' ContextMenuStrip1
-        ' 
-        ContextMenuStrip1.ImageScalingSize = New Size(20, 20)
-        ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(61, 4)
-        ' 
         ' TableLayoutPanelTotal
         ' 
         TableLayoutPanelTotal.BackColor = Color.AntiqueWhite
         TableLayoutPanelTotal.ColumnCount = 1
-        TableLayoutPanelTotal.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanelTotal.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
         TableLayoutPanelTotal.Controls.Add(PanelRight, 0, 0)
         TableLayoutPanelTotal.Controls.Add(FlowLayoutPanelItem, 0, 1)
         TableLayoutPanelTotal.Controls.Add(Panel4, 0, 2)
@@ -138,9 +131,9 @@ Partial Class SalesForm
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(548, 3)
         Panel2.TabIndex = 2
-
-        ' === FlowLayoutPanelItem ===
-
+        ' 
+        ' FlowLayoutPanelItem
+        ' 
         FlowLayoutPanelItem.Dock = DockStyle.Fill
         FlowLayoutPanelItem.FlowDirection = FlowDirection.TopDown
         FlowLayoutPanelItem.Location = New Point(3, 62)
@@ -268,10 +261,8 @@ Partial Class SalesForm
         ' 
         ' ButtonCheckOut
         ' 
-        ButtonCheckOut.BackColor = Color.Snow
+        ButtonCheckOut.BackColor = Color.SeaShell
         ButtonCheckOut.Dock = DockStyle.Fill
-        ButtonCheckOut.FlatAppearance.BorderSize = 0
-        ButtonCheckOut.FlatStyle = FlatStyle.Flat
         ButtonCheckOut.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
         ButtonCheckOut.Location = New Point(3, 916)
         ButtonCheckOut.Name = "ButtonCheckOut"
@@ -286,7 +277,7 @@ Partial Class SalesForm
         MenuStrip1.BackgroundImageLayout = ImageLayout.None
         MenuStrip1.Dock = DockStyle.Left
         MenuStrip1.ImageScalingSize = New Size(40, 40)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, LogOutToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {LogoToolStripMenuItem, SalesToolStripMenuItem, InventoryToolStripMenuItem, SupplierToolStripMenuItem, ReportToolStripMenuItem, AboutUsToolStripMenuItem, LogOutToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
@@ -335,11 +326,18 @@ Partial Class SalesForm
         ' 
         ReportToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Image
         ReportToolStripMenuItem.Image = My.Resources.Resources.report
-        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 529)
+        ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
         ReportToolStripMenuItem.Size = New Size(67, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
+        ' 
+        ' AboutUsToolStripMenuItem
+        ' 
+        AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
+        AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
+        AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
+        AboutUsToolStripMenuItem.Size = New Size(67, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -364,15 +362,15 @@ Partial Class SalesForm
         ' TableLayoutPanel2
         ' 
         TableLayoutPanel2.ColumnCount = 1
-        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
         TableLayoutPanel2.Controls.Add(FlowLayoutPanelSales, 0, 1)
         TableLayoutPanel2.Controls.Add(TableLayoutPanel1, 0, 0)
         TableLayoutPanel2.Dock = DockStyle.Fill
         TableLayoutPanel2.Location = New Point(0, 60)
         TableLayoutPanel2.Name = "TableLayoutPanel2"
         TableLayoutPanel2.RowCount = 2
-        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 55F))
-        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 55.0F))
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
         TableLayoutPanel2.Size = New Size(1280, 973)
         TableLayoutPanel2.TabIndex = 5
         ' 
@@ -388,16 +386,16 @@ Partial Class SalesForm
         ' TableLayoutPanel1
         ' 
         TableLayoutPanel1.ColumnCount = 4
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 810F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 810.0F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 69.38271F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 30.6172848F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 58F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 58.0F))
         TableLayoutPanel1.Controls.Add(ButtonSearch, 2, 0)
         TableLayoutPanel1.Controls.Add(ComboBoxCategory, 1, 0)
         TableLayoutPanel1.Dock = DockStyle.Top
         TableLayoutPanel1.Location = New Point(3, 3)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20.0F))
         TableLayoutPanel1.Size = New Size(1274, 49)
         TableLayoutPanel1.TabIndex = 2
         ' 
@@ -406,7 +404,7 @@ Partial Class SalesForm
         ButtonSearch.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         ButtonSearch.Location = New Point(1094, 18)
         ButtonSearch.Name = "ButtonSearch"
-        ButtonSearch.Size = New Size(115, 28)
+        ButtonSearch.Size = New Size(93, 28)
         ButtonSearch.TabIndex = 1
         ButtonSearch.Text = "Search"
         ' 
@@ -415,9 +413,9 @@ Partial Class SalesForm
         ComboBoxCategory.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         ComboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxCategory.Items.AddRange(New Object() {"All", "Building Materials", "Electrical", "Hand Tools", "Paint & Adhesives", "Plumbing", "Power Tools", "Safety Equipment"})
-        ComboBoxCategory.Location = New Point(838, 18)
+        ComboBoxCategory.Location = New Point(870, 18)
         ComboBoxCategory.Name = "ComboBoxCategory"
-        ComboBoxCategory.Size = New Size(250, 28)
+        ComboBoxCategory.Size = New Size(218, 28)
         ComboBoxCategory.TabIndex = 0
         ' 
         ' Panel8
@@ -433,7 +431,7 @@ Partial Class SalesForm
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(86, 40)
@@ -442,7 +440,7 @@ Partial Class SalesForm
         ' 
         ' SalesForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.Control
         ClientSize = New Size(1902, 1033)
@@ -470,8 +468,6 @@ Partial Class SalesForm
         ResumeLayout(False)
         PerformLayout()
     End Sub
-
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents TableLayoutPanelTotal As TableLayoutPanel
     Friend WithEvents PanelRight As Panel
     Friend WithEvents labelInvoiceNo As Label
@@ -505,4 +501,5 @@ Partial Class SalesForm
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TextBoxCustomerName As TextBox
     Friend WithEvents ButtonCheckOut As Button
+    Friend WithEvents AboutUsToolStripMenuItem As ToolStripMenuItem
 End Class
