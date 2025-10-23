@@ -263,7 +263,7 @@ Public Class InventoryForm
     ' === DELETE PRODUCT ===
     Private Sub DeleteProduct(productID As Integer, productName As String)
         Dim confirm As DialogResult = MessageBox.Show(
-        $"Are you sure you want to delete '{productName}' (ID: {productID})? " & vbCrLf &
+        $"Are you sure you want to delete '{productName}' (Product ID: {productID})? " & vbCrLf &
         "This will also remove all related sales details, orders, and inventory movements.",
         "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
