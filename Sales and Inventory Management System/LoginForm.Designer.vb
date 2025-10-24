@@ -22,8 +22,8 @@ Partial Class LoginForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Label1 = New Label()
-        Label2 = New Label()
+        UsernameLabel = New Label()
+        PasswordLabel = New Label()
         usernameTextBox = New TextBox()
         passwordTextBox = New TextBox()
         loginButton = New Button()
@@ -31,23 +31,23 @@ Partial Class LoginForm
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' Label1
+        ' UsernameLabel
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(967, 336)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(78, 20)
-        Label1.TabIndex = 0
-        Label1.Text = "Username:"
+        UsernameLabel.AutoSize = True
+        UsernameLabel.Location = New Point(967, 336)
+        UsernameLabel.Name = "UsernameLabel"
+        UsernameLabel.Size = New Size(78, 20)
+        UsernameLabel.TabIndex = 0
+        UsernameLabel.Text = "Username:"
         ' 
-        ' Label2
+        ' PasswordLabel
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(967, 390)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(73, 20)
-        Label2.TabIndex = 1
-        Label2.Text = "Password:"
+        PasswordLabel.AutoSize = True
+        PasswordLabel.Location = New Point(967, 390)
+        PasswordLabel.Name = "PasswordLabel"
+        PasswordLabel.Size = New Size(73, 20)
+        PasswordLabel.TabIndex = 1
+        PasswordLabel.Text = "Password:"
         ' 
         ' usernameTextBox
         ' 
@@ -92,8 +92,8 @@ Partial Class LoginForm
         Controls.Add(loginButton)
         Controls.Add(passwordTextBox)
         Controls.Add(usernameTextBox)
-        Controls.Add(Label2)
-        Controls.Add(Label1)
+        Controls.Add(PasswordLabel)
+        Controls.Add(UsernameLabel)
         Name = "LoginForm"
         StartPosition = FormStartPosition.CenterScreen
         WindowState = FormWindowState.Maximized
@@ -102,8 +102,8 @@ Partial Class LoginForm
         PerformLayout()
     End Sub
 
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents UsernameLabel As Label
+    Friend WithEvents PasswordLabel As Label
     Friend WithEvents usernameTextBox As TextBox
     Friend WithEvents passwordTextBox As TextBox
     Friend WithEvents loginButton As Button
