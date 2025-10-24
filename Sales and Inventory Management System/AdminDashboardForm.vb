@@ -53,6 +53,12 @@ Public Class AdminDashboardForm
         LoadProductPanel()
         LoadSuppliers()
     End Sub
+
+    ' === When UserPanel is clicked, open AddUserForm ===
+    Private Sub UserPanel_Click(sender As Object, e As EventArgs) Handles UserPanel.Click
+        Dim frm As New AddUserForm()
+        frm.ShowDialog()
+    End Sub
     Private Sub LoadSuppliers()
         Try
             ConnectDB()

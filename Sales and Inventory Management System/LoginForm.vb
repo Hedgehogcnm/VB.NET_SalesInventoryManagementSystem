@@ -36,9 +36,6 @@ Public Class LoginForm
         AddHandler loginButton.MouseEnter, Sub() loginButton.BackColor = Color.FromArgb(255, 225, 200)
         AddHandler loginButton.MouseLeave, Sub() loginButton.BackColor = Color.FromArgb(255, 235, 215)
 
-        ' === Default test credentials (optional) ===
-        usernameTextBox.Text = "admin"
-        passwordTextBox.Text = "12345"
     End Sub
 
     ' === Login Logic ===
