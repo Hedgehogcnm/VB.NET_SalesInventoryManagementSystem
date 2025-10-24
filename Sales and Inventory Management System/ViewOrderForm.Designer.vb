@@ -22,21 +22,20 @@ Partial Class ViewOrderForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Label1 = New Label()
+        TitleLabel = New Label()
         HeaderFlowLayoutPanel = New FlowLayoutPanel()
         OrderFlowLayoutPanel = New FlowLayoutPanel()
         SaveButton = New Button()
         SuspendLayout()
         ' 
-        ' Label1
+        ' TitleLabel
         ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(562, 18)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(176, 35)
-        Label1.TabIndex = 0
-        Label1.Text = "Order History"
+        TitleLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        TitleLabel.Location = New Point(574, 22)
+        TitleLabel.Name = "TitleLabel"
+        TitleLabel.Size = New Size(194, 37)
+        TitleLabel.TabIndex = 0
+        TitleLabel.Text = "Order History"
         ' 
         ' HeaderFlowLayoutPanel
         ' 
@@ -74,14 +73,13 @@ Partial Class ViewOrderForm
         Controls.Add(SaveButton)
         Controls.Add(OrderFlowLayoutPanel)
         Controls.Add(HeaderFlowLayoutPanel)
-        Controls.Add(Label1)
+        Controls.Add(TitleLabel)
         Name = "ViewOrderForm"
         StartPosition = FormStartPosition.CenterScreen
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
-    Friend WithEvents Label1 As Label
+    Friend WithEvents TitleLabel As Label
     Friend WithEvents HeaderFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents OrderFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents SaveButton As Button

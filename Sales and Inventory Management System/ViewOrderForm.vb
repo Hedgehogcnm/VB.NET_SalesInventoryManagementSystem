@@ -11,6 +11,22 @@ Public Class ViewOrderForm
         SetupOrderHeader()
         LoadOrderData()
         OrderFlowLayoutPanel.AutoScroll = True
+
+        ' === Title ===
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40) ' 深咖橙色
+        TitleLabel.TextAlign = ContentAlignment.MiddleCenter
+        TitleLabel.Dock = DockStyle.Top
+        TitleLabel.Height = 45
+
+        ' === Save Button ===
+        SaveButton.FlatStyle = FlatStyle.Flat
+        SaveButton.FlatAppearance.BorderSize = 0
+        SaveButton.BackColor = Color.FromArgb(255, 235, 215)
+        SaveButton.ForeColor = Color.FromArgb(120, 80, 40)
+        SaveButton.Font = New Font("Segoe UI Semibold", 9)
+        SaveButton.Cursor = Cursors.Hand
+        AddHandler SaveButton.MouseEnter, Sub() SaveButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler SaveButton.MouseLeave, Sub() SaveButton.BackColor = Color.FromArgb(255, 235, 215)
     End Sub
 
     ' === SETUP HEADER ===

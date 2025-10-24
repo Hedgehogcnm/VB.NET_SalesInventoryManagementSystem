@@ -1,5 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.IO
+Imports System.Drawing ' ✅ 确保使用 System.Drawing.Color, Font 等
 
 Public Class AddProductForm
 
@@ -7,8 +8,80 @@ Public Class AddProductForm
     Private ProductImagePath As String = "" ' store selected image path
 
     Private Sub AddProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' === Background ===
+        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.StartPosition = FormStartPosition.CenterScreen
+        Me.Font = New Font("Segoe UI", 10)
+        Me.Text = "Add Product"
+
+        ' === Title Label ===
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40)
+        TitleLabel.Dock = DockStyle.None
+        TitleLabel.TextAlign = ContentAlignment.MiddleCenter
+
+        ' === Label Style ===
+        For Each lbl As Label In {ProductIDText, SupplierIDText, ProductNameText, ProductCategoryText,
+                                  ProductMinStockText, ProductCostPriceText, ProductSellPriceText, ProductImageText}
+            lbl.Font = New Font("Segoe UI Semibold", 10)
+            lbl.ForeColor = Color.FromArgb(100, 70, 50)
+            lbl.TextAlign = ContentAlignment.MiddleRight
+        Next
+
+        ' === TextBox Style ===
+        For Each txt As TextBox In {ProductIDTextBox, ProductNameTextBox, ProductMinStockTextBox,
+                                    ProductCostPriceTextBox, ProductSellPriceTextBox}
+            txt.BorderStyle = BorderStyle.FixedSingle
+            txt.BackColor = Color.FromArgb(255, 245, 230)
+            txt.ForeColor = Color.FromArgb(50, 50, 50)
+        Next
+
+        For Each cmb As ComboBox In {SupplierIDComboBox, ProductCategoryComboBox}
+            cmb.FlatStyle = FlatStyle.Flat
+            cmb.BackColor = Color.FromArgb(255, 245, 230) ' 背景色与 TextBox 一致
+            cmb.ForeColor = Color.FromArgb(50, 50, 50)
+            cmb.IntegralHeight = False
+            cmb.DropDownHeight = 100
+        Next
+
+        ' === Product Image Box ===
+        ProductImagePictureBox.BorderStyle = BorderStyle.FixedSingle
+        ProductImagePictureBox.SizeMode = PictureBoxSizeMode.Zoom
+        ProductImagePictureBox.BackColor = Color.FromArgb(255, 245, 230)
+
+        ' === Upload Image Button ===
+        ProductImageButton.FlatStyle = FlatStyle.Flat
+        ProductImageButton.FlatAppearance.BorderSize = 0
+        ProductImageButton.BackColor = Color.FromArgb(255, 235, 215)
+        ProductImageButton.ForeColor = Color.FromArgb(120, 80, 40)
+        ProductImageButton.Font = New Font("Segoe UI Semibold", 9)
+        ProductImageButton.Cursor = Cursors.Hand
+        AddHandler ProductImageButton.MouseEnter, Sub() ProductImageButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler ProductImageButton.MouseLeave, Sub() ProductImageButton.BackColor = Color.FromArgb(255, 235, 215)
+
+        ' === Add Product Button ===
+        AddProductButton.FlatStyle = FlatStyle.Flat
+        AddProductButton.FlatAppearance.BorderSize = 0
+        AddProductButton.BackColor = Color.FromArgb(255, 235, 215)
+        AddProductButton.ForeColor = Color.FromArgb(120, 80, 40)
+        AddProductButton.Font = New Font("Segoe UI Semibold", 9)
+        AddProductButton.Cursor = Cursors.Hand
+        AddHandler AddProductButton.MouseEnter, Sub() AddProductButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler AddProductButton.MouseLeave, Sub() AddProductButton.BackColor = Color.FromArgb(255, 235, 215)
+
+        ' === Cancel Button ===
+        CancelButton.FlatStyle = FlatStyle.Flat
+        CancelButton.FlatAppearance.BorderSize = 0
+        CancelButton.BackColor = Color.FromArgb(255, 235, 215)
+        CancelButton.ForeColor = Color.FromArgb(120, 80, 40)
+        CancelButton.Font = New Font("Segoe UI Semibold", 9)
+        CancelButton.Cursor = Cursors.Hand
+        AddHandler CancelButton.MouseEnter, Sub() CancelButton.BackColor = Color.FromArgb(255, 225, 200)
+        AddHandler CancelButton.MouseLeave, Sub() CancelButton.BackColor = Color.FromArgb(255, 235, 215)
+
+        ' === Load ComboBox Data ===
         LoadSupplierComboBox()
-        ProductIDTextBox.Focus() ' 👈 Auto-focus when form opens
+        ProductIDTextBox.Focus()
     End Sub
 
 
@@ -16,19 +89,16 @@ Public Class AddProductForm
     Private Sub LoadSupplierComboBox()
         Try
             ConnectDB()
-
             Dim sql As String = "SELECT sup_id FROM tb_suppliers ORDER BY sup_id ASC"
             Dim da As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
             da.Fill(dt)
-
             SupplierIDComboBox.DataSource = dt
             SupplierIDComboBox.DisplayMember = "sup_id"
             SupplierIDComboBox.ValueMember = "sup_id"
             SupplierIDComboBox.SelectedIndex = -1
-
         Catch ex As Exception
-            MessageBox.Show("❌ Failed to load supplier IDs: " & ex.Message)
+            MessageBox.Show("Failed to load supplier IDs: " & ex.Message)
         Finally
             conn.Close()
         End Try
@@ -39,30 +109,27 @@ Public Class AddProductForm
         Dim ofd As New OpenFileDialog()
         ofd.Title = "Select Product Image"
         ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
-
         If ofd.ShowDialog() = DialogResult.OK Then
             ProductImagePath = ofd.FileName
             ProductImagePictureBox.Image = Image.FromFile(ProductImagePath)
+            ProductImagePictureBox.BackColor = Color.White
         End If
     End Sub
 
     ' === Add Product Button ===
     Private Sub AddProductButton_Click(sender As Object, e As EventArgs) Handles AddProductButton.Click
-        ' --- Validate Product ID ---
         Dim ProductID As Integer
         If Not Integer.TryParse(ProductIDTextBox.Text, ProductID) Then
             MessageBox.Show("Please enter a valid Product ID.")
             Exit Sub
         End If
 
-        ' --- Validate Supplier ID ---
         If SupplierIDComboBox.SelectedIndex = -1 Then
             MessageBox.Show("Please select a Supplier ID.")
             Exit Sub
         End If
         Dim SupplierID As Integer = CInt(SupplierIDComboBox.SelectedValue)
 
-        ' --- Validate other inputs ---
         Dim ProductName As String = ProductNameTextBox.Text.Trim()
         Dim ProductCategory As String = If(ProductCategoryComboBox.SelectedItem, "").ToString()
 
@@ -91,7 +158,6 @@ Public Class AddProductForm
 
         Try
             ConnectDB()
-
             Dim sql As String = "
                 INSERT INTO tb_products 
                 (p_id, sup_id, p_name, p_category, p_minStock, p_costPrice, p_sellPrice, p_image)
@@ -108,12 +174,10 @@ Public Class AddProductForm
                 cmd.Parameters.AddWithValue("@ProductCostPrice", ProductCostPrice)
                 cmd.Parameters.AddWithValue("@ProductSellPrice", ProductSellPrice)
 
-                ' === Handle Product Image ===
                 If ProductImagePath <> "" Then
                     Dim imgBytes() As Byte = File.ReadAllBytes(ProductImagePath)
                     cmd.Parameters.Add("@ProductImage", MySqlDbType.Blob).Value = imgBytes
                 Else
-                    ' No image selected — insert NULL
                     cmd.Parameters.AddWithValue("@ProductImage", DBNull.Value)
                 End If
 
@@ -121,12 +185,11 @@ Public Class AddProductForm
             End Using
 
             isSaved = True
-            MessageBox.Show("✅ Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.DialogResult = DialogResult.OK
             Me.Close()
-
         Catch ex As Exception
-            MessageBox.Show("❌ Error adding product: " & ex.Message)
+            MessageBox.Show("Error adding product: " & ex.Message)
         Finally
             conn.Close()
         End Try
