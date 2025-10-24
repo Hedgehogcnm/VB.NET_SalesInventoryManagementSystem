@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Sales_and_Inventory_Management_System</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>Sales_and_Inventory_Management_System.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
   </PropertyGroup>
