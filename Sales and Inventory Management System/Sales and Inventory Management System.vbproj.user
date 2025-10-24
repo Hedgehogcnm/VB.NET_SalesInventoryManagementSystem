@@ -10,6 +10,9 @@
     <Compile Update="AddSupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="AdminDashboardForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="EditSupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
