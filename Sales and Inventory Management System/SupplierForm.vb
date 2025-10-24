@@ -60,7 +60,7 @@ Public Class SupplierForm
                 .Padding = New Padding(10, 10, 10, 10)
             }
 
-            Dim columnWidths() As Integer = {230, 240, 280, 220, 220, 220}
+            Dim columnWidths() As Integer = {230, 360, 360, 300, 300, 280}
             Dim headers() As String = {"Company Logo", "Supplier Name", "Email", "Contact", "Status", "Action"}
 
             Dim colX(headers.Length - 1) As Integer
