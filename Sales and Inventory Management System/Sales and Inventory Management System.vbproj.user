@@ -10,6 +10,9 @@
     <Compile Update="AddSupplierForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="AddUserForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="AdminDashboardForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -35,6 +38,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SupplierForm.vb">
