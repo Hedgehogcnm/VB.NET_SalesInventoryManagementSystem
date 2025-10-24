@@ -22,18 +22,18 @@ Partial Class EditProductForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Label1 = New Label()
-        Label2 = New Label()
-        Label3 = New Label()
-        Label4 = New Label()
-        Label5 = New Label()
-        Label6 = New Label()
-        Label7 = New Label()
-        Label8 = New Label()
+        TitleLabel = New Label()
+        ProductIDText = New Label()
+        ProductNameText = New Label()
+        CategoryText = New Label()
+        StockText = New Label()
+        MinStockText = New Label()
+        CostText = New Label()
+        SellText = New Label()
         SaveButton = New Button()
         ProductCategoryComboBox = New ComboBox()
         EditProductNameTextBox = New TextBox()
-        Label9 = New Label()
+        SupplierIDText = New Label()
         ProductIDLabel = New Label()
         SupplierIDLabel = New Label()
         EditProductStockTextBox = New TextBox()
@@ -41,91 +41,92 @@ Partial Class EditProductForm
         EditProductCostPriceTextBox = New TextBox()
         EditProductSellPriceTextBox = New TextBox()
         CancelButton = New Button()
-        Label10 = New Label()
+        ImageText = New Label()
         ProductPictureBox = New PictureBox()
         ChangeImageButton = New Button()
         CType(ProductPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' Label1
+        ' TitleLabel
         ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(523, 36)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(159, 35)
-        Label1.TabIndex = 0
-        Label1.Text = "Edit Product"
+        TitleLabel.AutoSize = True
+        TitleLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        TitleLabel.ForeColor = Color.Sienna
+        TitleLabel.Location = New Point(523, 36)
+        TitleLabel.Name = "TitleLabel"
+        TitleLabel.Size = New Size(176, 37)
+        TitleLabel.TabIndex = 0
+        TitleLabel.Text = "Edit Product"
         ' 
-        ' Label2
+        ' ProductIDText
         ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label2.Location = New Point(90, 122)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(106, 23)
-        Label2.TabIndex = 1
-        Label2.Text = "Product ID: "
+        ProductIDText.AutoSize = True
+        ProductIDText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        ProductIDText.Location = New Point(90, 122)
+        ProductIDText.Name = "ProductIDText"
+        ProductIDText.Size = New Size(106, 23)
+        ProductIDText.TabIndex = 1
+        ProductIDText.Text = "Product ID: "
         ' 
-        ' Label3
+        ' ProductNameText
         ' 
-        Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(90, 247)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(140, 23)
-        Label3.TabIndex = 2
-        Label3.Text = "Product Name： "
+        ProductNameText.AutoSize = True
+        ProductNameText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        ProductNameText.Location = New Point(90, 247)
+        ProductNameText.Name = "ProductNameText"
+        ProductNameText.Size = New Size(148, 23)
+        ProductNameText.TabIndex = 2
+        ProductNameText.Text = "Product Name： "
         ' 
-        ' Label4
+        ' CategoryText
         ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.Location = New Point(90, 309)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(162, 23)
-        Label4.TabIndex = 3
-        Label4.Text = "Product Category: "
+        CategoryText.AutoSize = True
+        CategoryText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        CategoryText.Location = New Point(90, 309)
+        CategoryText.Name = "CategoryText"
+        CategoryText.Size = New Size(162, 23)
+        CategoryText.TabIndex = 3
+        CategoryText.Text = "Product Category: "
         ' 
-        ' Label5
+        ' StockText
         ' 
-        Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label5.Location = New Point(533, 122)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(134, 23)
-        Label5.TabIndex = 4
-        Label5.Text = "Product Stock: "
+        StockText.AutoSize = True
+        StockText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        StockText.Location = New Point(533, 122)
+        StockText.Name = "StockText"
+        StockText.Size = New Size(134, 23)
+        StockText.TabIndex = 4
+        StockText.Text = "Product Stock: "
         ' 
-        ' Label6
+        ' MinStockText
         ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label6.Location = New Point(450, 179)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(217, 23)
-        Label6.TabIndex = 5
-        Label6.Text = "Product Minimum Stock: "
+        MinStockText.AutoSize = True
+        MinStockText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        MinStockText.Location = New Point(450, 179)
+        MinStockText.Name = "MinStockText"
+        MinStockText.Size = New Size(217, 23)
+        MinStockText.TabIndex = 5
+        MinStockText.Text = "Product Minimum Stock: "
         ' 
-        ' Label7
+        ' CostText
         ' 
-        Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label7.Location = New Point(500, 246)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(167, 23)
-        Label7.TabIndex = 6
-        Label7.Text = "Product Cost Price: "
+        CostText.AutoSize = True
+        CostText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        CostText.Location = New Point(500, 246)
+        CostText.Name = "CostText"
+        CostText.Size = New Size(167, 23)
+        CostText.TabIndex = 6
+        CostText.Text = "Product Cost Price: "
         ' 
-        ' Label8
+        ' SellText
         ' 
-        Label8.AutoSize = True
-        Label8.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label8.Location = New Point(506, 309)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(161, 23)
-        Label8.TabIndex = 7
-        Label8.Text = "Product Sell Price: "
+        SellText.AutoSize = True
+        SellText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        SellText.Location = New Point(506, 309)
+        SellText.Name = "SellText"
+        SellText.Size = New Size(161, 23)
+        SellText.TabIndex = 7
+        SellText.Text = "Product Sell Price: "
         ' 
         ' SaveButton
         ' 
@@ -158,15 +159,15 @@ Partial Class EditProductForm
         EditProductNameTextBox.Size = New Size(224, 27)
         EditProductNameTextBox.TabIndex = 10
         ' 
-        ' Label9
+        ' SupplierIDText
         ' 
-        Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label9.Location = New Point(90, 179)
-        Label9.Name = "Label9"
-        Label9.Size = New Size(122, 23)
-        Label9.TabIndex = 11
-        Label9.Text = "Suppplier ID: "
+        SupplierIDText.AutoSize = True
+        SupplierIDText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        SupplierIDText.Location = New Point(90, 179)
+        SupplierIDText.Name = "SupplierIDText"
+        SupplierIDText.Size = New Size(122, 23)
+        SupplierIDText.TabIndex = 11
+        SupplierIDText.Text = "Suppplier ID: "
         ' 
         ' ProductIDLabel
         ' 
@@ -233,15 +234,15 @@ Partial Class EditProductForm
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = False
         ' 
-        ' Label10
+        ' ImageText
         ' 
-        Label10.AutoSize = True
-        Label10.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label10.Location = New Point(929, 120)
-        Label10.Name = "Label10"
-        Label10.Size = New Size(138, 23)
-        Label10.TabIndex = 19
-        Label10.Text = "Product Image: "
+        ImageText.AutoSize = True
+        ImageText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        ImageText.Location = New Point(929, 120)
+        ImageText.Name = "ImageText"
+        ImageText.Size = New Size(138, 23)
+        ImageText.TabIndex = 19
+        ImageText.Text = "Product Image: "
         ' 
         ' ProductPictureBox
         ' 
@@ -272,7 +273,7 @@ Partial Class EditProductForm
         ClientSize = New Size(1198, 526)
         Controls.Add(ChangeImageButton)
         Controls.Add(ProductPictureBox)
-        Controls.Add(Label10)
+        Controls.Add(ImageText)
         Controls.Add(CancelButton)
         Controls.Add(EditProductSellPriceTextBox)
         Controls.Add(EditProductCostPriceTextBox)
@@ -280,18 +281,18 @@ Partial Class EditProductForm
         Controls.Add(EditProductStockTextBox)
         Controls.Add(SupplierIDLabel)
         Controls.Add(ProductIDLabel)
-        Controls.Add(Label9)
+        Controls.Add(SupplierIDText)
         Controls.Add(EditProductNameTextBox)
         Controls.Add(ProductCategoryComboBox)
         Controls.Add(SaveButton)
-        Controls.Add(Label8)
-        Controls.Add(Label7)
-        Controls.Add(Label6)
-        Controls.Add(Label5)
-        Controls.Add(Label4)
-        Controls.Add(Label3)
-        Controls.Add(Label2)
-        Controls.Add(Label1)
+        Controls.Add(SellText)
+        Controls.Add(CostText)
+        Controls.Add(MinStockText)
+        Controls.Add(StockText)
+        Controls.Add(CategoryText)
+        Controls.Add(ProductNameText)
+        Controls.Add(ProductIDText)
+        Controls.Add(TitleLabel)
         Name = "EditProductForm"
         StartPosition = FormStartPosition.CenterScreen
         CType(ProductPictureBox, ComponentModel.ISupportInitialize).EndInit()
@@ -299,18 +300,18 @@ Partial Class EditProductForm
         PerformLayout()
     End Sub
 
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
-    Friend WithEvents Label7 As Label
-    Friend WithEvents Label8 As Label
+    Friend WithEvents TitleLabel As Label
+    Friend WithEvents ProductIDText As Label
+    Friend WithEvents ProductNameText As Label
+    Friend WithEvents CategoryText As Label
+    Friend WithEvents StockText As Label
+    Friend WithEvents MinStockText As Label
+    Friend WithEvents CostText As Label
+    Friend WithEvents SellText As Label
     Friend WithEvents SaveButton As Button
     Friend WithEvents ProductCategoryComboBox As ComboBox
     Friend WithEvents EditProductNameTextBox As TextBox
-    Friend WithEvents Label9 As Label
+    Friend WithEvents SupplierIDText As Label
     Friend WithEvents ProductIDLabel As Label
     Friend WithEvents SupplierIDLabel As Label
     Friend WithEvents EditProductStockTextBox As TextBox
@@ -318,7 +319,7 @@ Partial Class EditProductForm
     Friend WithEvents EditProductCostPriceTextBox As TextBox
     Friend WithEvents EditProductSellPriceTextBox As TextBox
     Friend WithEvents CancelButton As Button
-    Friend WithEvents Label10 As Label
+    Friend WithEvents ImageText As Label
     Friend WithEvents ProductPictureBox As PictureBox
     Friend WithEvents ChangeImageButton As Button
 End Class

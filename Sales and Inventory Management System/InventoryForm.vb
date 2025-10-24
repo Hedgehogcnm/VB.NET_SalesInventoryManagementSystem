@@ -44,6 +44,21 @@ Public Class InventoryForm
         ProductListFlowLayoutPanel.AutoScroll = True
         ProductListFlowLayoutPanel.WrapContents = False
         ProductListFlowLayoutPanel.FlowDirection = FlowDirection.TopDown
+
+        ' === Style for Add Product & View Order Buttons ===
+        Dim baseColor As Color = Color.SeaShell
+        Dim hoverColor As Color = Color.AntiqueWhite
+        Dim fontColor As Color = Color.Sienna
+
+        ' --- Button Style ---
+        Dim allButtons() As Button = {AddProductButton, ViewOrderButton, SearchProductButton}
+        For Each btn As Button In allButtons
+            With btn
+                .FlatAppearance.BorderSize = 0
+            End With
+            AddHandler btn.MouseEnter, Sub() btn.BackColor = hoverColor
+            AddHandler btn.MouseLeave, Sub() btn.BackColor = baseColor
+        Next
     End Sub
 
     Private Sub InventoryForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
