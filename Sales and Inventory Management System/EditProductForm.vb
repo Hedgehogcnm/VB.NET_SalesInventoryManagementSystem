@@ -11,14 +11,14 @@ Public Class EditProductForm
 
     Private Sub EditProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' === Background ===
-        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
+        Me.BackColor = Color.FromArgb(255, 247, 238)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.Font = New Font("Segoe UI", 10)
         Me.Text = "Edit Product"
 
         ' === Title ===
-        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40) ' 深棕色
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40)
         TitleLabel.TextAlign = ContentAlignment.MiddleCenter
         TitleLabel.Dock = DockStyle.None
 

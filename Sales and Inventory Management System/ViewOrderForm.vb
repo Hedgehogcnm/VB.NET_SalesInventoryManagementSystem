@@ -147,7 +147,7 @@ Public Class ViewOrderForm
             Next
 
         Catch ex As Exception
-            MessageBox.Show("❌ Error loading orders: " & ex.Message)
+            MessageBox.Show("Error loading orders: " & ex.Message)
         Finally
             conn.Close()
         End Try
@@ -188,11 +188,11 @@ Public Class ViewOrderForm
 
             Catch ex As Exception
                 transaction.Rollback()
-                MessageBox.Show("❌ Failed to update order statuses: " & ex.Message)
+                MessageBox.Show("Failed to update order statuses: " & ex.Message)
             End Try
 
         Catch ex As Exception
-            MessageBox.Show("❌ Connection error: " & ex.Message)
+            MessageBox.Show("Connection error: " & ex.Message)
         Finally
             conn.Close()
         End Try

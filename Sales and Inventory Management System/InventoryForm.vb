@@ -108,7 +108,7 @@ Public Class InventoryForm
                  FROM tb_products p
                  LEFT JOIN tb_suppliers s ON p.sup_id = s.sup_id"
 
-            ' ✅ Search only by Product Name
+            ' Search only by Product Name
             If searchTerm <> "" Then
                 sql &= " WHERE p.p_name LIKE @search"
             End If
@@ -260,7 +260,7 @@ Public Class InventoryForm
             Next
 
         Catch ex As Exception
-            MessageBox.Show("❌ Error loading products: " & ex.Message)
+            MessageBox.Show("Error loading products: " & ex.Message)
         Finally
             conn.Close()
         End Try
@@ -278,41 +278,41 @@ Public Class InventoryForm
                 ConnectDB()
                 Using transaction As MySqlTransaction = conn.BeginTransaction()
                     Try
-                        ' 🧾 Delete related sales detail records
+                        ' Delete related sales detail records
                         Using cmd0 As New MySqlCommand("DELETE FROM tb_sales_detail WHERE p_id = @pid", conn, transaction)
                             cmd0.Parameters.AddWithValue("@pid", productID)
                             cmd0.ExecuteNonQuery()
                         End Using
 
-                        ' 🧭 Delete related inventory movements
+                        ' Delete related inventory movements
                         Using cmd1 As New MySqlCommand("DELETE FROM tb_inventorymovements WHERE p_id = @pid", conn, transaction)
                             cmd1.Parameters.AddWithValue("@pid", productID)
                             cmd1.ExecuteNonQuery()
                         End Using
 
-                        ' 📦 Delete related orders
+                        ' Delete related orders
                         Using cmd2 As New MySqlCommand("DELETE FROM tb_orders WHERE p_id = @pid", conn, transaction)
                             cmd2.Parameters.AddWithValue("@pid", productID)
                             cmd2.ExecuteNonQuery()
                         End Using
 
-                        ' 🧹 Finally, delete product itself
+                        ' Finally, delete product itself
                         Using cmd3 As New MySqlCommand("DELETE FROM tb_products WHERE p_id = @pid", conn, transaction)
                             cmd3.Parameters.AddWithValue("@pid", productID)
                             cmd3.ExecuteNonQuery()
                         End Using
 
                         transaction.Commit()
-                        MessageBox.Show($"✅ Product '{productName}' deleted successfully, including related sales, orders, and inventory data.")
+                        MessageBox.Show($"Product '{productName}' deleted successfully, including related sales, orders, and inventory data.")
                         LoadProductTable()
 
                     Catch ex As Exception
                         transaction.Rollback()
-                        MessageBox.Show("❌ Failed to delete product: " & ex.Message)
+                        MessageBox.Show("Failed to delete product: " & ex.Message)
                     End Try
                 End Using
             Catch ex As Exception
-                MessageBox.Show("❌ Database error: " & ex.Message)
+                MessageBox.Show("Database error: " & ex.Message)
             Finally
                 conn.Close()
             End Try
@@ -340,7 +340,7 @@ Public Class InventoryForm
 
         ' --- Validate letters and spaces only ---
         If Not System.Text.RegularExpressions.Regex.IsMatch(searchTerm, "^[a-zA-Z0-9\s]+$") Then
-            MessageBox.Show("❌ Only letters and spaces are allowed for Product Name search.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Only letters and spaces are allowed for Product Name search.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 

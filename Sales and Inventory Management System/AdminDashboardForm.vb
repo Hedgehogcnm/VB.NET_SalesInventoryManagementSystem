@@ -5,6 +5,17 @@ Imports MySql.Data.MySqlClient
 Imports System.IO
 
 Public Class AdminDashboardForm
+    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
+        Dim frm As New AdminReportForm()
+        frm.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub DashboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DashboardToolStripMenuItem.Click
+        Dim frm As New AdminDashboardForm()
+        frm.Show()
+        Me.Close()
+    End Sub
 
     Private Sub AboutUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutUsToolStripMenuItem.Click
         Dim aboutbox As New AboutBox
@@ -416,4 +427,6 @@ Public Class AdminDashboardForm
 
         table.Controls.Add(lbl, col, row)
     End Sub
+
+
 End Class
