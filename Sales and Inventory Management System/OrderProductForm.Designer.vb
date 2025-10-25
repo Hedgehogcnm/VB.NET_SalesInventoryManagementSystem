@@ -22,56 +22,56 @@ Partial Class OrderProductForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Label1 = New Label()
-        Label2 = New Label()
-        Label3 = New Label()
+        TitleLabel = New Label()
+        ProductNameText = New Label()
+        QuantityText = New Label()
         OrderQuantityTextBox = New TextBox()
         OrderButton = New Button()
         CancelButton = New Button()
-        Label4 = New Label()
-        ProductIDLabel = New Label()
-        Label5 = New Label()
-        Label6 = New Label()
-        UnitPriceLabel = New Label()
-        TotalPriceLabel = New Label()
-        ProductNameLabel = New Label()
+        ProductIDText = New Label()
+        ProductIDDisplay = New Label()
+        UnitPriceText = New Label()
+        TotalText = New Label()
+        UnitPriceDisplay = New Label()
+        TotalPriceDisplay = New Label()
+        ProductNameDisplay = New Label()
         SuspendLayout()
         ' 
-        ' Label1
+        ' TitleLabel
         ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 15F, FontStyle.Bold)
-        Label1.Location = New Point(301, 20)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(182, 35)
-        Label1.TabIndex = 0
-        Label1.Text = "Order Product"
+        TitleLabel.AutoSize = True
+        TitleLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        TitleLabel.Location = New Point(229, 22)
+        TitleLabel.Name = "TitleLabel"
+        TitleLabel.Size = New Size(200, 37)
+        TitleLabel.TabIndex = 0
+        TitleLabel.Text = "Order Product"
         ' 
-        ' Label2
+        ' ProductNameText
         ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label2.Location = New Point(216, 82)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(135, 23)
-        Label2.TabIndex = 1
-        Label2.Text = "Product Name: "
+        ProductNameText.AutoSize = True
+        ProductNameText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        ProductNameText.Location = New Point(159, 89)
+        ProductNameText.Name = "ProductNameText"
+        ProductNameText.Size = New Size(135, 23)
+        ProductNameText.TabIndex = 1
+        ProductNameText.Text = "Product Name :"
         ' 
-        ' Label3
+        ' QuantityText
         ' 
-        Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label3.Location = New Point(243, 189)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(165, 23)
-        Label3.TabIndex = 3
-        Label3.Text = "Quantity to Order: "
+        QuantityText.AutoSize = True
+        QuantityText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        QuantityText.Location = New Point(130, 197)
+        QuantityText.Name = "QuantityText"
+        QuantityText.Size = New Size(164, 23)
+        QuantityText.TabIndex = 3
+        QuantityText.Text = "Quantity to Order :"
         ' 
         ' OrderQuantityTextBox
         ' 
         OrderQuantityTextBox.BackColor = SystemColors.Info
         OrderQuantityTextBox.BorderStyle = BorderStyle.FixedSingle
-        OrderQuantityTextBox.Location = New Point(414, 189)
+        OrderQuantityTextBox.Location = New Point(310, 197)
         OrderQuantityTextBox.Name = "OrderQuantityTextBox"
         OrderQuantityTextBox.Size = New Size(125, 27)
         OrderQuantityTextBox.TabIndex = 4
@@ -81,7 +81,7 @@ Partial Class OrderProductForm
         OrderButton.FlatStyle = FlatStyle.Flat
         OrderButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         OrderButton.ForeColor = Color.Sienna
-        OrderButton.Location = New Point(414, 389)
+        OrderButton.Location = New Point(554, 342)
         OrderButton.Name = "OrderButton"
         OrderButton.Size = New Size(94, 29)
         OrderButton.TabIndex = 5
@@ -93,111 +93,111 @@ Partial Class OrderProductForm
         CancelButton.FlatStyle = FlatStyle.Flat
         CancelButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         CancelButton.ForeColor = Color.Sienna
-        CancelButton.Location = New Point(282, 389)
+        CancelButton.Location = New Point(422, 342)
         CancelButton.Name = "CancelButton"
         CancelButton.Size = New Size(94, 29)
         CancelButton.TabIndex = 6
         CancelButton.Text = "Cancel"
         CancelButton.UseVisualStyleBackColor = True
         ' 
-        ' Label4
+        ' ProductIDText
         ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.Location = New Point(243, 138)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(106, 23)
-        Label4.TabIndex = 8
-        Label4.Text = "Product ID: "
+        ProductIDText.AutoSize = True
+        ProductIDText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        ProductIDText.Location = New Point(188, 145)
+        ProductIDText.Name = "ProductIDText"
+        ProductIDText.Size = New Size(106, 23)
+        ProductIDText.TabIndex = 8
+        ProductIDText.Text = "Product ID :"
         ' 
-        ' ProductIDLabel
+        ' ProductIDDisplay
         ' 
-        ProductIDLabel.AutoSize = True
-        ProductIDLabel.Location = New Point(357, 141)
-        ProductIDLabel.Name = "ProductIDLabel"
-        ProductIDLabel.Size = New Size(0, 20)
-        ProductIDLabel.TabIndex = 9
+        ProductIDDisplay.AutoSize = True
+        ProductIDDisplay.Location = New Point(310, 149)
+        ProductIDDisplay.Name = "ProductIDDisplay"
+        ProductIDDisplay.Size = New Size(0, 20)
+        ProductIDDisplay.TabIndex = 9
         ' 
-        ' Label5
+        ' UnitPriceText
         ' 
-        Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label5.Location = New Point(203, 294)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(98, 23)
-        Label5.TabIndex = 10
-        Label5.Text = "Unit Price: "
+        UnitPriceText.AutoSize = True
+        UnitPriceText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        UnitPriceText.Location = New Point(138, 258)
+        UnitPriceText.Name = "UnitPriceText"
+        UnitPriceText.Size = New Size(98, 23)
+        UnitPriceText.TabIndex = 10
+        UnitPriceText.Text = "Unit Price :"
         ' 
-        ' Label6
+        ' TotalText
         ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label6.Location = New Point(464, 294)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(103, 23)
-        Label6.TabIndex = 11
-        Label6.Text = "Total Price: "
+        TotalText.AutoSize = True
+        TotalText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        TotalText.Location = New Point(310, 259)
+        TotalText.Name = "TotalText"
+        TotalText.Size = New Size(103, 23)
+        TotalText.TabIndex = 11
+        TotalText.Text = "Total Price :"
         ' 
-        ' UnitPriceLabel
+        ' UnitPriceDisplay
         ' 
-        UnitPriceLabel.AutoSize = True
-        UnitPriceLabel.Location = New Point(301, 296)
-        UnitPriceLabel.Name = "UnitPriceLabel"
-        UnitPriceLabel.Size = New Size(0, 20)
-        UnitPriceLabel.TabIndex = 12
+        UnitPriceDisplay.AutoSize = True
+        UnitPriceDisplay.Location = New Point(244, 261)
+        UnitPriceDisplay.Name = "UnitPriceDisplay"
+        UnitPriceDisplay.Size = New Size(0, 20)
+        UnitPriceDisplay.TabIndex = 12
         ' 
-        ' TotalPriceLabel
+        ' TotalPriceDisplay
         ' 
-        TotalPriceLabel.AutoSize = True
-        TotalPriceLabel.Location = New Point(573, 296)
-        TotalPriceLabel.Name = "TotalPriceLabel"
-        TotalPriceLabel.Size = New Size(0, 20)
-        TotalPriceLabel.TabIndex = 13
+        TotalPriceDisplay.AutoSize = True
+        TotalPriceDisplay.Location = New Point(422, 263)
+        TotalPriceDisplay.Name = "TotalPriceDisplay"
+        TotalPriceDisplay.Size = New Size(0, 20)
+        TotalPriceDisplay.TabIndex = 13
         ' 
-        ' ProductNameLabel
+        ' ProductNameDisplay
         ' 
-        ProductNameLabel.AutoSize = True
-        ProductNameLabel.Location = New Point(357, 85)
-        ProductNameLabel.Name = "ProductNameLabel"
-        ProductNameLabel.Size = New Size(0, 20)
-        ProductNameLabel.TabIndex = 14
+        ProductNameDisplay.AutoSize = True
+        ProductNameDisplay.Location = New Point(310, 93)
+        ProductNameDisplay.Name = "ProductNameDisplay"
+        ProductNameDisplay.Size = New Size(0, 20)
+        ProductNameDisplay.TabIndex = 14
         ' 
         ' OrderProductForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.SeaShell
-        ClientSize = New Size(801, 454)
-        Controls.Add(ProductNameLabel)
-        Controls.Add(TotalPriceLabel)
-        Controls.Add(UnitPriceLabel)
-        Controls.Add(Label6)
-        Controls.Add(Label5)
-        Controls.Add(ProductIDLabel)
-        Controls.Add(Label4)
+        ClientSize = New Size(689, 403)
+        Controls.Add(ProductNameDisplay)
+        Controls.Add(TotalPriceDisplay)
+        Controls.Add(UnitPriceDisplay)
+        Controls.Add(TotalText)
+        Controls.Add(UnitPriceText)
+        Controls.Add(ProductIDDisplay)
+        Controls.Add(ProductIDText)
         Controls.Add(CancelButton)
         Controls.Add(OrderButton)
         Controls.Add(OrderQuantityTextBox)
-        Controls.Add(Label3)
-        Controls.Add(Label2)
-        Controls.Add(Label1)
+        Controls.Add(QuantityText)
+        Controls.Add(ProductNameText)
+        Controls.Add(TitleLabel)
         Name = "OrderProductForm"
         StartPosition = FormStartPosition.CenterScreen
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
+    Friend WithEvents TitleLabel As Label
+    Friend WithEvents ProductNameText As Label
+    Friend WithEvents QuantityText As Label
     Friend WithEvents OrderQuantityTextBox As TextBox
     Friend WithEvents OrderButton As Button
     Friend WithEvents CancelButton As Button
-    Friend WithEvents Label4 As Label
-    Friend WithEvents ProductIDLabel As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
-    Friend WithEvents UnitPriceLabel As Label
-    Friend WithEvents TotalPriceLabel As Label
-    Friend WithEvents ProductNameLabel As Label
+    Friend WithEvents ProductIDText As Label
+    Friend WithEvents ProductIDDisplay As Label
+    Friend WithEvents UnitPriceText As Label
+    Friend WithEvents TotalText As Label
+    Friend WithEvents UnitPriceDisplay As Label
+    Friend WithEvents TotalPriceDisplay As Label
+    Friend WithEvents ProductNameDisplay As Label
 End Class

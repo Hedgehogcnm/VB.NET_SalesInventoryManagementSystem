@@ -222,6 +222,7 @@ Public Class ReportForm
 
             Dim pages = previewCtrl.GetPreviewPageInfo()
 
+            PrintDoc.PrintController = New StandardPrintController()
             Dim flow As New FlowLayoutPanel With {
                 .Dock = DockStyle.Fill,
                 .AutoScroll = True,
