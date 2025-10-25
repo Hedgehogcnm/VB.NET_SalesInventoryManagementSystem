@@ -34,7 +34,7 @@ Public Class OrderProductForm
             lbl.ForeColor = Color.FromArgb(70, 50, 40)
             lbl.BackColor = Color.FromArgb(255, 245, 230)
             lbl.BorderStyle = BorderStyle.FixedSingle
-            lbl.AutoSize = False
+
         Next
 
         ' === Quantity TextBox ===

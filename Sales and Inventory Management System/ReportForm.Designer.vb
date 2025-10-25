@@ -112,7 +112,7 @@ Partial Class ReportForm
         AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
         AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
         AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        AboutUsToolStripMenuItem.Size = New Size(149, 80)
+        AboutUsToolStripMenuItem.Size = New Size(67, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -228,7 +228,7 @@ Partial Class ReportForm
         InventoryReportButton.ForeColor = SystemColors.ControlText
         InventoryReportButton.Location = New Point(17, 87)
         InventoryReportButton.Name = "InventoryReportButton"
-        InventoryReportButton.Size = New Size(135, 29)
+        InventoryReportButton.Size = New Size(138, 29)
         InventoryReportButton.TabIndex = 13
         InventoryReportButton.Text = "Inventory Report"
         InventoryReportButton.UseVisualStyleBackColor = False

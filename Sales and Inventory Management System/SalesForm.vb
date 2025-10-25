@@ -28,7 +28,7 @@ Public Class SalesForm
 
     Private Sub AboutUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutUsToolStripMenuItem.Click
         Dim aboutbox As New AboutBox
-        aboutbox.Show()
+        aboutbox.ShowDialog()
     End Sub
 
     Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click

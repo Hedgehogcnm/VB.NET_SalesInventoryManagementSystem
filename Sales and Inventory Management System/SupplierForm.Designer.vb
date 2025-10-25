@@ -49,7 +49,7 @@ Partial Class SupplierForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 1033)
+        MenuStrip1.Size = New Size(150, 1033)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -60,7 +60,7 @@ Partial Class SupplierForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(67, 62)
+        LogoToolStripMenuItem.Size = New Size(149, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
@@ -68,7 +68,7 @@ Partial Class SupplierForm
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SalesToolStripMenuItem.Size = New Size(67, 80)
+        SalesToolStripMenuItem.Size = New Size(149, 80)
         SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
@@ -77,7 +77,7 @@ Partial Class SupplierForm
         InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        InventoryToolStripMenuItem.Size = New Size(67, 80)
+        InventoryToolStripMenuItem.Size = New Size(149, 80)
         InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
@@ -86,7 +86,7 @@ Partial Class SupplierForm
         SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SupplierToolStripMenuItem.Size = New Size(67, 80)
+        SupplierToolStripMenuItem.Size = New Size(149, 80)
         SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
@@ -96,7 +96,7 @@ Partial Class SupplierForm
         ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.Size = New Size(149, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
         ' 
         ' AboutUsToolStripMenuItem
@@ -104,7 +104,7 @@ Partial Class SupplierForm
         AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
         AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
         AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        AboutUsToolStripMenuItem.Size = New Size(67, 80)
+        AboutUsToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -112,7 +112,7 @@ Partial Class SupplierForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.Size = New Size(149, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' PanelMain
@@ -120,9 +120,9 @@ Partial Class SupplierForm
         PanelMain.Controls.Add(SupplierFlowLayoutPanel)
         PanelMain.Controls.Add(Panel8)
         PanelMain.Dock = DockStyle.Fill
-        PanelMain.Location = New Point(68, 0)
+        PanelMain.Location = New Point(150, 0)
         PanelMain.Name = "PanelMain"
-        PanelMain.Size = New Size(1834, 1033)
+        PanelMain.Size = New Size(1752, 1033)
         PanelMain.TabIndex = 6
         ' 
         ' SupplierFlowLayoutPanel
@@ -131,7 +131,7 @@ Partial Class SupplierForm
         SupplierFlowLayoutPanel.Dock = DockStyle.Fill
         SupplierFlowLayoutPanel.Location = New Point(0, 60)
         SupplierFlowLayoutPanel.Name = "SupplierFlowLayoutPanel"
-        SupplierFlowLayoutPanel.Size = New Size(1834, 973)
+        SupplierFlowLayoutPanel.Size = New Size(1752, 973)
         SupplierFlowLayoutPanel.TabIndex = 8
         ' 
         ' Panel8
@@ -142,7 +142,7 @@ Partial Class SupplierForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1834, 60)
+        Panel8.Size = New Size(1752, 60)
         Panel8.TabIndex = 0
         ' 
         ' LabelForm
@@ -163,7 +163,7 @@ Partial Class SupplierForm
         AddPictureBox.BackColor = Color.SeaShell
         AddPictureBox.BackgroundImageLayout = ImageLayout.Zoom
         AddPictureBox.Image = My.Resources.Resources.AddIconBlue
-        AddPictureBox.Location = New Point(1758, 8)
+        AddPictureBox.Location = New Point(1676, 8)
         AddPictureBox.Name = "AddPictureBox"
         AddPictureBox.Size = New Size(47, 46)
         AddPictureBox.SizeMode = PictureBoxSizeMode.Zoom

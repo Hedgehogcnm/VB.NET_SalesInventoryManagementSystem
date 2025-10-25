@@ -76,7 +76,7 @@ Partial Class SalesForm
         TableLayoutPanelTotal.Controls.Add(Panel6, 0, 4)
         TableLayoutPanelTotal.Controls.Add(ButtonCheckOut, 0, 5)
         TableLayoutPanelTotal.Dock = DockStyle.Right
-        TableLayoutPanelTotal.Location = New Point(1280, 60)
+        TableLayoutPanelTotal.Location = New Point(1198, 60)
         TableLayoutPanelTotal.Name = "TableLayoutPanelTotal"
         TableLayoutPanelTotal.RowCount = 6
         TableLayoutPanelTotal.RowStyles.Add(New RowStyle(SizeType.Absolute, 59F))
@@ -283,7 +283,7 @@ Partial Class SalesForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 1033)
+        MenuStrip1.Size = New Size(150, 1033)
         MenuStrip1.TabIndex = 5
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -294,7 +294,7 @@ Partial Class SalesForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(67, 62)
+        LogoToolStripMenuItem.Size = New Size(149, 62)
         ' 
         ' SalesToolStripMenuItem
         ' 
@@ -302,7 +302,7 @@ Partial Class SalesForm
         SalesToolStripMenuItem.Image = My.Resources.Resources.Sales1
         SalesToolStripMenuItem.Name = "SalesToolStripMenuItem"
         SalesToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SalesToolStripMenuItem.Size = New Size(67, 80)
+        SalesToolStripMenuItem.Size = New Size(149, 80)
         SalesToolStripMenuItem.ToolTipText = "Sales"
         ' 
         ' InventoryToolStripMenuItem
@@ -311,7 +311,7 @@ Partial Class SalesForm
         InventoryToolStripMenuItem.Image = My.Resources.Resources.inventory
         InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
         InventoryToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        InventoryToolStripMenuItem.Size = New Size(67, 80)
+        InventoryToolStripMenuItem.Size = New Size(149, 80)
         InventoryToolStripMenuItem.ToolTipText = "Inventory"
         ' 
         ' SupplierToolStripMenuItem
@@ -320,7 +320,7 @@ Partial Class SalesForm
         SupplierToolStripMenuItem.Image = My.Resources.Resources.supplier
         SupplierToolStripMenuItem.Name = "SupplierToolStripMenuItem"
         SupplierToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        SupplierToolStripMenuItem.Size = New Size(67, 80)
+        SupplierToolStripMenuItem.Size = New Size(149, 80)
         SupplierToolStripMenuItem.ToolTipText = "Supplier"
         ' 
         ' ReportToolStripMenuItem
@@ -330,7 +330,7 @@ Partial Class SalesForm
         ReportToolStripMenuItem.Margin = New Padding(0, 0, 0, 448)
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.Size = New Size(149, 80)
         ReportToolStripMenuItem.ToolTipText = "Report"
         ' 
         ' AboutUsToolStripMenuItem
@@ -338,7 +338,7 @@ Partial Class SalesForm
         AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
         AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
         AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        AboutUsToolStripMenuItem.Size = New Size(67, 80)
+        AboutUsToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -346,7 +346,7 @@ Partial Class SalesForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.Size = New Size(149, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' Panel3
@@ -355,9 +355,9 @@ Partial Class SalesForm
         Panel3.Controls.Add(TableLayoutPanelTotal)
         Panel3.Controls.Add(Panel8)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(68, 0)
+        Panel3.Location = New Point(150, 0)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(1834, 1033)
+        Panel3.Size = New Size(1752, 1033)
         Panel3.TabIndex = 6
         ' 
         ' TableLayoutPanel2
@@ -372,7 +372,7 @@ Partial Class SalesForm
         TableLayoutPanel2.RowCount = 2
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 55F))
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel2.Size = New Size(1280, 973)
+        TableLayoutPanel2.Size = New Size(1198, 973)
         TableLayoutPanel2.TabIndex = 5
         ' 
         ' FlowLayoutPanelSales
@@ -381,7 +381,7 @@ Partial Class SalesForm
         FlowLayoutPanelSales.Dock = DockStyle.Fill
         FlowLayoutPanelSales.Location = New Point(3, 58)
         FlowLayoutPanelSales.Name = "FlowLayoutPanelSales"
-        FlowLayoutPanelSales.Size = New Size(1274, 912)
+        FlowLayoutPanelSales.Size = New Size(1192, 912)
         FlowLayoutPanelSales.TabIndex = 1
         ' 
         ' TableLayoutPanel1
@@ -397,13 +397,13 @@ Partial Class SalesForm
         TableLayoutPanel1.Location = New Point(3, 3)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
-        TableLayoutPanel1.Size = New Size(1274, 49)
+        TableLayoutPanel1.Size = New Size(1192, 49)
         TableLayoutPanel1.TabIndex = 2
         ' 
         ' ButtonSearch
         ' 
         ButtonSearch.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        ButtonSearch.Location = New Point(1094, 18)
+        ButtonSearch.Location = New Point(1037, 18)
         ButtonSearch.Name = "ButtonSearch"
         ButtonSearch.Size = New Size(93, 28)
         ButtonSearch.TabIndex = 1
@@ -414,7 +414,7 @@ Partial Class SalesForm
         ComboBoxCategory.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         ComboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxCategory.Items.AddRange(New Object() {"All", "Building Materials", "Electrical", "Hand Tools", "Paint & Adhesives", "Plumbing", "Power Tools", "Safety Equipment"})
-        ComboBoxCategory.Location = New Point(870, 18)
+        ComboBoxCategory.Location = New Point(813, 18)
         ComboBoxCategory.Name = "ComboBoxCategory"
         ComboBoxCategory.Size = New Size(218, 28)
         ComboBoxCategory.TabIndex = 0
@@ -426,7 +426,7 @@ Partial Class SalesForm
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1834, 60)
+        Panel8.Size = New Size(1752, 60)
         Panel8.TabIndex = 6
         ' 
         ' LabelForm

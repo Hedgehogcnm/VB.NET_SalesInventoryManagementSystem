@@ -13,7 +13,7 @@ Public Class ViewOrderForm
         OrderFlowLayoutPanel.AutoScroll = True
 
         ' === Title ===
-        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40) ' 深咖橙色
+        TitleLabel.ForeColor = Color.FromArgb(120, 80, 40)
         TitleLabel.TextAlign = ContentAlignment.MiddleCenter
         TitleLabel.Dock = DockStyle.Top
         TitleLabel.Height = 45
@@ -36,7 +36,7 @@ Public Class ViewOrderForm
         HeaderFlowLayoutPanel.Margin = New Padding(0)
 
         ' Updated column widths (removed Action column)
-        Dim columnWidths As Integer() = {100, 100, 190, 90, 100, 90, 150, 90}
+        Dim columnWidths As Integer() = {100, 120, 210, 110, 120, 110, 170, 110}
         Dim headers As String() = {
             "Order ID", "Product ID", "Product Name",
             "User ID", "Supplier ID", "Quantity",
@@ -101,7 +101,7 @@ Public Class ViewOrderForm
                 }
 
                 Dim xPos As Integer = 10
-                Dim columnWidths As Integer() = {100, 100, 200, 100, 100, 100, 150, 100}
+                Dim columnWidths As Integer() = {100, 120, 220, 120, 120, 115, 190, 110}
 
                 Dim values As String() = {
                     row("o_id").ToString(),

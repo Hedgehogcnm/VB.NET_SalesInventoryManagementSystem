@@ -32,9 +32,9 @@ Partial Class AdminDashboardForm
         LabelForm = New Label()
         AdminTableLayoutPanel = New TableLayoutPanel()
         ChartPanel = New Panel()
-        UserPanel = New Panel()
         ProductPanel = New FlowLayoutPanel()
         SupplierPanel = New FlowLayoutPanel()
+        UserPanel = New FlowLayoutPanel()
         TableLayoutPanel2 = New TableLayoutPanel()
         MenuStrip1.SuspendLayout()
         Panel8.SuspendLayout()
@@ -53,7 +53,7 @@ Partial Class AdminDashboardForm
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Padding = New Padding(0)
         MenuStrip1.RenderMode = ToolStripRenderMode.Professional
-        MenuStrip1.Size = New Size(68, 1033)
+        MenuStrip1.Size = New Size(150, 1033)
         MenuStrip1.TabIndex = 7
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -64,29 +64,29 @@ Partial Class AdminDashboardForm
         LogoToolStripMenuItem.ImageTransparentColor = Color.White
         LogoToolStripMenuItem.Name = "LogoToolStripMenuItem"
         LogoToolStripMenuItem.Padding = New Padding(12, 0, 12, 18)
-        LogoToolStripMenuItem.Size = New Size(67, 62)
+        LogoToolStripMenuItem.Size = New Size(149, 62)
         ' 
         ' DashboardToolStripMenuItem
         ' 
         DashboardToolStripMenuItem.Image = My.Resources.Resources.dashboard
         DashboardToolStripMenuItem.Name = "DashboardToolStripMenuItem"
         DashboardToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        DashboardToolStripMenuItem.Size = New Size(67, 80)
+        DashboardToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' ReportToolStripMenuItem
         ' 
         ReportToolStripMenuItem.Image = My.Resources.Resources.report
         ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         ReportToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        ReportToolStripMenuItem.Size = New Size(67, 80)
+        ReportToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' AboutUsToolStripMenuItem
         ' 
         AboutUsToolStripMenuItem.Image = My.Resources.Resources.info1
-        AboutUsToolStripMenuItem.Margin = New Padding(0, 620, 0, 0)
+        AboutUsToolStripMenuItem.Margin = New Padding(0, 606, 0, 0)
         AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
         AboutUsToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        AboutUsToolStripMenuItem.Size = New Size(67, 80)
+        AboutUsToolStripMenuItem.Size = New Size(149, 80)
         ' 
         ' LogOutToolStripMenuItem
         ' 
@@ -94,7 +94,7 @@ Partial Class AdminDashboardForm
         LogOutToolStripMenuItem.Image = My.Resources.Resources.logout
         LogOutToolStripMenuItem.Name = "LogOutToolStripMenuItem"
         LogOutToolStripMenuItem.Padding = New Padding(12, 18, 12, 18)
-        LogOutToolStripMenuItem.Size = New Size(67, 80)
+        LogOutToolStripMenuItem.Size = New Size(149, 80)
         LogOutToolStripMenuItem.ToolTipText = "Log Out"
         ' 
         ' Panel8
@@ -102,15 +102,15 @@ Partial Class AdminDashboardForm
         Panel8.BackColor = Color.SeaShell
         Panel8.Controls.Add(LabelForm)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(68, 0)
+        Panel8.Location = New Point(150, 0)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1834, 60)
+        Panel8.Size = New Size(1752, 60)
         Panel8.TabIndex = 8
         ' 
         ' LabelForm
         ' 
         LabelForm.AutoSize = True
-        LabelForm.Font = New Font("Segoe UI", 17F, FontStyle.Bold)
+        LabelForm.Font = New Font("Segoe UI", 17.0F, FontStyle.Bold)
         LabelForm.Location = New Point(15, 10)
         LabelForm.Name = "LabelForm"
         LabelForm.Size = New Size(265, 40)
@@ -123,74 +123,79 @@ Partial Class AdminDashboardForm
         AdminTableLayoutPanel.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 33.4245071F))
         AdminTableLayoutPanel.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 66.57549F))
         AdminTableLayoutPanel.Controls.Add(ChartPanel, 1, 1)
-        AdminTableLayoutPanel.Controls.Add(UserPanel, 0, 0)
         AdminTableLayoutPanel.Controls.Add(ProductPanel, 1, 0)
         AdminTableLayoutPanel.Controls.Add(SupplierPanel, 0, 1)
+        AdminTableLayoutPanel.Controls.Add(UserPanel, 0, 0)
         AdminTableLayoutPanel.Dock = DockStyle.Fill
         AdminTableLayoutPanel.Location = New Point(3, 3)
         AdminTableLayoutPanel.Name = "AdminTableLayoutPanel"
         AdminTableLayoutPanel.RowCount = 2
         AdminTableLayoutPanel.RowStyles.Add(New RowStyle(SizeType.Percent, 36.6080666F))
         AdminTableLayoutPanel.RowStyles.Add(New RowStyle(SizeType.Percent, 63.3919334F))
-        AdminTableLayoutPanel.Size = New Size(1828, 967)
+        AdminTableLayoutPanel.Size = New Size(1746, 967)
         AdminTableLayoutPanel.TabIndex = 9
         ' 
         ' ChartPanel
         ' 
-        ChartPanel.BackColor = Color.Snow
+        ChartPanel.BackColor = Color.Linen
         ChartPanel.Dock = DockStyle.Fill
-        ChartPanel.Location = New Point(614, 357)
+        ChartPanel.Location = New Point(586, 357)
         ChartPanel.Name = "ChartPanel"
         ChartPanel.Padding = New Padding(10)
-        ChartPanel.Size = New Size(1211, 607)
+        ChartPanel.Size = New Size(1157, 607)
         ChartPanel.TabIndex = 0
-        ' 
-        ' UserPanel
-        ' 
-        UserPanel.BackColor = Color.Snow
-        UserPanel.Dock = DockStyle.Fill
-        UserPanel.Location = New Point(3, 3)
-        UserPanel.Name = "UserPanel"
-        UserPanel.Size = New Size(605, 348)
-        UserPanel.TabIndex = 2
         ' 
         ' ProductPanel
         ' 
         ProductPanel.AutoScroll = True
-        ProductPanel.BackColor = Color.Snow
+        ProductPanel.BackColor = Color.Linen
         ProductPanel.Dock = DockStyle.Fill
-        ProductPanel.Location = New Point(614, 3)
+        ProductPanel.Location = New Point(586, 3)
         ProductPanel.Name = "ProductPanel"
-        ProductPanel.Size = New Size(1211, 348)
+        ProductPanel.Size = New Size(1157, 348)
         ProductPanel.TabIndex = 4
         ' 
         ' SupplierPanel
         ' 
-        SupplierPanel.BackColor = Color.Snow
+        SupplierPanel.AutoScroll = True
+        SupplierPanel.BackColor = Color.Linen
         SupplierPanel.Dock = DockStyle.Fill
         SupplierPanel.FlowDirection = FlowDirection.TopDown
         SupplierPanel.Location = New Point(3, 357)
         SupplierPanel.Name = "SupplierPanel"
-        SupplierPanel.Size = New Size(605, 607)
+        SupplierPanel.Size = New Size(577, 607)
         SupplierPanel.TabIndex = 5
+        SupplierPanel.WrapContents = False
+        ' 
+        ' UserPanel
+        ' 
+        UserPanel.AutoScroll = True
+        UserPanel.BackColor = Color.Linen
+        UserPanel.Dock = DockStyle.Fill
+        UserPanel.FlowDirection = FlowDirection.TopDown
+        UserPanel.Location = New Point(3, 3)
+        UserPanel.Name = "UserPanel"
+        UserPanel.Size = New Size(577, 348)
+        UserPanel.TabIndex = 6
+        UserPanel.WrapContents = False
         ' 
         ' TableLayoutPanel2
         ' 
         TableLayoutPanel2.ColumnCount = 1
-        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
         TableLayoutPanel2.Controls.Add(AdminTableLayoutPanel, 0, 0)
         TableLayoutPanel2.Dock = DockStyle.Fill
-        TableLayoutPanel2.Location = New Point(68, 60)
+        TableLayoutPanel2.Location = New Point(150, 60)
         TableLayoutPanel2.Name = "TableLayoutPanel2"
         TableLayoutPanel2.RowCount = 1
-        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
-        TableLayoutPanel2.Size = New Size(1834, 973)
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 20.0F))
+        TableLayoutPanel2.Size = New Size(1752, 973)
         TableLayoutPanel2.TabIndex = 9
         ' 
         ' AdminDashboardForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1902, 1033)
         Controls.Add(TableLayoutPanel2)
@@ -217,9 +222,9 @@ Partial Class AdminDashboardForm
     Friend WithEvents AdminTableLayoutPanel As TableLayoutPanel
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents ChartPanel As Panel
-    Friend WithEvents UserPanel As Panel
     Friend WithEvents ProductPanel As FlowLayoutPanel
     Friend WithEvents SupplierPanel As FlowLayoutPanel
     Friend WithEvents DashboardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UserPanel As FlowLayoutPanel
 End Class

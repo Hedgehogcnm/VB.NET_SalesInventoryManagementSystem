@@ -52,31 +52,37 @@ Partial Class AddUserForm
         ' 
         ' SaveButton
         ' 
-        SaveButton.Location = New Point(538, 325)
+        SaveButton.BackColor = Color.SeaShell
+        SaveButton.FlatStyle = FlatStyle.Flat
+        SaveButton.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        SaveButton.ForeColor = Color.Sienna
+        SaveButton.Location = New Point(353, 353)
         SaveButton.Name = "SaveButton"
         SaveButton.Size = New Size(94, 29)
         SaveButton.TabIndex = 7
-        SaveButton.Text = "Button1"
-        SaveButton.UseVisualStyleBackColor = True
+        SaveButton.Text = "Save"
+        SaveButton.UseVisualStyleBackColor = False
         ' 
         ' RoleComboBox
         ' 
+        RoleComboBox.AllowDrop = True
         RoleComboBox.FormattingEnabled = True
-        RoleComboBox.Location = New Point(277, 231)
+        RoleComboBox.Items.AddRange(New Object() {"admin", "staff"})
+        RoleComboBox.Location = New Point(410, 242)
         RoleComboBox.Name = "RoleComboBox"
         RoleComboBox.Size = New Size(151, 28)
         RoleComboBox.TabIndex = 6
         ' 
         ' PasswordTextBox
         ' 
-        PasswordTextBox.Location = New Point(277, 179)
+        PasswordTextBox.Location = New Point(410, 190)
         PasswordTextBox.Name = "PasswordTextBox"
         PasswordTextBox.Size = New Size(151, 27)
         PasswordTextBox.TabIndex = 5
         ' 
         ' UserNameTextBox
         ' 
-        UserNameTextBox.Location = New Point(277, 125)
+        UserNameTextBox.Location = New Point(410, 136)
         UserNameTextBox.Name = "UserNameTextBox"
         UserNameTextBox.Size = New Size(151, 27)
         UserNameTextBox.TabIndex = 4
@@ -84,36 +90,40 @@ Partial Class AddUserForm
         ' RoleText
         ' 
         RoleText.AutoSize = True
-        RoleText.Location = New Point(116, 231)
+        RoleText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        RoleText.Location = New Point(249, 242)
         RoleText.Name = "RoleText"
-        RoleText.Size = New Size(66, 20)
+        RoleText.Size = New Size(78, 23)
         RoleText.TabIndex = 3
         RoleText.Text = "RoleText"
         ' 
         ' PasswordText
         ' 
         PasswordText.AutoSize = True
-        PasswordText.Location = New Point(116, 182)
+        PasswordText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        PasswordText.Location = New Point(249, 193)
         PasswordText.Name = "PasswordText"
-        PasswordText.Size = New Size(110, 20)
+        PasswordText.Size = New Size(135, 23)
         PasswordText.TabIndex = 2
         PasswordText.Text = "User Password :"
         ' 
         ' UserNameText
         ' 
         UserNameText.AutoSize = True
-        UserNameText.Location = New Point(116, 128)
+        UserNameText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        UserNameText.Location = New Point(249, 139)
         UserNameText.Name = "UserNameText"
-        UserNameText.Size = New Size(56, 20)
+        UserNameText.Size = New Size(67, 23)
         UserNameText.TabIndex = 1
         UserNameText.Text = "Name :"
         ' 
         ' TitleLabel
         ' 
         TitleLabel.AutoSize = True
-        TitleLabel.Location = New Point(328, 53)
+        TitleLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        TitleLabel.Location = New Point(333, 53)
         TitleLabel.Name = "TitleLabel"
-        TitleLabel.Size = New Size(70, 20)
+        TitleLabel.Size = New Size(135, 37)
         TitleLabel.TabIndex = 0
         TitleLabel.Text = "Add User"
         ' 
@@ -121,9 +131,11 @@ Partial Class AddUserForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.SeaShell
         ClientSize = New Size(800, 450)
         Controls.Add(MainPanel)
         Name = "AddUserForm"
+        StartPosition = FormStartPosition.CenterScreen
         MainPanel.ResumeLayout(False)
         MainPanel.PerformLayout()
         ResumeLayout(False)

@@ -12,6 +12,8 @@
   <ItemGroup>
     <None Remove="EditIcon.png" />
     <None Remove="replace.png" />
+    <None Remove="Resources\add.png" />
+    <None Remove="Resources\AddIcon.jpg" />
     <None Remove="Resources\dashboard.png" />
     <None Remove="Resources\info.png" />
     <None Remove="Resources\inventory.png" />
@@ -20,6 +22,7 @@
     <None Remove="Resources\report.png" />
     <None Remove="Resources\Sales.png" />
     <None Remove="Resources\supplier.png" />
+    <None Remove="Resources\user.png" />
     <None Remove="Resources\VBlogo.png" />
   </ItemGroup>
 
@@ -28,6 +31,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="replace.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\dashboard.png">
@@ -52,6 +58,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\supplier.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\user.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\VBlogo.png">

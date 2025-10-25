@@ -112,17 +112,16 @@ Partial Class OrderProductForm
         ' 
         ' ProductIDDisplay
         ' 
-        ProductIDDisplay.AutoSize = True
         ProductIDDisplay.Location = New Point(310, 149)
         ProductIDDisplay.Name = "ProductIDDisplay"
-        ProductIDDisplay.Size = New Size(0, 20)
+        ProductIDDisplay.Size = New Size(125, 27)
         ProductIDDisplay.TabIndex = 9
         ' 
         ' UnitPriceText
         ' 
         UnitPriceText.AutoSize = True
-        UnitPriceText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        UnitPriceText.Location = New Point(138, 258)
+        UnitPriceText.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        UnitPriceText.Location = New Point(107, 258)
         UnitPriceText.Name = "UnitPriceText"
         UnitPriceText.Size = New Size(98, 23)
         UnitPriceText.TabIndex = 10
@@ -131,8 +130,8 @@ Partial Class OrderProductForm
         ' TotalText
         ' 
         TotalText.AutoSize = True
-        TotalText.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        TotalText.Location = New Point(310, 259)
+        TotalText.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        TotalText.Location = New Point(355, 259)
         TotalText.Name = "TotalText"
         TotalText.Size = New Size(103, 23)
         TotalText.TabIndex = 11
@@ -140,26 +139,23 @@ Partial Class OrderProductForm
         ' 
         ' UnitPriceDisplay
         ' 
-        UnitPriceDisplay.AutoSize = True
-        UnitPriceDisplay.Location = New Point(244, 261)
+        UnitPriceDisplay.Location = New Point(213, 256)
         UnitPriceDisplay.Name = "UnitPriceDisplay"
-        UnitPriceDisplay.Size = New Size(0, 20)
+        UnitPriceDisplay.Size = New Size(125, 27)
         UnitPriceDisplay.TabIndex = 12
         ' 
         ' TotalPriceDisplay
         ' 
-        TotalPriceDisplay.AutoSize = True
-        TotalPriceDisplay.Location = New Point(422, 263)
+        TotalPriceDisplay.Location = New Point(467, 257)
         TotalPriceDisplay.Name = "TotalPriceDisplay"
-        TotalPriceDisplay.Size = New Size(0, 20)
+        TotalPriceDisplay.Size = New Size(125, 27)
         TotalPriceDisplay.TabIndex = 13
         ' 
         ' ProductNameDisplay
         ' 
-        ProductNameDisplay.AutoSize = True
         ProductNameDisplay.Location = New Point(310, 93)
         ProductNameDisplay.Name = "ProductNameDisplay"
-        ProductNameDisplay.Size = New Size(0, 20)
+        ProductNameDisplay.Size = New Size(300, 27)
         ProductNameDisplay.TabIndex = 14
         ' 
         ' OrderProductForm

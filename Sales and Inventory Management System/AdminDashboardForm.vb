@@ -1,8 +1,9 @@
 ﻿Imports System.Drawing.Drawing2D
+Imports System.IO
 Imports LiveCharts
 Imports LiveCharts.WinForms
+Imports LiveCharts.Wpf
 Imports MySql.Data.MySqlClient
-Imports System.IO
 
 Public Class AdminDashboardForm
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
@@ -19,7 +20,7 @@ Public Class AdminDashboardForm
 
     Private Sub AboutUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutUsToolStripMenuItem.Click
         Dim aboutbox As New AboutBox
-        aboutbox.Show()
+        aboutbox.ShowDialog()
     End Sub
 
     Private Sub LogOutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogOutToolStripMenuItem.Click
@@ -35,41 +36,101 @@ Public Class AdminDashboardForm
         RoundifyPanel(ProductPanel)
         RoundifyPanel(UserPanel)
 
-        ' === Create and configure chart ===
-        Dim chart As New LiveCharts.WinForms.CartesianChart() With {.Dock = DockStyle.Fill}
-
-        Dim months = {"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"}
-        Dim expenses As Double() = {2800, 1500, 2000, 32000, 25000, 27000, 30000}
-        Dim profits As Double() = {2200, 1800, 2300, 19000, 26000, 31000, 35000}
-
-        chart.Series = New SeriesCollection From {
-            New LiveCharts.Wpf.LineSeries With {
-                .Title = "Expense",
-                .Values = New ChartValues(Of Double)(expenses)
-            },
-            New LiveCharts.Wpf.LineSeries With {
-                .Title = "Profit",
-                .Values = New ChartValues(Of Double)(profits)
-            }
-        }
-
-        chart.AxisX.Add(New LiveCharts.Wpf.Axis With {.Labels = months})
-        chart.AxisY.Add(New LiveCharts.Wpf.Axis With {.Title = "RM"})
-
-        ' Add chart into ChartPanel
-        ChartPanel.Controls.Add(chart)
-        chart.Dock = DockStyle.Fill
-
         LoadUserPanel()
         LoadProductPanel()
         LoadSuppliers()
+        LoadChartPanel()
     End Sub
 
-    ' === When UserPanel is clicked, open AddUserForm ===
-    Private Sub UserPanel_Click(sender As Object, e As EventArgs) Handles UserPanel.Click
-        Dim frm As New AddUserForm()
-        frm.ShowDialog()
+    Private Sub LoadChartPanel()
+        Try
+            ' === Connect to database ===
+            ConnectDB()
+
+            ' === Step 1: Get monthly total expenses from tb_orders ===
+            Dim expenseQuery As String = "
+            SELECT DATE_FORMAT(o_dateTime, '%b') AS monthName, 
+                   SUM(o_total) AS totalExpense
+            FROM tb_orders
+            WHERE o_status = 'ordered' OR o_status = 'received'
+            GROUP BY YEAR(o_dateTime), MONTH(o_dateTime)
+            ORDER BY YEAR(o_dateTime), MONTH(o_dateTime);"
+
+            Dim expensesDict As New Dictionary(Of String, Double)
+            Using cmd As New MySqlCommand(expenseQuery, conn)
+                Using rdr As MySqlDataReader = cmd.ExecuteReader()
+                    While rdr.Read()
+                        expensesDict(rdr("monthName").ToString()) = Convert.ToDouble(rdr("totalExpense"))
+                    End While
+                End Using
+            End Using
+
+            ' === Step 2: Get monthly total profit (sales) from tb_sales ===
+            Dim profitQuery As String = "
+            SELECT DATE_FORMAT(s_dateTime, '%b') AS monthName, 
+                   SUM(s_total) AS totalProfit
+            FROM tb_sales
+            GROUP BY YEAR(s_dateTime), MONTH(s_dateTime)
+            ORDER BY YEAR(s_dateTime), MONTH(s_dateTime);"
+
+            Dim profitsDict As New Dictionary(Of String, Double)
+            Using cmd As New MySqlCommand(profitQuery, conn)
+                Using rdr As MySqlDataReader = cmd.ExecuteReader()
+                    While rdr.Read()
+                        profitsDict(rdr("monthName").ToString()) = Convert.ToDouble(rdr("totalProfit"))
+                    End While
+                End Using
+            End Using
+
+            ' === Step 3: Determine all months that appear in either table ===
+            Dim allMonths = expensesDict.Keys.Union(profitsDict.Keys).ToList()
+            allMonths.Sort(Function(a, b) DateTime.ParseExact(a, "MMM", Nothing).Month.CompareTo(DateTime.ParseExact(b, "MMM", Nothing).Month))
+
+            ' === Step 4: Build data arrays ===
+            Dim expenseValues As New ChartValues(Of Double)
+            Dim profitValues As New ChartValues(Of Double)
+
+            For Each m In allMonths
+                expenseValues.Add(If(expensesDict.ContainsKey(m), expensesDict(m), 0))
+                profitValues.Add(If(profitsDict.ContainsKey(m), profitsDict(m), 0))
+            Next
+
+            ' === Step 5: Create chart ===
+            ChartPanel.Controls.Clear()
+
+            Dim chart As New LiveCharts.WinForms.CartesianChart() With {
+            .Dock = DockStyle.Fill
+        }
+
+            chart.Series = New SeriesCollection From {
+            New LineSeries With {.Title = "Expense", .Values = expenseValues, .DataLabels = False, .LabelPoint = Function(point) ""},
+            New LineSeries With {.Title = "Profit", .Values = profitValues, .DataLabels = False, .LabelPoint = Function(point) ""}
+        }
+
+            chart.AxisX.Add(New Axis With {.Title = "Month", .Labels = allMonths, .FontSize = 14})
+            chart.AxisY.Add(New Axis With {.Title = "Amount (RM)", .FontSize = 14})
+
+            ' === Step 6: Add title ===
+            Dim titleLbl As New Label()
+            titleLbl.Text = "Expense vs Profit"
+            titleLbl.Font = New Font("Segoe UI", 14, FontStyle.Bold)
+            titleLbl.ForeColor = Color.FromArgb(60, 60, 60)
+            titleLbl.TextAlign = ContentAlignment.MiddleCenter
+            titleLbl.Dock = DockStyle.Top
+            titleLbl.Height = 40
+
+            ' === Step 7: Add to ChartPanel ===
+            ChartPanel.Controls.Add(chart)
+            ChartPanel.Controls.Add(titleLbl)
+            chart.BringToFront()
+
+        Catch ex As Exception
+            MessageBox.Show("❌ Failed to load chart data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
     End Sub
+
     Private Sub LoadSuppliers()
         Try
             ConnectDB()
@@ -79,67 +140,35 @@ Public Class AdminDashboardForm
             da.Fill(dt)
             conn.Close()
 
-            SupplierPanel.Controls.Clear()  ' Clear previous controls
+            SupplierPanel.Controls.Clear()
 
-            ' === Flow Panel Settings ===
-            With SupplierPanel
-                .AutoScroll = True
-                .WrapContents = False
-                .FlowDirection = FlowDirection.TopDown
-                .BackColor = Color.WhiteSmoke
-            End With
+            ' === Title===
+            Dim titleLbl As New Label()
+            titleLbl.Text = "Supplier Lists"
+            titleLbl.Font = New Font("Segoe UI", 14, FontStyle.Bold)
+            titleLbl.ForeColor = Color.FromArgb(60, 60, 60)
+            titleLbl.TextAlign = ContentAlignment.MiddleCenter
+            titleLbl.Dock = DockStyle.Top
+            titleLbl.Height = 45
+            titleLbl.BackColor = Color.Transparent
+            SupplierPanel.Controls.Add(titleLbl)
 
-            ' === HEADER ===
-            Dim headerPanel As New Panel With {
-            .Width = SupplierPanel.Width - 30,
-            .Height = 50,
-            .BackColor = Color.FromArgb(255, 236, 214),
-            .Margin = New Padding(5)
-        }
-
-            Dim columnWidths() As Integer = {230, 360, 360, 300, 200}
-            Dim headers() As String = {"Company Logo", "Supplier Name", "Email", "Contact", "Status"}
-
-            Dim colX(headers.Length - 1) As Integer
-            colX(0) = 10
-            For i As Integer = 1 To headers.Length - 1
-                colX(i) = colX(i - 1) + columnWidths(i - 1)
-            Next
-
-            For i As Integer = 0 To headers.Length - 1
-                Dim lbl As New Label With {
-                .Text = headers(i),
-                .Font = New Font("Segoe UI", 10, FontStyle.Bold),
-                .ForeColor = Color.Black,
-                .AutoSize = False,
-                .Width = columnWidths(i),
-                .Height = 40,
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Location = New Point(colX(i), 5),
-                .BackColor = Color.FromArgb(255, 236, 214)
-            }
-                headerPanel.Controls.Add(lbl)
-            Next
-
-            SupplierPanel.Controls.Add(headerPanel)
-
-            ' === ROWS ===
+            ' === Display each supplier ===
             For Each row As DataRow In dt.Rows
-                Dim rowPanel As New Panel With {
-                .Width = SupplierPanel.Width - 30,
-                .Height = 80,
+                Dim card As New Panel With {
+                .Width = SupplierPanel.Width - 35,
+                .Height = 100,
                 .BackColor = Color.White,
-                .Margin = New Padding(3)
+                .Margin = New Padding(5)
             }
 
-                ' === Company Logo ===
+                ' --- Logo ---
                 Dim logoBox As New PictureBox With {
-                .Width = columnWidths(0) - 60,
+                .Width = 70,
                 .Height = 70,
-                .SizeMode = PictureBoxSizeMode.Zoom,
-                .Location = New Point(colX(0) + 30, 5)
+                .Location = New Point(35, 15),
+                .SizeMode = PictureBoxSizeMode.Zoom
             }
-
                 Try
                     If Not IsDBNull(row("logo_image")) Then
                         Dim imgData() As Byte = DirectCast(row("logo_image"), Byte())
@@ -152,41 +181,60 @@ Public Class AdminDashboardForm
                 Catch
                     logoBox.BackColor = Color.LightGray
                 End Try
-                rowPanel.Controls.Add(logoBox)
+                card.Controls.Add(logoBox)
 
-                ' === Supplier Details ===
-                Dim values() As String = {
-                row("sup_name").ToString(),
-                row("sup_email").ToString(),
-                row("sup_contact").ToString(),
-                row("status").ToString()
+                ' --- Supplier info ---
+                Dim infoFont As New Font("Segoe UI", 9)
+                Dim boldFont As New Font("Segoe UI", 9, FontStyle.Bold)
+                Dim xPos As Integer = 160
+                Dim yBase As Integer = 15
+
+                ' Supplier name
+                Dim lblName As New Label With {
+                .Text = row("sup_name").ToString(),
+                .Font = boldFont,
+                .AutoSize = False,
+                .Width = 280,
+                .Height = 25,
+                .Location = New Point(xPos, yBase)
             }
+                card.Controls.Add(lblName)
 
-                For i As Integer = 0 To values.Length - 1
-                    Dim lbl As New Label With {
-                    .Text = values(i),
-                    .Font = New Font("Segoe UI", 9),
-                    .ForeColor = If(i = 3 AndAlso values(i).ToLower() = "active", Color.SeaGreen,
-                                   If(i = 3, Color.Gray, Color.Black)),
-                    .AutoSize = False,
-                    .Width = columnWidths(i + 1),
-                    .Height = 40,
-                    .TextAlign = ContentAlignment.MiddleCenter,
-                    .Location = New Point(colX(i + 1), 20)
-                }
-                    rowPanel.Controls.Add(lbl)
-                Next
+                ' Contact info (email + phone)
+                Dim lblContact As New Label With {
+                .Text = "📧 " & row("sup_email").ToString() & vbCrLf &
+                        "📞 " & row("sup_contact").ToString(),
+                .Font = infoFont,
+                .ForeColor = Color.Black,
+                .AutoSize = False,
+                .Width = 300,
+                .Height = 40,
+                .Location = New Point(xPos, yBase + 25)
+            }
+                card.Controls.Add(lblContact)
 
-                SupplierPanel.Controls.Add(rowPanel)
+                ' Status (text color only)
+                Dim statusText As String = row("status").ToString()
+                Dim statusColor As Color = If(statusText.ToLower() = "active", Color.SeaGreen, Color.FromArgb(220, 53, 69))
+                Dim lblStatus As New Label With {
+                .Text = statusText,
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .ForeColor = statusColor,
+                .AutoSize = True,
+                .Location = New Point(card.Width - 100, 38),
+                .BackColor = Color.Transparent
+            }
+                card.Controls.Add(lblStatus)
+
+                SupplierPanel.Controls.Add(card)
             Next
 
         Catch ex As Exception
-            MessageBox.Show("Error loading suppliers: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("❌ Error loading suppliers: " & ex.Message)
         Finally
             conn.Close()
         End Try
     End Sub
-
 
     Private Sub LoadProductPanel()
         Try
@@ -210,7 +258,7 @@ Public Class AdminDashboardForm
             ' === No Data Found ===
             If dt.Rows.Count = 0 Then
                 Dim noDataLbl As New Label With {
-                    .Text = "😕 No products found.",
+                    .Text = "No products found.",
                     .Font = New Font("Segoe UI", 11, FontStyle.Italic),
                     .ForeColor = Color.Gray,
                     .AutoSize = True,
@@ -219,6 +267,24 @@ Public Class AdminDashboardForm
                 ProductPanel.Controls.Add(noDataLbl)
                 Exit Sub
             End If
+
+            ' === Title (centered, fixed width) ===
+            Dim titleContainer As New Panel With {
+                .Width = ProductPanel.Width - 35,
+                .Height = 45,
+                .BackColor = Color.Transparent
+            }
+
+            Dim titleLbl As New Label With {
+                .Text = "Product Lists",
+                .Font = New Font("Segoe UI", 14, FontStyle.Bold),
+                .ForeColor = Color.FromArgb(60, 60, 60),
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Dock = DockStyle.Fill
+            }
+
+            titleContainer.Controls.Add(titleLbl)
+            ProductPanel.Controls.Add(titleContainer)
 
             ' === Display Each Product ===
             For Each row As DataRow In dt.Rows
@@ -234,14 +300,14 @@ Public Class AdminDashboardForm
                 Dim stock As Integer = Convert.ToInt32(row("p_stock"))
                 Dim minStock As Integer = Convert.ToInt32(row("p_minStock"))
 
-                ' 🔴 Highlight low stock
+                'Highlight low stock
                 If stock <= minStock Then productCard.BackColor = Color.MistyRose
 
                 ' === Product Image ===
                 Dim pic As New PictureBox With {
                     .Width = 70,
                     .Height = 70,
-                    .Location = New Point(15, 15),
+                    .Location = New Point(50, 15),
                     .SizeMode = PictureBoxSizeMode.Zoom
                 }
 
@@ -267,8 +333,8 @@ Public Class AdminDashboardForm
                 ' === Product Details ===
                 Dim detailsFont As New Font("Segoe UI", 9)
                 Dim boldFont As New Font("Segoe UI", 9, FontStyle.Bold)
-                Dim xPos As Integer = 100
-                Dim yBase As Integer = 15
+                Dim xPos As Integer = 200
+                Dim yBase As Integer = 25
 
                 ' Product ID + Name
                 Dim lblName As New Label With {
@@ -302,7 +368,7 @@ Public Class AdminDashboardForm
                     .AutoSize = False,
                     .Width = 200,
                     .Height = 20,
-                    .Location = New Point(xPos + 310, yBase)
+                    .Location = New Point(xPos + 720, yBase)
                 }
                 productCard.Controls.Add(lblStock)
 
@@ -312,9 +378,9 @@ Public Class AdminDashboardForm
                     .Font = detailsFont,
                     .ForeColor = Color.DarkGreen,
                     .AutoSize = False,
-                    .Width = 250,
+                    .Width = 200,
                     .Height = 20,
-                    .Location = New Point(xPos + 310, yBase + 25)
+                    .Location = New Point(xPos + 720, yBase + 25)
                 }
                 productCard.Controls.Add(lblPrice)
 
@@ -324,6 +390,149 @@ Public Class AdminDashboardForm
 
         Catch ex As Exception
             MessageBox.Show("❌ Error loading products: " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub LoadUserPanel()
+        Try
+            ConnectDB()
+            Dim sql As String = "SELECT u_id, u_name, u_role FROM tb_users"
+            Dim da As New MySqlDataAdapter(sql, conn)
+            Dim dt As New DataTable()
+            da.Fill(dt)
+            conn.Close()
+
+            UserPanel.Controls.Clear()
+
+            ' === Title Container (for label + Add button) ===
+            Dim titleContainer As New Panel With {
+                .Width = UserPanel.Width - 35,
+                .Height = 45,
+                .Dock = DockStyle.Top,
+                .BackColor = Color.Transparent
+            }
+
+            ' === Add Button (top-right transparent) ===
+            Dim addBtn As New Button With {
+                .Size = New Size(40, 40),
+                .FlatStyle = FlatStyle.Flat,
+                .Location = New Point(titleContainer.Width - 50, 8),
+                .Cursor = Cursors.Hand
+            }
+            addBtn.FlatAppearance.BorderSize = 0
+
+            ' Load Add icon
+            Dim addImg As Image = TryCast(My.Resources.ResourceManager.GetObject("add"), Image)
+            If addImg Is Nothing Then
+                Dim addImagePath As String = Path.Combine(Application.StartupPath, "Resources\add.png")
+                If File.Exists(addImagePath) Then
+                    addImg = Image.FromFile(addImagePath)
+                End If
+            End If
+            If addImg IsNot Nothing Then
+                addBtn.BackgroundImage = addImg
+                addBtn.BackgroundImageLayout = ImageLayout.Zoom
+            End If
+
+            ' === Title Label (centered) ===
+            Dim titleLbl As New Label With {
+                .Text = "User Lists",
+                .Font = New Font("Segoe UI", 14, FontStyle.Bold),
+                .ForeColor = Color.FromArgb(60, 60, 60),
+                .AutoSize = True
+            }
+            ' Center it manually inside the panel
+            titleLbl.Location = New Point((titleContainer.Width - titleLbl.Width) \ 2, (titleContainer.Height - titleLbl.Height) \ 2)
+
+            ' === Button Click Event ===
+            AddHandler addBtn.Click, Sub(sender, e)
+                                         Dim addForm As New AddUserForm()
+                                         addForm.ShowDialog()
+                                     End Sub
+
+            ' === Add controls to container ===
+            titleContainer.Controls.Add(addBtn)
+            titleContainer.Controls.Add(titleLbl)
+            UserPanel.Controls.Add(titleContainer)
+
+            ' Ensure Add button stays on top of label
+            addBtn.BringToFront()
+
+            ' === Display each user ===
+            For Each row As DataRow In dt.Rows
+                Dim card As New Panel With {
+                .Width = UserPanel.Width - 35,
+                .Height = 90,
+                .BackColor = Color.White,
+                .Margin = New Padding(5)
+            }
+
+                ' --- User Icon ---
+                Dim userIcon As New PictureBox With {
+                .Width = 30,
+                .Height = 30,
+                .Location = New Point(35, 30),
+                .SizeMode = PictureBoxSizeMode.Zoom
+            }
+
+                Dim userImagePath As String = Path.Combine(Application.StartupPath, "Resources\user.png")
+                If File.Exists(userImagePath) Then
+                    userIcon.Image = Image.FromFile(userImagePath)
+                Else
+                    userIcon.BackColor = Color.LightGray
+                End If
+                card.Controls.Add(userIcon)
+
+                ' --- User info ---
+                Dim infoFont As New Font("Segoe UI", 9)
+                Dim boldFont As New Font("Segoe UI", 9, FontStyle.Bold)
+                Dim xPos As Integer = 120
+                Dim yBase As Integer = 20
+
+                ' User name
+                Dim lblName As New Label With {
+                .Text = row("u_name").ToString(),
+                .Font = boldFont,
+                .AutoSize = False,
+                .Width = 250,
+                .Height = 25,
+                .Location = New Point(xPos, yBase)
+            }
+                card.Controls.Add(lblName)
+
+                ' User details (ID + Role)
+                Dim lblDetails As New Label With {
+                .Text = $"🆔 ID: {row("u_id").ToString()}",
+                .Font = infoFont,
+                .ForeColor = Color.DimGray,
+                .AutoSize = False,
+                .Width = 350,
+                .Height = 25,
+                .Location = New Point(xPos, yBase + 25)
+            }
+                card.Controls.Add(lblDetails)
+
+                ' === Role Highlight ===
+                Dim roleText As String = row("u_role").ToString().ToLower()
+                Dim roleColor As Color = If(roleText = "admin", Color.DarkOrange, Color.SeaGreen)
+
+                Dim lblRole As New Label With {
+                .Text = row("u_role").ToString(),
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .ForeColor = roleColor,
+                .AutoSize = True,
+                .Location = New Point(card.Width - 100, 35),
+                .BackColor = Color.Transparent
+            }
+                card.Controls.Add(lblRole)
+
+                UserPanel.Controls.Add(card)
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("❌ Error loading users: " & ex.Message)
         Finally
             conn.Close()
         End Try
@@ -341,71 +550,6 @@ Public Class AdminDashboardForm
         path.AddArc(New Rectangle(0, pnl.Height - radius, radius, radius), 90, 90)
         path.CloseFigure()
         pnl.Region = New Region(path)
-    End Sub
-
-
-    Private Sub LoadUserPanel()
-        ' === Database Connection ===
-        Dim connStr As String = "server=localhost;user=root;password=;database=db_sales_inventory_management_system;"
-        Dim query As String = "SELECT u_id, u_name, u_role FROM tb_users"
-
-        Dim dt As New DataTable()
-        Using conn As New MySqlConnection(connStr)
-            conn.Open()
-            Using da As New MySqlDataAdapter(query, conn)
-                da.Fill(dt)
-            End Using
-        End Using
-
-        ' === Clear panel ===
-        UserPanel.Controls.Clear()
-
-        ' === Create a vertical layout (for title + table) ===
-        Dim mainLayout As New TableLayoutPanel()
-        mainLayout.Dock = DockStyle.Fill
-        mainLayout.BackColor = Color.White
-        mainLayout.RowCount = 2
-        mainLayout.ColumnCount = 1
-        mainLayout.RowStyles.Add(New RowStyle(SizeType.Absolute, 50)) ' Title
-        mainLayout.RowStyles.Add(New RowStyle(SizeType.Percent, 100)) ' Table
-        mainLayout.Padding = New Padding(10)
-
-        ' === Add Title ===
-        Dim titleLbl As New Label()
-        titleLbl.Text = "User List"
-        titleLbl.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        titleLbl.ForeColor = Color.FromArgb(60, 60, 60)
-        titleLbl.TextAlign = ContentAlignment.MiddleCenter
-        titleLbl.Dock = DockStyle.Fill
-        mainLayout.Controls.Add(titleLbl, 0, 0)
-
-        ' === Create Table ===
-        Dim table As New TableLayoutPanel()
-        table.Dock = DockStyle.Fill
-        table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
-        table.ColumnCount = 3
-        table.RowCount = dt.Rows.Count + 1
-        table.BackColor = Color.White
-        table.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 20))
-        table.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50))
-        table.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 30))
-
-        ' === Header Row ===
-        AddCell(table, "User ID", True, 0, 0)
-        AddCell(table, "User Name", True, 1, 0)
-        AddCell(table, "Role", True, 2, 0)
-
-        ' === Fill Rows ===
-        Dim r As Integer = 1
-        For Each row As DataRow In dt.Rows
-            AddCell(table, row("u_id").ToString(), False, 0, r)
-            AddCell(table, row("u_name").ToString(), False, 1, r)
-            AddCell(table, row("u_role").ToString(), False, 2, r)
-            r += 1
-        Next
-
-        mainLayout.Controls.Add(table, 0, 1)
-        UserPanel.Controls.Add(mainLayout)
     End Sub
 
     ' === Helper Function for Table Cells ===
