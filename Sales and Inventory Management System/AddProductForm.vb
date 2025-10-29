@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.IO
-Imports System.Drawing ' ✅ 确保使用 System.Drawing.Color, Font 等
+Imports System.Drawing
 
 Public Class AddProductForm
 
@@ -9,7 +9,7 @@ Public Class AddProductForm
 
     Private Sub AddProductForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' === Background ===
-        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
+        Me.BackColor = Color.FromArgb(255, 247, 238)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.Font = New Font("Segoe UI", 10)
@@ -38,7 +38,7 @@ Public Class AddProductForm
 
         For Each cmb As ComboBox In {SupplierIDComboBox, ProductCategoryComboBox}
             cmb.FlatStyle = FlatStyle.Flat
-            cmb.BackColor = Color.FromArgb(255, 245, 230) ' 背景色与 TextBox 一致
+            cmb.BackColor = Color.FromArgb(255, 245, 230)
             cmb.ForeColor = Color.FromArgb(50, 50, 50)
             cmb.IntegralHeight = False
             cmb.DropDownHeight = 100
