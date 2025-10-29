@@ -571,6 +571,4 @@ Public Class AdminDashboardForm
 
         table.Controls.Add(lbl, col, row)
     End Sub
-
-
 End Class

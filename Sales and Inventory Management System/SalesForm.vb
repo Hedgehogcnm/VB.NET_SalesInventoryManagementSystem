@@ -88,7 +88,7 @@ Public Class SalesForm
         Try
             ConnectDB()
 
-            ' Include the image column in your query
+            ' Include the image column
             Dim query As String
             If selectedCategory = "All" Then
                 query = "SELECT p_name, p_sellPrice, p_image, p_stock FROM tb_products"
@@ -101,7 +101,7 @@ Public Class SalesForm
                 cmd.Parameters.AddWithValue("@cat", selectedCategory)
             End If
 
-            ' Step 1: Load data into list
+            'Load data into list
             Dim productList As New List(Of Product)
             Dim reader As MySqlDataReader = cmd.ExecuteReader()
 
@@ -122,7 +122,7 @@ Public Class SalesForm
             End While
             reader.Close()
 
-            ' Step 2: Display all cards
+            'Display all cards
             For Each item As Product In productList
                 Dim card As New Panel()
                 card.Width = 150
@@ -228,7 +228,7 @@ Public Class SalesForm
             .SizeMode = PictureBoxSizeMode.Zoom,
             .Location = New Point(10, 15)
         }
-            ' Try to load from product (you can store in CartItem later)
+            ' Try to load from product
             If c.ImageData IsNot Nothing Then
                 Dim ms As New IO.MemoryStream(c.ImageData)
                 pic.Image = Image.FromStream(ms)
@@ -305,7 +305,8 @@ Public Class SalesForm
             ' === Plus button ===
             AddHandler btnPlus.Click, Sub()
                                           If c.Quantity + 1 > c.Stock Then
-                                              MessageBox.Show("Only " & c.Stock & " units available.", "Stock Limit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                              MessageBox.Show("Only " & c.Stock & " units available.",
+                                                              "Stock Limit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                           Else
                                               c.Quantity += 1
                                           End If
@@ -330,7 +331,8 @@ Public Class SalesForm
                                                        Cart.Remove(c.Name)
                                                    ElseIf qty > c.Stock Then
                                                        qty = c.Stock
-                                                       MessageBox.Show("Only " & c.Stock & " units available.", "Stock Limit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                                       MessageBox.Show("Only " & c.Stock & " units available.",
+                                                                       "Stock Limit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                                    End If
                                                    c.Quantity = qty
                                                End If

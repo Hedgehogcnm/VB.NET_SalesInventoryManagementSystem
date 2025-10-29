@@ -12,14 +12,14 @@ Public Class SplashScreen1
     Private progressValue As Integer = 0
 
     Public Sub New()
-        ' === 窗体基础设置 ===
+        'Basic Form Settings
         Me.FormBorderStyle = FormBorderStyle.None
         Me.StartPosition = FormStartPosition.CenterScreen
-        Me.BackColor = Color.FromArgb(255, 247, 238) ' 柔和米橙色
+        Me.BackColor = Color.FromArgb(255, 247, 238)
         Me.Size = New Size(600, 350)
         Me.TopMost = True
 
-        ' === 圆角边框 ===
+        'Rounded Corners
         Me.Region = New Region(New Drawing2D.GraphicsPath())
         Dim path As New Drawing2D.GraphicsPath()
         path.AddArc(0, 0, 20, 20, 180, 90)
@@ -29,14 +29,13 @@ Public Class SplashScreen1
         path.CloseAllFigures()
         Me.Region = New Region(path)
 
-        ' === Logo ===
+        'Logo
         LogoPictureBox = New PictureBox With {
             .Size = New Size(120, 120),
             .Location = New Point((Me.ClientSize.Width - 90) \ 2, 50),
             .SizeMode = PictureBoxSizeMode.Zoom,
             .BackColor = Color.Transparent
         }
-        ' 替换为你自己的路径或资源图片
         Try
             LogoPictureBox.Image = My.Resources.logo__500_
         Catch
@@ -44,7 +43,7 @@ Public Class SplashScreen1
         End Try
         Me.Controls.Add(LogoPictureBox)
 
-        ' === 标题 ===
+        'Title
         TitleLabel = New Label With {
             .Text = "Sales and Inventory Management System",
             .Font = New Font("Segoe UI Semibold", 14, FontStyle.Bold),
@@ -57,7 +56,7 @@ Public Class SplashScreen1
         }
         Me.Controls.Add(TitleLabel)
 
-        ' === 副标题 ===
+        'Subtitle
         SubtitleLabel = New Label With {
             .Text = "Loading, please wait...",
             .Font = New Font("Segoe UI", 10, FontStyle.Regular),
@@ -70,7 +69,7 @@ Public Class SplashScreen1
         }
         Me.Controls.Add(SubtitleLabel)
 
-        ' === 进度条 ===
+        'ProgressBar
         ProgressBar1 = New ProgressBar With {
             .Location = New Point(100, 260),
             .Size = New Size(400, 12),
@@ -80,9 +79,9 @@ Public Class SplashScreen1
         ProgressBar1.BackColor = Color.FromArgb(255, 230, 210)
         Me.Controls.Add(ProgressBar1)
 
-        ' === 计时器控制加载动画 ===
+        'Timer to Control Loading Animation
         Timer1 = New Timer()
-        Timer1.Interval = 40 ' 速度（毫秒）
+        Timer1.Interval = 40 ' Speed (milliseconds)
         AddHandler Timer1.Tick, AddressOf Timer1_Tick
         Timer1.Start()
     End Sub
